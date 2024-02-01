@@ -1,0 +1,145 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#login-page, #register-page {
+  text-align: center;
+}
+
+/******************* BUTTONS START *******************/
+
+button {
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 10px;
+  font-family: 'Droid Sans', 'Helvetica Neue', sans-serif;
+  color: black;
+  line-height: 1.5;
+  font-size: 1.3em;
+  -moz-osx-font-smoothing: grayscale;
+  min-width: 10rem;
+}
+
+.posButton{
+  background: -webkit-linear-gradient(top, #9aea43, #00a82d);
+  border-color: #00a82d;
+}
+.posButton:hover{
+  background: rgba(0, 168, 45, 0.8);
+}
+
+.stdButton{
+  background: -webkit-linear-gradient(top, #67e8ff, #3498db);
+  border-color: #3498db;
+}
+
+.stdButton:hover{
+  background: rgba(52, 152, 219, 0.8);
+}
+
+.negButton{
+  background: -webkit-linear-gradient(top, #ff3300, #c0392b);
+  border-color: #c0392b;
+}
+
+.negButton:hover{
+  background-color: rgba(192, 57, 43, 0.8);
+}
+/******************* BUTTONS END *******************/
+
+
+/******************* UPLOAD BUTTON START *******************/
+
+.file-upload::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.file-upload {
+  /*border: 1px solid black;*/
+  display: block;
+  margin: 5px auto 20px;
+  width: fit-content;
+  /*background: -webkit-linear-gradient(top, #67e8ff, #5ca2e7);*/
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.file-upload:hover{
+  background: -webkit-linear-gradient(top, rgba(103, 232, 255, 0.80), rgba(92, 162, 231, 0.8));
+}
+
+.file-upload input {
+  overflow: hidden;
+  display: none;
+  width: 0;
+}
+
+/******************* UPLOAD BUTTON END *******************/
+
+
+/******************* FORMS START *******************/
+
+form {
+  display: flex;
+  flex-direction: column;
+  /*gap: 5px;*/
+}
+.register-form {
+  margin: 0 auto;
+  flex-direction: row;
+  /*width: 50%;*/
+  padding: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.login-form {
+  margin: 0 auto;
+  background-color: rgb(238 238 238 / 60%);
+  width: 50%;
+  padding: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.column {
+  width: 47%;
+}
+
+.field {
+  margin: 10px 0;
+}
+
+input {
+  position: relative;
+  /* padding: 12px; */
+   margin-bottom: 10px;
+  width: 94%;
+  /* font-weight: 600; */
+  /* border: 0; */
+  /* outline: 0; */
+  border: 1px solid #a7a7a7;
+  border-radius: 5px;
+  line-height: 1.5;
+}
+input::placeholder {
+  color: #a7a7a7;
+}
+
+.required:after {
+  content:" *";
+  color: red;
+}
+/******************* FORMS END *******************/
