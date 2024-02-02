@@ -19,6 +19,13 @@ section {
   text-align: center;
 }
 
+.loadingGif {
+  z-index: 55;
+  position: fixed;
+  top: 10%;
+  left: 29%;
+}
+
 /******************* BUTTONS START *******************/
 
 button {
@@ -51,12 +58,12 @@ button {
 }
 
 .negButton{
-  background: -webkit-linear-gradient(top, #ff3300, #c0392b);
+  background: -webkit-linear-gradient(top, #f66743, #c0392b);
   border-color: #c0392b;
 }
 
 .negButton:hover{
-  background-color: rgba(192, 57, 43, 0.8);
+  background: rgba(192, 57, 43, 0.8);
 }
 /******************* BUTTONS END *******************/
 
@@ -143,3 +150,60 @@ input::placeholder {
   color: red;
 }
 /******************* FORMS END *******************/
+
+
+
+/******************* ALERT BOXES START *******************/
+
+.message {
+  z-index: 55;
+  position: fixed;
+  top:85%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: fadeOut 4s ease-out;
+
+}
+
+.message-hide {
+  display: none;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  40% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.alert-box {
+  color:#555;
+  border-radius:30px;
+  font-family:Tahoma,Geneva,Arial,sans-serif;font-size:30px;
+  padding:10px 10px 10px 90px;
+  max-width: fit-content;
+}
+
+.alert-box span {
+  font-weight:bold;
+  text-transform:uppercase;
+}
+
+.success {
+  background:#e9ffd9 url("images/success.png") no-repeat 6px 55%;
+  border:1px solid #a6ca8a;
+  background-size: 70px;
+}
+
+.warning {
+  background:#fff8c4 url("images/warning.png") no-repeat 6px 55%;
+  border:1px solid #f2c779;
+  background-size: 70px;
+}
+
+.error {
+  background:#ffecec url("images/error.png") no-repeat 6px 55%;
+  border:1px solid #f5aca6;
+  background-size: 70px;
+}
+
+/******************* ALERT BOXES END *******************/

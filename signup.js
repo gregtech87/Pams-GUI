@@ -1,3 +1,9 @@
+// import {ObjectId} from "mongodb";
+
+
+
+// import {ObjectId} from "mongodb";
+
 function displaySignupPage() {
     mainDiv.innerHTML = `
  <section style="width: 400px; margin: auto">
@@ -8,55 +14,81 @@ function displaySignupPage() {
           <input type="file" id="imageInput" accept="image/*" onchange="handleImageChange()">
           Upload profile picture
         </label>
-        <form id="register-form" class="register-form">
+        <form id="register-form" class="register-form" onsubmit="registerUser()">
           <div class="column one">
             <label for="register-username" class="required">Username:</label>
             <input type="text" id="register-username" required>
 
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname">
+            <label for="register-firstname">First Name:</label>
+            <input type="text" id="register-firstname">
 
-            <label for="email" class="required">Email:</label>
-            <input type="email" id="email" required>
+            <label for="register-email" class="required">Email:</label>
+            <input type="email" id="register-email" required>
   
-            <label for="address">Address:</label>
-            <input type="text" id="address">          
+            <label for="register-address">Address:</label>
+            <input type="text" id="register-address">          
 
-            <label for="city">City:</label>
-            <input type="text" id="city">
+            <label for="register-city">City:</label>
+            <input type="text" id="register-city">
           </div>
           <div class="column two">
             <label for="register-password" class="required">Password:</label>
             <input type="password" id="register-password" required>
 
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname">
+            <label for="register-lastname">Last Name:</label>
+            <input type="text" id="register-lastname">
   
-            <label for="phone-number">Phone Number:</label>
-            <input type="tel" id="phone-number">
+            <label for="register-phone-number">Phone Number:</label>
+            <input type="tel" id="register-phone-number">
 
-            <label for="postalCode">PostalCode:</label>
-            <input type="text" id="postalCode">
+            <label for="register-postalCode">PostalCode:</label>
+            <input type="text" id="register-postalCode">
           </div>
         <button type="submit" class="posButton">Register</button>
         <button onclick="loadLoginPage()" class="negButton">Return</button>
         </form>
       </div>
     </section>
-
         `;
-    loadSignupButtons();
 }
 
+function registerUser() {
+        loadingGif();
 
-function loadSignupButtons() {
-    const registerForm = document.getElementById("register-form");
+    let newUser = {
+        "id": "0",
+        "customerId": 2,
+        "username": "sssssssssssssssssssssss",
+        "password": "{noop}jerry",
+        "firstName": "Jerry",
+        "lastName": "Persson",
+        "email": "jerry@cat.se",
+        "phone": "0766654665",
+        "dateOfBirth": "1948-01-06",
+        "address": {
+            "street": "Haspelvägen 3",
+            "postalCode": 87445,
+            "city": "Växsjö"
+        },
+        "roles": [
+            {
+                "id": "0",
+                "role": "ROLE_ADMIN"
+            },
+            {
+                "id": "0",
+                "role": "ROLE_USER"
+            }
+        ]
+    };
+    const url = 'http://localhost:8586/api/v1/users';
+    let signupUser = btoa(`${"newUser"}:${"newUser"}`)
+    fetchDataPost(url, signupUser, newUser).then(r => {
 
-    registerForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        // Implement registration logic here (store user data, etc.)
-        alert("Registration functionality not implemented in this example.");
+        loadLoginPage();
     });
+    // alert(JSON.stringify(newUser));
+
 }
 
 let uploadedTempProfilePicture;
@@ -77,7 +109,7 @@ function handleImageChange() {
             let imageData = e.target.result;
 
             // Use the 'blob' object as needed (e.g., send it to a server).
-            setTempProfilePicture(dataURItoBlob(imageData, file.type));
+            setTempProfilePicture(fileToBlob(imageData, file.type));
 
             // Update the source of the image element
             previewImage.src = imageData;
@@ -85,12 +117,8 @@ function handleImageChange() {
         reader.readAsDataURL(input.files[0]);
     }
 }
-function setTempProfilePicture(pic) {
-  uploadedTempProfilePicture = pic
-  console.log(pic)
-  console.log(uploadedTempProfilePicture)
-}
-function dataURItoBlob(dataURI, fileType) {
+
+function fileToBlob(dataURI, fileType) {
   // Convert base64 data URI to a binary string.
   const byteString = atob(dataURI.split(',')[1]);
 
@@ -102,8 +130,10 @@ function dataURItoBlob(dataURI, fileType) {
     uint8Array[i] = byteString.charCodeAt(i);
   }
 
-  // Create a Blob from the Uint8Array with dynamic MIME type.
-  const blob = new Blob([uint8Array], { type: fileType });
+  // Create a Blob from the Uint8Array with dynamic MIME type and return it.
+    return new Blob([uint8Array], {type: fileType});
+}
 
-  return blob;
+function setTempProfilePicture(pic) {
+    uploadedTempProfilePicture = pic
 }
