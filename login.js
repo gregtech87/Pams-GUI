@@ -1,37 +1,7 @@
 const mainDiv = document.querySelector("#app")
 let loggedInUser;
 let base64credentials;
-// let dummyUser = {
-//         "id": "2",
-//         "customerId": 2,
-//         "username": "jerry",
-//         "password": "{noop}jerry",
-//         "firstName": "Jerry",
-//         "lastName": "Persson",
-//         "email": "jerry@cat.se",
-//         "phone": "0766654665",
-//         "dateOfBirth": "1948-01-06",
-//         "address": {
-//             "street": "Haspelvägen 3",
-//             "postalCode": 87445,
-//             "city": "Växsjö"
-//         },
-//         "roles": [
-//             {
-//                 "id": "3",
-//                 "role": "ROLE_ADMIN"
-//             },
-//             {
-//                 "id": "4",
-//                 "role": "ROLE_USER"
-//             }
-//         ]
-//     };
-// dummyUser.roles.forEach(r => {
-//     console.log(r);
-//     console.log(r.id);
-//     console.log(r.role);
-// });
+
 
 
 
@@ -57,7 +27,7 @@ function loadLoginPage() {
 }
 
 function loadLoginButtons() {
-    const loginForm = document.getElementById("login-form");
+    const loginForm = document.querySelector("#login-form");
 
     loginForm.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -75,8 +45,8 @@ function loadLoginButtons() {
 }
 
 async function login() {
-    let loggedInUsername = document.getElementById('login-username').value;
-    let loggedInPassword = document.getElementById('login-password').value;
+    let loggedInUsername = document.querySelector('#login-username').value;
+    let loggedInPassword = document.querySelector('#login-password').value;
     loadingGif();
     base64credentials = btoa(`${loggedInUsername}:${loggedInPassword}`);
     let success = false;
