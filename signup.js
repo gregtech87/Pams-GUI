@@ -120,7 +120,23 @@ function handleImageChange(v) {
     // Check if any files are selected
     if (file) {
         let reader = new FileReader();
+        console.log(file.lastModified)
+        console.log(file.lastModifiedDate)
+        console.log(file.name)
+        console.log(file.type)
+        console.log(file.size)
         console.log(file)
+
+        let ffile = {
+            lastModified:file.lastModified,
+            lastModifiedDate:file.lastModifiedDate,
+            name:file.name,
+            type:file.type,
+            size:file.size,
+
+        }
+
+        console.log(JSON.stringify(ffile))
         // console.log(reader)
         // Read the selected image file
         reader.onload = function (e) {
