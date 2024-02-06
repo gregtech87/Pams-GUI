@@ -33,6 +33,7 @@ function loadLoginButtons() {
         event.preventDefault();
         login().then(permitted => {
             if(permitted){
+                loadApplication();
                 console.log("yeay!!")
                 console.log(loggedInUser)
             } else {
