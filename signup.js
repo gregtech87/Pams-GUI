@@ -58,10 +58,7 @@ function displaySignupPage() {
 async function registerUser(event) {
     event.preventDefault();
     // loadingGif();
-    console.log(document.getElementById("register-username"))
-    console.log(document.getElementById("register-username").innerHTML)
-    console.log(document.getElementById("register-username").values)
-    console.log(document.getElementById("register-username").value)
+
     let newUser = {
         "id": "0",
         "username": document.querySelector("#register-username").value,
@@ -95,10 +92,10 @@ async function registerUser(event) {
     const url = 'http://localhost:8586/api/v1/users';
     let signupUser = btoa(`${"newUser"}:${"newUser"}`)
     try {
-        loadingGif()
+        // loadingGif()
         response = await fetchDataPost(url, signupUser, newUser);
     } catch (e){
-        loadLoginPage()
+        // loadLoginPage()
         errorBox("Something went wrong! Try again later.")
     }
 
@@ -112,7 +109,7 @@ async function registerUser(event) {
     }
 }
 
-let uploadedTempProfilePicture;
+let uploadedTempProfilePicture = "noImage";
 function handleImageChange(v) {
     // Get the file input element
     const input = document.querySelector('#imageInput');
@@ -124,22 +121,21 @@ function handleImageChange(v) {
     if (file) {
         let reader = new FileReader();
         console.log(file)
-        console.log(reader)
+        // console.log(reader)
         // Read the selected image file
         reader.onload = function (e) {
             // The e.target.result contains the data URL of the image
             let imageData = e.target.result;
-            console.log(imageData)
-            console.log(file.type)
+            // console.log(imageData)
+            // console.log(file.type)
             // Use the 'blob' object as needed (e.g., send it to a server).
 
             setTempProfilePicture(imageData);
-            let g = fileToBlob(imageData, file.type);
-            console.log(g)
+            // let g = fileToBlob(imageData, file.type);
+            // console.log(g)
             // Update the source of the image element
             previewImage.src = imageData;
         };
-        console.log(reader)
         reader.readAsDataURL(input.files[0]);
     }
 }
@@ -151,9 +147,7 @@ function fileToBlob(dataURI, fileType) {
 
   // Create a Uint8Array from the binary string.
   const arrayBuffer = new ArrayBuffer(byteString.length);
-    console.log(arrayBuffer)
   const uint8Array = new Uint8Array(arrayBuffer);
-    console.log(uint8Array)
 
   for (let i = 0; i < byteString.length; i++) {
     uint8Array[i] = byteString.charCodeAt(i);
@@ -165,5 +159,12 @@ function fileToBlob(dataURI, fileType) {
 }
 
 function setTempProfilePicture(imageData) {
-    uploadedTempProfilePicture = imageData;
+
+    let commaIndex = imageData.indexOf(",",0)
+    console.log(commaIndex);
+    console.log(imageData.substring(commaIndex+1,50))
+    console.log(imageData.length)
+    if (imageData.length > 50) {
+        uploadedTempProfilePicture = imageData.substring(commaIndex + 1);
+    }
 }
