@@ -1,6 +1,6 @@
 function displaySignupPage() {
     mainDiv.innerHTML = `
- <section style="width: 400px; margin: auto">
+ <section style="width: 400px;">
       <div id="register-page">
         <h2>Register User</h2>
         <img id="previewImage" src="/images/defaultUser.jpg" alt="Uploaded Image" style="width: 200px">

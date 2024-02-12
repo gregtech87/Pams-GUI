@@ -51,18 +51,20 @@ async function login() {
     let loggedInPassword = document.querySelector('#login-password').value;
     loadingGif();
     base64credentials = btoa(`${loggedInUsername}:${loggedInPassword}`);
+    console.log(base64credentials)
     let success = false;
-    const url = 'http://localhost:8586/api/v1/users';
+    const url = 'http://localhost:8586/api/v1/login';
     try {
         const response = await fetchDataGet(url, base64credentials);
         let data = await response.json();
         console.log(data)
-        data.forEach(user => {
-            if (user.username === loggedInUsername) {
-                loggedInUser = user;
+        // data.forEach(user => {
+            if (data.username === loggedInUsername) {
+                loggedInUser = data;
+                console.log(loggedInUser)
                 success = true;
             }
-        });
+        // });
         console.log(success)
     } catch (e) {
         errorBox('\"' + loggedInUsername + '\" Not found or wrong password')
