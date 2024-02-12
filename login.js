@@ -1,4 +1,5 @@
 const mainDiv = document.querySelector("#app")
+const messageDiv = document.querySelector("#messageBoxes");
 let loggedInUser;
 let base64credentials;
 
@@ -9,7 +10,7 @@ function loadLoginPage() {
     mainDiv.innerHTML = `
         <section>
       <div id="login-page">
-        <h2>Login</h2>
+        <h2>PAM: Personal Asset Management</h2>
         <form id="login-form">
           <label for="login-username">Username:</label>
           <input type="text" id="login-username" required>
@@ -33,9 +34,9 @@ function loadLoginButtons() {
         event.preventDefault();
         login().then(permitted => {
             if(permitted){
-                loadApplication();
                 console.log("yeay!!")
                 console.log(loggedInUser)
+                loadApplication();
             } else {
                 console.log("NOOOO!!")
                 console.log(loggedInUser)
@@ -71,8 +72,8 @@ async function login() {
 }
 
 function loadingGif() {
-    mainDiv.innerHTML += `
-        <img src="/images/loadingGif.gif" alt="loading Image" class="loadingGif">
+    messageDiv.innerHTML += `
+        <img src="/images/loadingGif.gif" alt="loading Image" id="loadingSnail" class="loadingGif">
     `;
 }
 
