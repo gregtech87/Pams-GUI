@@ -86,12 +86,13 @@ async function registerUser(event) {
             "postalCode": document.querySelector("#register-postalCode").value,
             "city": document.querySelector("#register-city").value
         },
-        "roles": [
-            {
-                "id": "0",
-                "role": ""
-            }
-        ]
+        // "roles": [
+        //     {
+        //         "id": "0",
+        //         "role": ""
+        //     }
+        // ]
+        "role:": ""
     };
     console.log(JSON.stringify(newUser));
     let response;
@@ -104,7 +105,7 @@ async function registerUser(event) {
         loadLoginPage()
         errorBox("Something went wrong! Try again later.")
     }
-
+    console.log(response)
     if (response.verified) {
         loadLoginPage();
         successBox(response.answer)
