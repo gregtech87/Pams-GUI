@@ -4,8 +4,6 @@ let loggedInUser;
 let base64credentials;
 
 
-
-
 function loadLoginPage() {
     mainDiv.innerHTML = `
         <section>
@@ -33,7 +31,7 @@ function loadLoginButtons() {
     loginForm.addEventListener("submit", function (event) {
         event.preventDefault();
         login().then(permitted => {
-            if(permitted){
+            if (permitted) {
                 console.log("yeay!!")
                 console.log(loggedInUser)
                 loadApplication();
@@ -51,23 +49,40 @@ async function login() {
     let loggedInPassword = document.querySelector('#login-password').value;
     loadingGif();
     base64credentials = btoa(`${loggedInUsername}:${loggedInPassword}`);
-    console.log(base64credentials)
     let success = false;
-    const url = 'http://localhost:8586/api/v1/login';
+
     try {
+        const url = 'http://localhost:8586/api/v1/login';
         const response = await fetchDataGet(url, base64credentials);
-        let data = await response.json();
-        console.log(data)
-        // data.forEach(user => {
-            if (data.username === loggedInUsername) {
-                loggedInUser = data;
-                console.log(loggedInUser)
-                success = true;
-            }
-        // });
-        console.log(success)
+        let user = await response.json();
+
+        if (user.username === loggedInUsername) {
+            loggedInUser = user;
+            success = true;
+            console.log(success)
+        }
     } catch (e) {
-        errorBox('\"' + loggedInUsername + '\" Not found or wrong password')
+        const url = "http://localhost:8586/api/v1/userstatus?credentials=" + loggedInUsername + ":" + loggedInPassword;
+        console.log(url)
+        const response = await fetchDataGet(url, btoa(`statusCheck:statusCheck`));
+        let answer = await response.json();
+        console.log(answer)
+        let found = answer.userFound;
+        let password = answer.verifiedPassword;
+        let enabled = answer.accountEnabled;
+        let locked = answer.accountLocked;
+        console.log(found)
+        console.log(enabled)
+        if (!found){
+            errorBox('User with username: \"' + loggedInUsername + '\" Not found!')
+        } else if(!password) {
+            errorBox('Wrong password!')
+        } else if (!enabled) {
+            errorBox('Account not confirmed')
+        } else if (locked){
+            errorBox('Account locked!')
+        }
+
         loadLoginPage();
     }
     return success;

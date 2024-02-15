@@ -28,7 +28,7 @@ function displaySignupPage() {
           </div>
           <div class="column two">
             <label for="register-password" class="required">Password:</label>
-            <input type="password" id="register-password" required>
+            <input type="password" id="register-password" minlength="8" required>
 
             <label for="register-lastname">Last Name:</label>
             <input type="text" id="register-lastname">
@@ -96,8 +96,9 @@ async function registerUser(event) {
     };
     console.log(JSON.stringify(newUser));
     let response;
-    const url = 'http://localhost:8586/api/v1/users';
-    let signupUser = btoa(`${"newUser"}:${"newUser"}`)
+    const url = 'http://localhost:8586/api/v1/registeruser';
+    let signupUser = btoa(`newUser:newUser`)
+    console.log(signupUser)
     try {
         response = await fetchDataPost(url, signupUser, newUser);
         // loadingGif()
