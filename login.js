@@ -8,7 +8,8 @@ function loadLoginPage() {
     mainDiv.innerHTML = `
         <section>
       <div id="login-page">
-        <h2>PAM: Personal Asset Management</h2>
+        <img src="images/MainLogoVit.svg" style="width: 100%">
+        <h2>Personal Asset Management</h2>
         <form id="login-form">
           <label for="login-username">Username:</label>
           <input type="text" id="login-username" required>
