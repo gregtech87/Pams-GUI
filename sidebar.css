@@ -25,11 +25,22 @@
     top: 0;
 }
 
+.sidebar p{
+
+    color: #fff;
+    text-align: center;
+}
+
+#profilePic {
+    width: 60%;
+    padding-left: 2rem;
+}
+
 .wrapper .sidebar h2{
     color: #fff;
     text-transform: uppercase;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .wrapper .sidebar ul li{

@@ -1,0 +1,29 @@
+.editPage {
+display: flex;
+    flex-wrap: wrap;
+    border: #555555 3px solid;
+    border-radius: 5px;
+    width: fit-content;
+    padding: 10px 10px 10px 10px;
+}
+
+.editUserForm {
+    width: 25rem;
+}
+
+/*#editPic {*/
+/*    width: 60%;*/
+/*}*/
+
+
+.editUserPic {
+    max-width: 20rem;
+}
+
+.editUserPic img {
+    max-width: 20rem;
+}
+
+.editBorder {
+
+}

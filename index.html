@@ -6,36 +6,40 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="sidebar.css">
   <link rel="stylesheet" href="stuff.css">
+  <link rel="icon" href="images/order.png">
   <title>Personal Asset Management System</title>
   <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 </head>
-<!--<body onload="loadLoginPage()" class="body-login-register">-->
-<body onload="loadApplication()">
+<body onload="loadLoginPage()" class="body-login-register">
+<!--<body onload="loadApplication()">-->
 <!--<body>-->
 
 
 
 
-  <div id="app">
-<!--      Content will be dynamically loaded here-->
-  </div>
+<div id="app">
+  <!-- Content will be dynamically loaded here -->
+</div>
 
 
 <div id="messageBoxes">
   <!-- Content will be loaded dynamically here -->
 </div>
 
-  <script src="login.js"></script>
-  <script src="signup.js"></script>
-  <script src="fetches.js"></script>
-  <script src="notifications.js"></script>
-  <script src="application.js"></script>
+<!-- Dark mode dependency -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@bufferhead/nightowl@0.0.12/dist/nightowl.js"></script>
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@bufferhead/nightowl@0.0.12/dist/nightowl.js"></script>
-<!--    Comment out this line if you want to use dev-tools.-->
+<!-- Dev-tools disabler. -->
 <!--<script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>-->
-<!--  <script src=""></script>-->
-<!--  <script src=""></script>-->
+
+<script src="login.js"></script>
+<script src="signup.js"></script>
+<script src="fetches.js"></script>
+<script src="notifications.js"></script>
+<script src="application.js"></script>
+<script src="appStuff.js"></script>
+<script src="editUserStuff.js"></script>
+
 
 
 </body>

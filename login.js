@@ -1,6 +1,7 @@
 const mainDiv = document.querySelector("#app")
 const messageDiv = document.querySelector("#messageBoxes");
 let loggedInUser;
+let loggedInUser2 = {firstname: "Tobias"};
 let base64credentials;
 
 
@@ -21,9 +22,22 @@ function loadLoginPage() {
         </form>
         <div>Not a member? <a href="#" onclick="displaySignupPage()">Sign up now</a></div>
       </div>
+      
+<!--      Devbutton-->
+      <button onclick="bbbbbbbbb()">aaaaaaaa</button>
     </section>
     `;
     loadLoginButtons()
+}
+
+// Dev use only
+async function bbbbbbbbb() {
+    const url = 'http://localhost:8586/api/v1/login';
+    let base64 = btoa(`tobbe:Sommar13`);
+    const response = await fetchDataGet(url, base64);
+    loggedInUser = await response.json();
+    loadApplication();
+
 }
 
 function loadLoginButtons() {
@@ -74,13 +88,13 @@ async function login() {
         let locked = answer.accountLocked;
         console.log(found)
         console.log(enabled)
-        if (!found){
+        if (!found) {
             errorBox('User with username: \"' + loggedInUsername + '\" Not found!')
-        } else if(!password) {
+        } else if (!password) {
             errorBox('Wrong password!')
         } else if (!enabled) {
             errorBox('Account not confirmed')
-        } else if (locked){
+        } else if (locked) {
             errorBox('Account locked!')
         }
 

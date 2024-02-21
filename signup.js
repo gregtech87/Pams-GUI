@@ -3,9 +3,9 @@ function displaySignupPage() {
  <section style="width: 400px;">
       <div id="register-page">
         <h2>Register User</h2>
-        <img id="previewImage" src="/images/defaultUser.jpg" alt="Uploaded Image" style="width: 200px">
+        <img id="previewImage" src="images/defaultUser.jpg" alt="Uploaded Image" style="width: 200px">
         <label class="file-upload stdButton">
-          <input type="file" id="imageInput" accept="image/*" onchange="handleImageChange()">
+          <input type="file" id="imageInput" accept="image/*" onchange="handleImageChange('#imageInput', '#previewImage')">
           Upload profile picture
         </label>
         <form id="register-form" class="register-form" onsubmit="registerUser(event)">
@@ -53,7 +53,7 @@ function displaySignupPage() {
         `;
 }
 
-async function registerUser(event) {
+function registerUser(event) {
     event.preventDefault();
     loadingGif();
 
@@ -94,21 +94,44 @@ async function registerUser(event) {
         // ]
         "role:": ""
     };
+    inspectNewUser(newUser).then(loadLoginPage);
+    // console.log(JSON.stringify(newUser));
+    // let response;
+    // const url = 'http://localhost:8586/api/v1/registeruser';
+    // let signupUser = btoa(`newUser:newUser`)
+    // console.log(signupUser)
+    // try {
+    //     response = await fetchDataPost(url, signupUser, newUser);
+    //     // loadingGif()
+    // } catch (e) {
+    //     loadLoginPage()
+    //     errorBox("Something went wrong! Try again later.")
+    // }
+    // console.log(response)
+    // if (response.verified) {
+    //     loadLoginPage();
+    //     successBox(response.answer)
+    // } else if (!response.verifiedUsername) {
+    //     messageBox("Username already in use!")
+    // } else if (!response.verifiedEmail) {
+    //     messageBox("Email already in use!")
+    // }
+}
+async function inspectNewUser(newUser) {
     console.log(JSON.stringify(newUser));
     let response;
-    const url = 'http://localhost:8586/api/v1/registeruser';
+    const url = 'http://localhost:8586/api/v1/user';
     let signupUser = btoa(`newUser:newUser`)
     console.log(signupUser)
     try {
         response = await fetchDataPost(url, signupUser, newUser);
-        // loadingGif()
     } catch (e) {
-        loadLoginPage()
+        // loadLoginPage()
         errorBox("Something went wrong! Try again later.")
     }
     console.log(response)
     if (response.verified) {
-        loadLoginPage();
+        // loadLoginPage();
         successBox(response.answer)
     } else if (!response.verifiedUsername) {
         messageBox("Username already in use!")
@@ -116,15 +139,16 @@ async function registerUser(event) {
         messageBox("Email already in use!")
     }
 }
-
 let uploadedTempProfilePicture = {"$binary": {}};
 
-function handleImageChange(v) {
+function handleImageChange(inputId, elementID) {
+    // Resetting temp file
+    uploadedTempProfilePicture = {"$binary": {}};
     // Get the file input element
-    const input = document.querySelector('#imageInput');
+    const input = document.querySelector(inputId);
     const file = input.files[0];
     // Get the image element
-    let previewImage = document.querySelector('#previewImage');
+    let previewImage = document.querySelector(elementID);
 
     // Check if any files are selected
     if (file) {
@@ -135,17 +159,12 @@ function handleImageChange(v) {
         uploadedTempProfilePicture.lastModified = file.lastModified;
         uploadedTempProfilePicture.lastModifiedDate = file.lastModifiedDate;
 
-        console.log(JSON.stringify(uploadedTempProfilePicture))
-        // console.log(reader)
         // Read the selected image file
         reader.onload = function (e) {
             // The e.target.result contains the data URL of the image
             let imageData = e.target.result;
             // Use the 'blob' object as needed (e.g., send it to a server).
-
             setTempProfilePicture(imageData);
-            // let g = fileToBlob(imageData, file.type);
-            // console.log(g)
             // Update the source of the image element
             previewImage.src = imageData;
         };
@@ -172,13 +191,8 @@ function fileToBlob(dataURI, fileType) {
 }
 
 function setTempProfilePicture(imageData) {
-
     let commaIndex = imageData.indexOf(",", 0)
-    console.log(commaIndex);
-    console.log(imageData.substring(commaIndex + 1, 50))
-    console.log(imageData.length)
     if (imageData.length > 50) {
         uploadedTempProfilePicture.$binary.base64 = imageData.substring(commaIndex + 1);
     }
-    console.log(uploadedTempProfilePicture)
 }
