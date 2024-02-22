@@ -1,15 +1,15 @@
 const mainDiv = document.querySelector("#app")
 const messageDiv = document.querySelector("#messageBoxes");
 let loggedInUser;
-let loggedInUser2 = {firstname: "Tobias"};
 let base64credentials;
-
+// let baseFetchUrl = 'https://pam-api.gregtech.duckdns.org/api/v1/';
+let baseFetchUrl = 'http://localhost:8586/api/v1/';
 
 function loadLoginPage() {
     mainDiv.innerHTML = `
         <section>
       <div id="login-page">
-        <img src="images/MainLogoVit.svg" style="width: 100%">
+        <img src="images/MainLogo.png" style="width: 100%" alt="Logo">
         <h2>Personal Asset Management</h2>
         <form id="login-form">
           <label for="login-username">Username:</label>
@@ -32,8 +32,8 @@ function loadLoginPage() {
 
 // Dev use only
 async function bbbbbbbbb() {
-    const url = 'http://localhost:8586/api/v1/login';
-    let base64 = btoa(`tobbe:Sommar13`);
+    const url = baseFetchUrl + 'login';
+    let base64 = btoa(`ttt:tttttttt`);
     const response = await fetchDataGet(url, base64);
     loggedInUser = await response.json();
     loadApplication();
@@ -67,7 +67,7 @@ async function login() {
     let success = false;
 
     try {
-        const url = 'http://localhost:8586/api/v1/login';
+        const url = baseFetchUrl + 'login';
         const response = await fetchDataGet(url, base64credentials);
         let user = await response.json();
 
@@ -77,7 +77,7 @@ async function login() {
             console.log(success)
         }
     } catch (e) {
-        const url = "http://localhost:8586/api/v1/userstatus?credentials=" + loggedInUsername + ":" + loggedInPassword;
+        const url = baseFetchUrl + "userstatus?credentials=" + loggedInUsername + ":" + loggedInPassword;
         console.log(url)
         const response = await fetchDataGet(url, btoa(`statusCheck:statusCheck`));
         let answer = await response.json();
@@ -105,7 +105,7 @@ async function login() {
 
 function loadingGif() {
     messageDiv.innerHTML += `
-        <img src="/images/loadingGif.gif" alt="loading Image" id="loadingSnail" class="loadingGif">
+        <img src="images/loadingGif.gif" alt="loading Image" id="loadingSnail" class="loadingGif">
     `;
 }
 

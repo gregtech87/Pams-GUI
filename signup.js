@@ -3,7 +3,7 @@ function displaySignupPage() {
  <section style="width: 400px;">
       <div id="register-page">
         <h2>Register User</h2>
-        <img id="previewImage" src="images/defaultUser.jpg" alt="Uploaded Image" style="width: 200px">
+        <img id="previewImage" src="images/defaultUser.png" alt="Uploaded Image" style="width: 200px">
         <label class="file-upload stdButton">
           <input type="file" id="imageInput" accept="image/*" onchange="handleImageChange('#imageInput', '#previewImage')">
           Upload profile picture
@@ -97,7 +97,7 @@ function registerUser(event) {
     inspectNewUser(newUser).then(loadLoginPage);
     // console.log(JSON.stringify(newUser));
     // let response;
-    // const url = 'http://localhost:8586/api/v1/registeruser';
+    // const url = baseFetchUrl + 'registeruser';
     // let signupUser = btoa(`newUser:newUser`)
     // console.log(signupUser)
     // try {
@@ -120,7 +120,7 @@ function registerUser(event) {
 async function inspectNewUser(newUser) {
     console.log(JSON.stringify(newUser));
     let response;
-    const url = 'http://localhost:8586/api/v1/user';
+    const url = baseFetchUrl + 'user';
     let signupUser = btoa(`newUser:newUser`)
     console.log(signupUser)
     try {

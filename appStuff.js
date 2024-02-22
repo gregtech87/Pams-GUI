@@ -29,7 +29,7 @@ function displayProfileEdit() {
 
     contentDiv.innerHTML = `
     <h2>Edit Profile</h2>
-    <div class="editPage" style="margin-bottom: 0">
+    <div class="editPage editBorder" style="margin-bottom: 0">
         <div class="editUserForm" style="margin-bottom: 0">
             <form id="updateUserForm">
                 <label for="firstName">First Name:</label>
@@ -66,8 +66,8 @@ function displayProfileEdit() {
             </form>
         </div>
         <div class="editUserPic" style="margin-bottom: 0">
-            <img id="editPic" src="images/defaultUser.jpg" alt="Profile picture">
-            <label for="newPicture">Profile Picture:</label>
+            <img id="editPic" src="images/defaultUser.png" alt="Profile picture"><br>
+            <label for="newPicture">Profile Picture:</label><br>
             <input type="file" id="newPicture" accept="image/*">
         </div>    
 <!--        External form buttons for ev resizing          -->
@@ -93,7 +93,7 @@ function displayProfileEdit() {
     let updateUserForm = document.querySelector('#updateUserForm');
     updateUserForm.addEventListener("submit", function (event) {
         event.preventDefault();
-        updateUser(newProfilePic);
+        updateUser(newProfilePic).then();
     });
 }
 
@@ -124,7 +124,7 @@ async function updateUser(newProfilePic) {
         editedLoggedInUser.profilePictureData.lastModifiedDate = uploadedTempProfilePicture.lastModifiedDate
     }
     let response;
-    const url = 'http://localhost:8586/api/v1/user';
+    const url = baseFetchUrl + 'user';
     let cred = btoa(`editUser:editUser`)
     try{
      response = await fetchDataPut(url, cred, editedLoggedInUser)
