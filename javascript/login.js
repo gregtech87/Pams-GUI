@@ -1,9 +1,4 @@
-const mainDiv = document.querySelector("#app")
-const messageDiv = document.querySelector("#messageBoxes");
-let loggedInUser;
-let base64credentials;
-// let baseFetchUrl = 'https://pam-api.gregtech.duckdns.org/api/v1/';
-let baseFetchUrl = 'http://localhost:8586/api/v1/';
+
 
 function loadLoginPage() {
     mainDiv.innerHTML = `
@@ -25,7 +20,6 @@ function loadLoginPage() {
       
 <!--      Devbutton-->
       <button onclick="aaaaaaa()">aaaaaaaa</button>
-      <button onclick="bbbbb()">bbbbbbbb</button>
     </section>
     `;
     loadLoginButtons()
@@ -37,12 +31,14 @@ async function aaaaaaa() {
     let base64 = btoa(`ttt:tttttttt`);
     const response = await fetchDataGet(url, base64);
     loggedInUser = await response.json();
-    loadApplication();
-
+    console.log(loggedInUser)
+    sessionStorage.setItem("loggedInUser", JSON.stringify(loggedInUser))
+    sessionStorage.setItem("base64credentials", JSON.stringify(base64));
+    let user = JSON.parse(sessionStorage.getItem("loggedInUser"))
+    console.log(user)
+    window.open("application.html", "_self", windowSize);
 }
-function bbbbb() {
 
-}
 function loadLoginButtons() {
     const loginForm = document.querySelector("#login-form");
 
@@ -52,7 +48,8 @@ function loadLoginButtons() {
             if (permitted) {
                 console.log("yeay!!")
                 console.log(loggedInUser)
-                loadApplication();
+                // loadApplication();
+                window.open("application.html", "_self", windowSize);
             } else {
                 console.log("NOOOO!!")
                 console.log(loggedInUser)
@@ -67,6 +64,7 @@ async function login() {
     let loggedInPassword = document.querySelector('#login-password').value;
     loadingGif();
     base64credentials = btoa(`${loggedInUsername}:${loggedInPassword}`);
+    sessionStorage.setItem("base64credentials", JSON.stringify(base64credentials));
     let success = false;
 
     try {
@@ -76,6 +74,7 @@ async function login() {
 
         if (user.username === loggedInUsername) {
             loggedInUser = user;
+            sessionStorage.setItem("loggedInUser", JSON.stringify(loggedInUser))
             success = true;
             console.log(success)
         }
@@ -101,7 +100,7 @@ async function login() {
             errorBox('Account locked!')
         }
 
-        loadLoginPage();
+        // loadLoginPage();
     }
     return success;
 }

@@ -94,28 +94,9 @@ function registerUser(event) {
         // ]
         "role:": ""
     };
-    inspectNewUser(newUser).then(loadLoginPage);
-    // console.log(JSON.stringify(newUser));
-    // let response;
-    // const url = baseFetchUrl + 'registeruser';
-    // let signupUser = btoa(`newUser:newUser`)
-    // console.log(signupUser)
-    // try {
-    //     response = await fetchDataPost(url, signupUser, newUser);
-    //     // loadingGif()
-    // } catch (e) {
-    //     loadLoginPage()
-    //     errorBox("Something went wrong! Try again later.")
-    // }
-    // console.log(response)
-    // if (response.verified) {
-    //     loadLoginPage();
-    //     successBox(response.answer)
-    // } else if (!response.verifiedUsername) {
-    //     messageBox("Username already in use!")
-    // } else if (!response.verifiedEmail) {
-    //     messageBox("Email already in use!")
-    // }
+    inspectNewUser(newUser).then(
+        // loadLoginPage
+    );
 }
 async function inspectNewUser(newUser) {
     console.log(JSON.stringify(newUser));
@@ -131,7 +112,8 @@ async function inspectNewUser(newUser) {
     }
     console.log(response)
     if (response.verified) {
-        // loadLoginPage();
+        loadLoginPage();
+        alert("Please click the link in the email that has been sent to you for verification.")
         successBox(response.answer)
     } else if (!response.verifiedUsername) {
         messageBox("Username already in use!")

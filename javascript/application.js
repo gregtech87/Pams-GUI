@@ -1,10 +1,16 @@
 
+function loadParameters() {
+    loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    base64credentials = JSON.parse(sessionStorage.getItem("base64credentials"));
+}
+
 
 function loadApplication() {
+    loadParameters();
+    console.log(loggedInUser)
+    console.log(base64credentials)
     let body = document.querySelector("body");
     body.classList.remove("body-login-register")
-    console.log(loggedInUser);
-
 
     messageDiv.innerHTML = ``;
     mainDiv.innerHTML = `

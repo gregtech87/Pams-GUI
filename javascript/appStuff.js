@@ -1,6 +1,5 @@
 function setProfilePic(elementId) {
     const imageElement = document.querySelector(elementId);
-
     if (loggedInUser.profilePic.length > 100) {
         // Convert base64 data URI to a binary string.
         const byteString = atob(loggedInUser.profilePic);
