@@ -203,19 +203,19 @@ input::placeholder {
 }
 
 .success {
-  background:#e9ffd9 url("images/success.png") no-repeat 6px 55%;
+  background:#e9ffd9 url("../images/success.png") no-repeat 6px 55%;
   border:1px solid #a6ca8a;
   background-size: 70px;
 }
 
 .warning {
-  background:#fff8c4 url("images/warning.png") no-repeat 6px 55%;
+  background:#fff8c4 url("../images/warning.png") no-repeat 6px 55%;
   border:1px solid #f2c779;
   background-size: 70px;
 }
 
 .error {
-  background:#ffecec url("images/error.png") no-repeat 6px 55%;
+  background:#ffecec url("../images/error.png") no-repeat 6px 55%;
   border:1px solid #f5aca6;
   background-size: 70px;
 }

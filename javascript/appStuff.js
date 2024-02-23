@@ -66,7 +66,7 @@ function displayProfileEdit() {
             </form>
         </div>
         <div class="editUserPic" style="margin-bottom: 0">
-            <img id="editPic" src="images/defaultUser.png" alt="Profile picture"><br>
+            <img id="editPic" src="../images/defaultUser.png" alt="Profile picture"><br>
             <label for="newPicture">Profile Picture:</label><br>
             <input type="file" id="newPicture" accept="image/*">
         </div>    

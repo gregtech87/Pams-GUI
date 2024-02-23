@@ -9,7 +9,7 @@ function loadLoginPage() {
     mainDiv.innerHTML = `
         <section>
       <div id="login-page">
-        <img src="images/MainLogo.png" style="width: 100%" alt="Logo">
+        <img src="../images/MainLogo.png" style="width: 100%" alt="Logo">
         <h2>Personal Asset Management</h2>
         <form id="login-form">
           <label for="login-username">Username:</label>
@@ -24,14 +24,15 @@ function loadLoginPage() {
       </div>
       
 <!--      Devbutton-->
-      <button onclick="bbbbbbbbb()">aaaaaaaa</button>
+      <button onclick="aaaaaaa()">aaaaaaaa</button>
+      <button onclick="bbbbb()">bbbbbbbb</button>
     </section>
     `;
     loadLoginButtons()
 }
 
 // Dev use only
-async function bbbbbbbbb() {
+async function aaaaaaa() {
     const url = baseFetchUrl + 'login';
     let base64 = btoa(`ttt:tttttttt`);
     const response = await fetchDataGet(url, base64);
@@ -39,7 +40,9 @@ async function bbbbbbbbb() {
     loadApplication();
 
 }
+function bbbbb() {
 
+}
 function loadLoginButtons() {
     const loginForm = document.querySelector("#login-form");
 
@@ -105,7 +108,7 @@ async function login() {
 
 function loadingGif() {
     messageDiv.innerHTML += `
-        <img src="images/loadingGif.gif" alt="loading Image" id="loadingSnail" class="loadingGif">
+        <img src="../images/loadingGif.gif" alt="loading Image" id="loadingSnail" class="loadingGif">
     `;
 }
 

@@ -11,9 +11,9 @@ function loadApplication() {
 
 <div class="wrapper">
     <div class="sidebar">
-    <img src="images/liten%20logga.svg" alt="pam">
+    <img src="../images/liten%20logga.svg" alt="pam">
         <h2>Personal Asset Management</h2>
-        <img id="profilePic" src="images/defaultUser.png" alt="Profile picture" style="width: 60%"><br>
+        <img id="profilePic" src="../images/defaultUser.png" alt="Profile picture" style="width: 60%"><br>
         <p><strong style="color: #85d6e9">User:</strong> ${loggedInUser.firstName}</p>
         <ul>
             <li><a href="#" onclick="loadApplication()"><i class="fas fa-home"></i>Home</a></li>
@@ -23,7 +23,7 @@ function loadApplication() {
             <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
             <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
             <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
-            <li><a href="#"><img src="images/right-from-bracket-solid.svg" class="logOutBtn" alt="Logout symbol"></i>Logout</a></li>
+            <li><a href="#"><img src="../images/right-from-bracket-solid.svg" class="logOutBtn" alt="Logout symbol"></i>Logout</a></li>
         </ul> 
         <div class="social_media">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -46,12 +46,12 @@ function loadApplication() {
             </aside>
             <section>
                 <div>
-                <img src="images/defaultUser.jpg" alt="loading Image">
+                <img src="../images/defaultUser.jpg" alt="loading Image">
                 </div>   
             </section>             
             <section>
                 <div>
-                <img src="images/defaultUser.jpg" alt="loading Image">
+                <img src="../images/defaultUser.jpg" alt="loading Image">
                 </div>   
             </section>
 

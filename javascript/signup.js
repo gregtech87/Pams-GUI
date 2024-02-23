@@ -3,7 +3,7 @@ function displaySignupPage() {
  <section style="width: 400px;">
       <div id="register-page">
         <h2>Register User</h2>
-        <img id="previewImage" src="images/defaultUser.png" alt="Uploaded Image" style="width: 200px">
+        <img id="previewImage" src="../images/defaultUser.png" alt="Uploaded Image" style="width: 200px">
         <label class="file-upload stdButton">
           <input type="file" id="imageInput" accept="image/*" onchange="handleImageChange('#imageInput', '#previewImage')">
           Upload profile picture
