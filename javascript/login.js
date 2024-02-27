@@ -28,15 +28,19 @@ function loadLoginPage() {
 // Dev use only
 async function aaaaaaa() {
     const url = baseFetchUrl + 'login';
-    let base64 = btoa(`ttt:tttttttt`);
-    const response = await fetchDataGet(url, base64);
-    loggedInUser = await response.json();
-    console.log(loggedInUser)
-    sessionStorage.setItem("loggedInUser", JSON.stringify(loggedInUser))
-    sessionStorage.setItem("base64credentials", JSON.stringify(base64));
-    let user = JSON.parse(sessionStorage.getItem("loggedInUser"))
-    console.log(user)
-    window.open("application.html", "_self", windowSize);
+    let base64 = btoa(`testGuy:testGuy`);
+    try {
+        const response = await fetchDataGet(url, base64);
+        let user = await response.json();
+        console.log(user)
+        sessionStorage.setItem("loggedInUser", JSON.stringify(user))
+        sessionStorage.setItem("base64credentials", JSON.stringify(base64));
+        loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"))
+        console.log(loggedInUser)
+        window.open("application.html", "_self", windowSize);
+    } catch (e) {
+
+    }
 }
 
 function loadLoginButtons() {
