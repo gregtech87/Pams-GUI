@@ -19,3 +19,107 @@ function populateEditUserForm() {
     inputField9.value = loggedInUser.address.postalCode;
     inputField10.value = loggedInUser.address.city;
 }
+
+async function updateUser() {
+    loadingGif()
+    let newProfilePic = sessionStorage.getItem("newProfilePic");
+    loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    console.log(loggedInUser)
+    let editedLoggedInUser = {"address": {}, "profilePictureData": {}};
+    editedLoggedInUser.id = loggedInUser.id;
+    editedLoggedInUser.username = document.querySelector("#update-username").value;
+    editedLoggedInUser.password = "Dummydata";
+    editedLoggedInUser.firstName = document.querySelector("#update-firstName").value;
+    editedLoggedInUser.lastName = document.querySelector("#update-lastName").value;
+    editedLoggedInUser.email = document.querySelector("#update-email").value;
+    editedLoggedInUser.phone = document.querySelector("#update-phone").value;
+    editedLoggedInUser.address.street = document.querySelector("#update-address").value;
+    editedLoggedInUser.address.postalCode = document.querySelector("#update-postalCode").value;
+    editedLoggedInUser.address.city = document.querySelector("#update-city").value;
+    editedLoggedInUser.dateOfBirth = document.querySelector("#update-dob").value;
+    editedLoggedInUser.role = loggedInUser.role;
+    editedLoggedInUser.enabled = loggedInUser.enabled;
+    editedLoggedInUser.locked = loggedInUser.locked;
+    editedLoggedInUser.confirmationToken = loggedInUser.confirmationToken;
+    if (newProfilePic) {
+        editedLoggedInUser.profilePic = {"$binary": {"base64": uploadedTempProfilePicture.$binary.base64}};
+        editedLoggedInUser.profilePictureData.name = uploadedTempProfilePicture.name;
+        editedLoggedInUser.profilePictureData.type = uploadedTempProfilePicture.type;
+        editedLoggedInUser.profilePictureData.size = uploadedTempProfilePicture.size;
+        editedLoggedInUser.profilePictureData.lastModified = uploadedTempProfilePicture.lastModified;
+        editedLoggedInUser.profilePictureData.lastModifiedDate = uploadedTempProfilePicture.lastModifiedDate;
+    } else {
+        editedLoggedInUser.profilePic = {"$binary": {"base64": ""}};
+        editedLoggedInUser.profilePictureData.name = "";
+        editedLoggedInUser.profilePictureData.type = "";
+        editedLoggedInUser.profilePictureData.size = "";
+        editedLoggedInUser.profilePictureData.lastModified = "";
+        editedLoggedInUser.profilePictureData.lastModifiedDate = "";
+    }
+    let response;
+    const url = baseFetchUrl + 'user';
+    let cred = btoa(`editUser:editUser`)
+    try{
+        response = await fetchDataPut(url, cred, editedLoggedInUser)
+    }catch (e){
+        errorBox("Something went wrong! Try again later.")
+    }
+
+
+    console.log(response)
+    if (!response.found) {
+        errorBox(response.answer)
+    } else if (response.verified) {
+        let response;
+
+        const url = baseFetchUrl + 'user/' + editedLoggedInUser.id;
+        let cred = btoa(`editUser:editUser`)
+        try{
+            response = await fetchDataGet(url, cred)
+            let user = await response.json();
+            sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+        }catch (e){
+            errorBox("Something went wrong! Try again later.")
+        }
+        successBox("User updated successfully!")
+    } else if (!response.verifiedUsername) {
+        messageBox("Username already in use!")
+    } else if (!response.verifiedEmail) {
+        messageBox("Email already in use!")
+
+    }
+    console.log(editedLoggedInUser)
+}
+
+async function updateUserPassword() {
+    let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    let oldPassword = document.querySelector("#oldPassword").value
+    let password1 = document.querySelector("#newPassword").value
+    let password2 = document.querySelector("#confirmPassword").value
+    let sendingString = user.id + ":" + oldPassword + ":" + password1
+    console.log(user)
+    console.log(oldPassword)
+    console.log(password1)
+    console.log(password2)
+
+    if (password1 === password2) {
+
+
+
+        let response;
+        const url = baseFetchUrl + 'userPassword';
+        let signupUser = btoa(`editUser:editUser`)
+        try {
+            response = await fetchDataPost(url, signupUser, sendingString);
+            if (await response){
+                successBox("Password updated successfully!")
+            } else {
+                errorBox("Password NOT updated successfully for some reason!")
+            }
+        } catch (e) {
+            errorBox("Something went wrong! Try again later.")
+        }
+    } else {
+        messageBox("Passwords not matching!")
+    }
+}

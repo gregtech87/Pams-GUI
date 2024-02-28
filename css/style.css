@@ -30,3 +30,15 @@
   color: #7bbe46;
   padding-right: 10px;
 }
+
+.passwordForm {
+  border-top: solid #989998 2px;
+  border-top-style: dotted;
+  border-left: solid #989998 2px;
+  border-left-style: dotted;
+  padding: 5px 5px 0 10px;
+}
+.passwordForm button {
+  background: #70c6ff;
+  margin: 0 14px -45px -1px;
+}

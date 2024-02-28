@@ -109,9 +109,4 @@ async function login() {
     return success;
 }
 
-function loadingGif() {
-    messageDiv.innerHTML += `
-        <img src="../images/loadingGif.gif" alt="loading Image" id="loadingSnail" class="loadingGif">
-    `;
-}
 

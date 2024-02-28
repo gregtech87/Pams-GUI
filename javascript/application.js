@@ -29,7 +29,7 @@ function loadApplication() {
             <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
             <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
             <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
-            <li><a href="#"><img src="../images/right-from-bracket-solid.svg" class="logOutBtn" alt="Logout symbol"></i>Logout</a></li>
+            <li><a href="#" onclick="logout()"><img src="../images/right-from-bracket-solid.svg" class="logOutBtn" alt="Logout symbol"></i>Logout</a></li>
         </ul> 
         <div class="social_media">
             <a href="#"><i class="fab fa-facebook-f"></i></a>

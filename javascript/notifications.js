@@ -1,7 +1,7 @@
 function messageBox(message) {
-    let boxes = document.querySelector('#messageBoxes');
+    let messageboxes = document.querySelector('#messageBoxes');
 
-    boxes.innerHTML = `
+    messageboxes.innerHTML = `
     <div id="messageDiv" class="message">
         <div class="alert-box warning"><span>Message: </span>${message}</div>
     </div>
@@ -10,7 +10,7 @@ function messageBox(message) {
     setTimeout(function () {
         let box = document.querySelector('#messageDiv');
         box.classList.add('message-hide')
-        boxes.innerHTML = ``;
+        messageboxes.innerHTML = ``;
     }, 4000);
 }
 

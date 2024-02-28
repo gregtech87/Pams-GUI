@@ -25,7 +25,7 @@ function setProfilePic(elementId) {
 
 function displayProfileEdit() {
     let contentDiv = document.querySelector("#mainContent");
-
+    sessionStorage.setItem("newProfilePic", "false");
     contentDiv.innerHTML = `
     <h2>Edit Profile</h2>
     <div class="editPage editBorder" style="margin-bottom: 0">
@@ -67,7 +67,19 @@ function displayProfileEdit() {
         <div class="editUserPic" style="margin-bottom: 0">
             <img id="editPic" src="../images/defaultUser.png" alt="Profile picture"><br>
             <label for="newPicture">Profile Picture:</label><br>
-            <input type="file" id="newPicture" accept="image/*">
+            <input type="file" id="newPicture" accept="image/*" onchange="editUSerProfilePic('#newPicture', '#editPic')">
+            
+            <form id="passwordForm" class="passwordForm">
+                <label for="oldPassword">Old Password:</label>
+                <input type="password" id="oldPassword" name="oldPassword" required>
+                
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+                
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <button type="submit">Change Password</button>
+            </form>
         </div>    
 <!--        External form buttons for ev resizing          -->
         <div style="margin-bottom: 0;">
@@ -79,59 +91,31 @@ function displayProfileEdit() {
     populateEditUserForm();
     setProfilePic('#editPic');
 
-    let newProfilePic = false;
-
-    let editProfilePicBtn = document.querySelector('#newPicture');
-    editProfilePicBtn.addEventListener("change", function () {
-        console.log(uploadedTempProfilePicture)
-        handleImageChange('#newPicture', '#editPic');
-        console.log(uploadedTempProfilePicture)
-        newProfilePic = true;
-    })
-
     let updateUserForm = document.querySelector('#updateUserForm');
     updateUserForm.addEventListener("submit", function (event) {
         event.preventDefault();
-        updateUser(newProfilePic).then();
+        updateUser().then();
+    });
+
+    let passwordForm = document.querySelector('#passwordForm');
+    passwordForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        updateUserPassword().then();
     });
 }
-
-async function updateUser(newProfilePic) {
-    // loadingGif()
-    console.log(loggedInUser)
+function editUSerProfilePic(inputPic, target) {
+    handleImageChange(inputPic, target);
     console.log(uploadedTempProfilePicture)
+    sessionStorage.setItem("newProfilePic", "true");
+}
 
-
-    let editedLoggedInUser = {"address": {}, "profilePictureData": {}};
-    editedLoggedInUser.id = loggedInUser.id;
-    editedLoggedInUser.username = document.querySelector("#update-username").value;
-    editedLoggedInUser.password = "dummyPassword"
-    editedLoggedInUser.firstName = document.querySelector("#update-firstName").value;
-    editedLoggedInUser.lastName = document.querySelector("#update-lastName").value;
-    editedLoggedInUser.email = document.querySelector("#update-email").value;
-    editedLoggedInUser.phone = document.querySelector("#update-phone").value;
-    editedLoggedInUser.address.street = document.querySelector("#update-address").value;
-    editedLoggedInUser.address.postalCode = document.querySelector("#update-postalCode").value;
-    editedLoggedInUser.address.city = document.querySelector("#update-city").value;
-    editedLoggedInUser.dateOfBirth = document.querySelector("#update-dob").value;
-    if (newProfilePic) {
-        editedLoggedInUser.profilePic = {"$binary": {"base64": uploadedTempProfilePicture.$binary.base64}};
-        editedLoggedInUser.profilePictureData.name = uploadedTempProfilePicture.name
-        editedLoggedInUser.profilePictureData.type = uploadedTempProfilePicture.type
-        editedLoggedInUser.profilePictureData.size = uploadedTempProfilePicture.size
-        editedLoggedInUser.profilePictureData.lastModified = uploadedTempProfilePicture.lastModified
-        editedLoggedInUser.profilePictureData.lastModifiedDate = uploadedTempProfilePicture.lastModifiedDate
-    }
-    let response;
-    const url = baseFetchUrl + 'user';
-    let cred = btoa(`editUser:editUser`)
-    try{
-     response = await fetchDataPut(url, cred, editedLoggedInUser)
-    }catch (e){
-        errorBox("Something went wrong! Try again later.")
-    }
-    console.log(newProfilePic)
-    console.log(response)
-    console.log(loggedInUser)
-    console.log(editedLoggedInUser)
+function logout() {
+    console.log("Logging out")
+    loggedInUser = "Nope";
+    baseFetchUrl = "Nope";
+    base64credentials = "Nope";
+    uploadedTempProfilePicture = "Nope";
+    sessionStorage.setItem("base64credentials", "")
+    sessionStorage.setItem("loggedInUser", "")
+    window.open("index.html", "_self", windowSize);
 }
