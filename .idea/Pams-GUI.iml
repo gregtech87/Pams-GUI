@@ -7,5 +7,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="disable-devtool" level="application" />
     <orderEntry type="library" name="b99e675b6e" level="application" />
+    <orderEntry type="library" name="leaflet" level="application" />
+    <orderEntry type="library" name="b99e675b6e" level="application" />
   </component>
 </module>

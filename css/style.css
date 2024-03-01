@@ -42,3 +42,11 @@
   background: #70c6ff;
   margin: 0 14px -45px -1px;
 }
+
+.mapDiv {
+  display: block;
+  width: 500px;
+  height: 380px;
+  /*margin-bottom: 0;*/
+}
+
