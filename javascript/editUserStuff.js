@@ -52,13 +52,16 @@ async function updateUser() {
         editedLoggedInUser.profilePictureData.lastModified = uploadedTempProfilePicture.lastModified;
         editedLoggedInUser.profilePictureData.lastModifiedDate = uploadedTempProfilePicture.lastModifiedDate;
     } else {
-        editedLoggedInUser.profilePic = {"$binary": {"base64": ""}};
-        editedLoggedInUser.profilePictureData.name = "";
-        editedLoggedInUser.profilePictureData.type = "";
-        editedLoggedInUser.profilePictureData.size = "";
-        editedLoggedInUser.profilePictureData.lastModified = "";
-        editedLoggedInUser.profilePictureData.lastModifiedDate = "";
+        editedLoggedInUser.profilePic.$binary.base64 = loggedInUser.profilePic.$binary.base64;
+        editedLoggedInUser.profilePictureData.name = loggedInUser.profilePictureData.name;
+        editedLoggedInUser.profilePictureData.type = loggedInUser.profilePictureData.type;
+        editedLoggedInUser.profilePictureData.size = loggedInUser.profilePictureData.size;
+        editedLoggedInUser.profilePictureData.lastModified = loggedInUser.profilePictureData.lastModified;
+        editedLoggedInUser.profilePictureData.lastModifiedDate = loggedInUser.profilePictureData.lastModifiedDate;
     }
+
+    console.log("edited: ")
+    console.log(editedLoggedInUser)
     let response;
     const url = baseFetchUrl + 'user';
     let cred = btoa(`editUser:editUser`)
