@@ -7,8 +7,9 @@ function populateEditUserForm() {
     const inputField6 = updateUserForm.querySelector(`[name="phone"]`);
     const inputField7 = updateUserForm.querySelector(`[name="dob"]`);
     const inputField8 = updateUserForm.querySelector(`[name="address"]`);
-    const inputField9 = updateUserForm.querySelector(`[name="postalCode"]`);
-    const inputField10 = updateUserForm.querySelector(`[name="city"]`);
+    const inputField9 = updateUserForm.querySelector(`[name="addressNumber"]`);
+    const inputField10 = updateUserForm.querySelector(`[name="postalCode"]`);
+    const inputField11 = updateUserForm.querySelector(`[name="city"]`);
     inputField1.value = loggedInUser.firstName;
     inputField2.value = loggedInUser.lastName;
     inputField3.value = loggedInUser.username;
@@ -16,8 +17,9 @@ function populateEditUserForm() {
     inputField6.value = loggedInUser.phone;
     inputField7.value = loggedInUser.dateOfBirth;
     inputField8.value = loggedInUser.address.street;
-    inputField9.value = loggedInUser.address.postalCode;
-    inputField10.value = loggedInUser.address.city;
+    inputField9.value = loggedInUser.address.streetNumber;
+    inputField10.value = loggedInUser.address.postalCode;
+    inputField11.value = loggedInUser.address.city;
 }
 
 async function updateUser() {
@@ -34,6 +36,7 @@ async function updateUser() {
     editedLoggedInUser.email = document.querySelector("#update-email").value;
     editedLoggedInUser.phone = document.querySelector("#update-phone").value;
     editedLoggedInUser.address.street = document.querySelector("#update-address").value;
+    editedLoggedInUser.address.streetNumber = document.querySelector("#update-addressNumber").value;
     editedLoggedInUser.address.postalCode = document.querySelector("#update-postalCode").value;
     editedLoggedInUser.address.city = document.querySelector("#update-city").value;
     editedLoggedInUser.dateOfBirth = document.querySelector("#update-dob").value;

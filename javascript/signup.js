@@ -18,10 +18,15 @@ function displaySignupPage() {
 
             <label for="register-email" class="required">Email:</label>
             <input type="email" id="register-email" placeholder="Fixa validering" required>
-  
             <label for="register-address">Address:</label>
-            <input type="text" id="register-address">          
-
+            <div STYLE="display: flex">
+                <div>
+                    <input type="text" id="register-address" placeholder="Street">                    
+                </div>
+                <div style="width: 40%">
+                    <input type="number" id="register-addressNumber" placeholder="Num">
+                </div>          
+            </div>
             <label for="register-city">City:</label>
             <input type="text" id="register-city">
             <button type="submit" class="posButton">Register</button>
@@ -80,6 +85,7 @@ function registerUser(event) {
         },
         "address": {
             "street": document.querySelector("#register-address").value,
+            "streetNumber": document.querySelector("#register-addressNumber").value,
             "postalCode": document.querySelector("#register-postalCode").value,
             "city": document.querySelector("#register-city").value
         },

@@ -17,6 +17,25 @@ async function fetchDataGet(url, credentials) {
     }
 }
 
+async function fetchDataGetUnAuth(url) {
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            new Error(`HTTP error! Status: ${response.status}`);
+        } else {
+            return response;
+        }
+    } catch (error) {
+        console.error('Error: ', error);
+    }
+}
+
+
 async function fetchDataPost(url, credentials, formData) {
 
     try {

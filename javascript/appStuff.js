@@ -50,7 +50,10 @@ function displayProfileEdit() {
                 <input type="date" id="update-dob" name="dob">
         
                 <label for="address">Address:</label>
-                <input type="text" id="update-address" name="address">
+                <div style="display: flex">
+                <input type="text" id="update-address" name="address" placeholder="Street">
+                <input type="number" id="update-addressNumber" name="addressNumber" placeholder="Number" style="width: 50%">                
+                </div>
         
                 <label for="postalCode">Postal Code:</label>
                 <input type="text" id="update-postalCode" name="postalCode">
@@ -83,7 +86,7 @@ function displayProfileEdit() {
         </div>    
 <!--        External form buttons for ev resizing          -->
         <div style="margin-bottom: 0;">
-            <button id="formsub" type="submit" form="updateUserForm" class="posButton">Save Changes</button>
+            <button id="formSub" type="submit" form="updateUserForm" class="posButton">Save Changes</button>
             <button class="negButton" onclick="loadApplication()">Return</button>
         </div>
     </div>
@@ -97,12 +100,24 @@ function displayProfileEdit() {
         updateUser().then();
     });
 
+    let enterKeyAction = document.querySelector('#updateUserForm');
+    enterKeyAction.addEventListener("keypress", function (event) {
+        // If the user presses the "Enter" key on the keyboard
+        if (event.key === "Enter") {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.querySelector('#formSub').click();
+        }
+    });
+
     let passwordForm = document.querySelector('#passwordForm');
     passwordForm.addEventListener("submit", function (event) {
         event.preventDefault();
         updateUserPassword().then();
     });
 }
+
 function editUSerProfilePic(inputPic, target) {
     handleImageChange(inputPic, target);
     console.log(uploadedTempProfilePicture)
