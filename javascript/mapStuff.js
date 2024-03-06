@@ -44,7 +44,7 @@ async function searchAddress() {
         sessionStorage.setItem("latLong", JSON.stringify(curLocation))
         console.log(JSON.parse(sessionStorage.getItem("latLong")))
 
-        map.setView([lat.toPrecision(4), long.toPrecision(4)], 15)
+        map.setView([lat.toPrecision(4), long.toPrecision(4)], 16)
         layerGroup.clearLayers();
         map.closePopup();
 

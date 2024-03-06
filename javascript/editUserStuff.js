@@ -24,7 +24,7 @@ function populateEditUserForm() {
 
 async function updateUser() {
     loadingGif()
-    let newProfilePic = sessionStorage.getItem("newProfilePic");
+    let newProfilePic = JSON.parse(sessionStorage.getItem("newProfilePic"));
     loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
     console.log(loggedInUser)
     let editedLoggedInUser = {"address": {}, "profilePictureData": {}};
@@ -52,7 +52,7 @@ async function updateUser() {
         editedLoggedInUser.profilePictureData.lastModified = uploadedTempProfilePicture.lastModified;
         editedLoggedInUser.profilePictureData.lastModifiedDate = uploadedTempProfilePicture.lastModifiedDate;
     } else {
-        editedLoggedInUser.profilePic.$binary.base64 = loggedInUser.profilePic.$binary.base64;
+        editedLoggedInUser.profilePic = {"$binary": {"base64": loggedInUser.profilePic}};
         editedLoggedInUser.profilePictureData.name = loggedInUser.profilePictureData.name;
         editedLoggedInUser.profilePictureData.type = loggedInUser.profilePictureData.type;
         editedLoggedInUser.profilePictureData.size = loggedInUser.profilePictureData.size;

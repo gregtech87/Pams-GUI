@@ -45,8 +45,14 @@
 
 .mapDiv {
   display: block;
-  width: 500px;
-  height: 380px;
-  /*margin-bottom: 0;*/
+  width: 800px;
+  height: 800px;
+}
+
+.noteArea {
+  width: 800px;
+  height: 400px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 

@@ -1,3 +1,5 @@
+const monthsForPrintout = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const weekDaysForPrintout = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const mainDiv = document.querySelector("#app")
 const messageDiv = document.querySelector("#messageBoxes");
 let windowSize = "width=" + window.innerWidth + ",height=" + window.innerHeight + ",scrollbars=no";
