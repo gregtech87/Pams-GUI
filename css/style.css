@@ -46,13 +46,24 @@
 .mapDiv {
   display: block;
   width: 800px;
-  height: 800px;
+  height: 600px;
+}
+
+.mapForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 800px;
+}
+
+.mapForm div{
+  display: flex;
+  height: fit-content;
 }
 
 .noteArea {
   width: 800px;
   height: 400px;
   white-space: pre-wrap;
-  overflow-wrap: break-word;
 }
 

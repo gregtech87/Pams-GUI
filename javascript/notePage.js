@@ -20,6 +20,7 @@
 // }
 
 async function addNewNote() {
+    loadingGif()
     console.log(document.querySelector("#note").value);
     console.log(document.querySelector("#note").innerHTML);
     console.log(JSON.stringify(document.querySelector("#note").value));
@@ -44,20 +45,23 @@ async function addNewNote() {
     let user = await response.json();
     console.log(user);
     sessionStorage.setItem("loggedInUser", JSON.stringify(user));
-    loadNotesPage();
+    updateUser(false, true, false)
+    await loadNotesPage();
 
 }
 
 async function loadNotesPage() {
+    messageDiv.innerHTML = ``;
     let contentDiv = document.querySelector("#mainContent");
-    contentDiv.innerHTML = ``;
+    contentDiv.innerHTML = `
+    <button class="posButton" onclick="loadAddNotesPage()">Add new Note</button>
+`;
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
     console.log(user);
 
     if (user.notes.length === 0) {
         let contentDiv = document.querySelector("#mainContent");
-        contentDiv.innerHTML = `
-        <button class="posButton" onclick="loadAddNotesPage()">Add new Note</button>
+        contentDiv.innerHTML += `
         <section style="max-width: 800px">
             <p>${new Date()}</p>
             <p>No Notes writen so far!</p>
@@ -73,7 +77,7 @@ async function loadNotesPage() {
         contentDiv.innerHTML += `
         <section style="max-width: 800px">
             <p>${note.created}</p>
-            <p>${note.note}</p>
+            <pre>${note.note}</pre>
         </section>
         `;
     }

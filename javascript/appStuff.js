@@ -49,10 +49,18 @@ function displayProfileEdit() {
                 <label for="dob">Date of Birth:</label>
                 <input type="date" id="update-dob" name="dob">
         
-                <label for="address">Address:</label>
-                <div style="display: flex">
-                <input type="text" id="update-address" name="address" placeholder="Street">
-                <input type="number" id="update-addressNumber" name="addressNumber" placeholder="Number" style="width: 50%">                
+                <div style="width: 94%">
+                    <div style="display: flex; justify-content: space-between">
+                        <label for="address">Address:</label>
+                        <div>
+                            <label for="customLocation">Custom coordinates:</label>
+                            <input type="checkbox" id="customLocation" name="customLocation" style="width: fit-content">
+                        </div>
+                    </div>
+                    <div style="display: flex">
+                        <input type="text" id="update-address" name="address" placeholder="Street">
+                        <input type="number" id="update-addressNumber" name="addressNumber" placeholder="Number" style="width: 50%">                
+                    </div>
                 </div>
         
                 <label for="postalCode">Postal Code:</label>
@@ -97,7 +105,7 @@ function displayProfileEdit() {
     let updateUserForm = document.querySelector('#updateUserForm');
     updateUserForm.addEventListener("submit", function (event) {
         event.preventDefault();
-        updateUser().then();
+        updateUser(false, false ,false).then();
     });
 
     let enterKeyAction = document.querySelector('#updateUserForm');

@@ -24,7 +24,7 @@ function loadApplication() {
         <ul>
             <li><a href="#" onclick="loadApplication()"><i class="fas fa-home"></i>Home</a></li>
             <li><a href="#" onclick="displayProfileEdit()"><i class="fas fa-user"></i>Profile</a></li>
-            <li><a href="#" onclick="loadMapPage()"><i class="fas fa-map-pin"></i>Map</a></li>
+            <li><a href="#" onclick="loadMapPage(true, false)"><i class="fas fa-map-pin"></i>Map</a></li>
             <li><a href="#" onclick="loadNotesPage()"><i class="fas fa-blog"></i>Notes</a></li>
 <!--            <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>-->
 <!--            <li><a href="#"><i class="fas fa-project-diagram"></i>portfolio</a></li>-->
