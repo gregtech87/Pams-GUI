@@ -69,23 +69,48 @@ button {
 /******************* BUTTONS END *******************/
 
 
-/******************* UPLOAD BUTTON START *******************/
+/******************* PROFILE PICTURE UPLOAD BUTTON START *******************/
 
-.file-upload::-webkit-file-upload-button {
-    visibility: hidden;
-}
-.file-upload {
-    /*border: 1px solid black;*/
+.pic-upload {
     display: block;
     margin: 5px auto 20px;
     width: fit-content;
-    /*background: -webkit-linear-gradient(top, #67e8ff, #5ca2e7);*/
     border-radius: 5px;
     padding: 5px;
 }
 
-.file-upload:hover{
+.pic-upload:hover{
     background: -webkit-linear-gradient(top, rgba(103, 232, 255, 0.80), rgba(92, 162, 231, 0.8));
+}
+
+.pic-upload::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.pic-upload input {
+    overflow: hidden;
+    display: none;
+    width: 0;
+}
+
+/******************* PROFILE PICTURE UPLOAD BUTTON END *******************/
+
+
+/******************* FILE UPLOAD BUTTON START *******************/
+
+.file-upload {
+    display: block;
+    width: fit-content;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.file-upload:hover{
+    background: -webkit-linear-gradient(top, rgba(154, 234, 67, 0.80), rgba(0, 168, 45, 0.8));
+}
+
+.file-upload::-webkit-file-upload-button {
+    visibility: hidden;
 }
 
 .file-upload input {
@@ -94,7 +119,7 @@ button {
     width: 0;
 }
 
-/******************* UPLOAD BUTTON END *******************/
+/******************* FILE UPLOAD BUTTON END *******************/
 
 
 /******************* FORMS START *******************/
@@ -207,3 +232,45 @@ input::placeholder {
 }
 
 /******************* ALERT BOXES END *******************/
+
+
+/******************* TABLES END *******************/
+
+table {
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.table-sortable th {
+    cursor: pointer;
+}
+
+.table-sortable .th-sort-asc::after {
+    content: "\25b4";
+}
+
+.table-sortable .th-sort-desc::after {
+    content: "\25be";
+}
+
+.table-sortable .th-sort-asc::after,
+.table-sortable .th-sort-desc::after {
+    margin-left: 5px;
+}
+
+.table-sortable .th-sort-asc,
+.table-sortable .th-sort-desc {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/******************* TABLES END *******************/

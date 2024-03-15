@@ -39,7 +39,6 @@
   padding: 5px 5px 0 10px;
 }
 .passwordForm button {
-  background: #70c6ff;
   margin: 0 14px -45px -1px;
 }
 
@@ -67,3 +66,7 @@
   white-space: pre-wrap;
 }
 
+.displayNotes {
+  white-space:pre-wrap;
+  word-break: break-all;
+}

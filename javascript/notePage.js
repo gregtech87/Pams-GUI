@@ -1,4 +1,3 @@
-
 // function loadNotesPage() {
 //     let contentDiv = document.querySelector("#mainContent");
 //     let date = new Date()
@@ -19,21 +18,63 @@
 //     displayNotes().then();
 // }
 
+
+async function loadNotesPage() {
+    loadingGif();
+    let contentDiv = document.querySelector("#mainContent");
+    contentDiv.innerHTML = `
+    <button class="posButton" onclick="loadAddNotesPage()">Add new Note</button>
+`;
+    let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+    if (user.notes.length === 0) {
+        let contentDiv = document.querySelector("#mainContent");
+        contentDiv.innerHTML += `
+        <section style="max-width: 800px">
+            <p>${new Date()}</p>
+            <p>No Notes writen so far!</p>
+        </section>
+        `;
+    }
+
+    let responseNote = await fetchDataGet(baseFetchUrl + "note/" + user.notes, btoa("noteGuy:noteGuy"))
+    let noteList = await responseNote.json();
+    console.log(noteList)
+    for (const n of noteList.reverse()) {
+
+        let contentDiv = document.querySelector("#mainContent");
+        let title = n.title;
+        let note = n.note;
+        let createdAt = n.created;
+        if (n.title.length < 1) {
+            title = "No Title"
+        }
+
+        contentDiv.innerHTML += `
+        <section style="max-width: 800px">
+            <p><b>${title}: </b>${createdAt}</p>
+            <pre class="displayNotes">${note}</pre>
+        </section>
+        `;
+    }
+    messageDiv.innerHTML = ``;
+}
+
 async function addNewNote() {
     loadingGif()
-    console.log(document.querySelector("#note").value);
-    console.log(document.querySelector("#note").innerHTML);
-    console.log(JSON.stringify(document.querySelector("#note").value));
+
     let date = new Date();
     let timeString = "(" + weekDaysForPrintout[date.getDay()] + ") " + date.getDate() + " / " + monthsForPrintout[date.getMonth()] +
         " - " + date.getFullYear() + ", " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     console.log(timeString);
     let storedUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
     let note = document.querySelector("#note").value;
+    let title = document.querySelector("#noteTitle").value;
     let noteObject = {
         id: "0",
         author: storedUser.id,
         created: timeString,
+        title: title,
         note: note
     };
     console.log(noteObject);
@@ -48,37 +89,4 @@ async function addNewNote() {
     updateUser(false, true, false)
     await loadNotesPage();
 
-}
-
-async function loadNotesPage() {
-    messageDiv.innerHTML = ``;
-    let contentDiv = document.querySelector("#mainContent");
-    contentDiv.innerHTML = `
-    <button class="posButton" onclick="loadAddNotesPage()">Add new Note</button>
-`;
-    let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
-    console.log(user);
-
-    if (user.notes.length === 0) {
-        let contentDiv = document.querySelector("#mainContent");
-        contentDiv.innerHTML += `
-        <section style="max-width: 800px">
-            <p>${new Date()}</p>
-            <p>No Notes writen so far!</p>
-        </section>
-        `;
-    }
-
-    for (const n of user.notes.reverse()) {
-        let responseNote = await fetchDataGet(baseFetchUrl + "note/" + n, btoa("noteGuy:noteGuy"))
-        let note = await  responseNote.json();
-        console.log(note)
-        let contentDiv = document.querySelector("#mainContent");
-        contentDiv.innerHTML += `
-        <section style="max-width: 800px">
-            <p>${note.created}</p>
-            <pre>${note.note}</pre>
-        </section>
-        `;
-    }
 }

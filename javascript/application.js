@@ -26,8 +26,8 @@ function loadApplication() {
             <li><a href="#" onclick="displayProfileEdit()"><i class="fas fa-user"></i>Profile</a></li>
             <li><a href="#" onclick="loadMapPage(true, false)"><i class="fas fa-map-pin"></i>Map</a></li>
             <li><a href="#" onclick="loadNotesPage()"><i class="fas fa-blog"></i>Notes</a></li>
+            <li><a href="#" onclick="loadFilesPage()"><i class="fas fa-project-diagram"></i>Files</a></li>
 <!--            <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>-->
-<!--            <li><a href="#"><i class="fas fa-project-diagram"></i>portfolio</a></li>-->
 <!--            <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>-->
             <li><a href="#" onclick="logout()"><img src="../images/right-from-bracket-solid.svg" class="logOutBtn" alt="Logout symbol"></i>Logout</a></li>
         </ul> 

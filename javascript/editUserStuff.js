@@ -21,12 +21,24 @@ function populateEditUserForm() {
     inputField10.value = loggedInUser.address.postalCode;
     inputField11.value = loggedInUser.address.city;
     document.querySelector("#customLocation").checked = !!loggedInUser.customLocation;
+
+    if (loggedInUser.pdfUser.userInfoPdfIdentifier !== null) {
+        let userPdfBox = document.querySelector("#userPdfBox");
+        userPdfBox.src = "../images/checkBoxPositive.svg"
+        userPdfBox.alt = "Pdf present"
+
+        let age = loggedInUser.pdfUser.createdAt;
+        let age1 = age.substring(0,10);
+        let age2 = age.substring(11,19);
+        document.querySelector("#pdfAge").innerText = "(" + age1 + ": " + age2 + ")";
+    }
 }
 
 async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean) {
     loadingGif()
     let newProfilePic = JSON.parse(sessionStorage.getItem("newProfilePic"));
     loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    console.log("Unedited:")
     console.log(loggedInUser)
     let editedLoggedInUser;
     if (!userLocationBoolean && !noteBoolean && !itemLocationBoolean){
@@ -74,9 +86,7 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
         editedLoggedInUser.profilePictureData.lastModified = loggedInUser.profilePictureData.lastModified;
         editedLoggedInUser.profilePictureData.lastModifiedDate = loggedInUser.profilePictureData.lastModifiedDate;
     }
-    console.log(editedLoggedInUser.notes)
-    console.log("edited: ")
-    console.log(editedLoggedInUser)
+
     let response;
     const url = baseFetchUrl + 'user';
     let cred = btoa(`editUser:editUser`)
@@ -86,8 +96,6 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
         errorBox("Something went wrong! Try again later.")
     }
 
-
-    console.log(response)
     if (!response.found) {
         errorBox(response.answer)
     } else if (response.verified) {
@@ -109,6 +117,7 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
         messageBox("Email already in use!")
 
     }
+    console.log("Edited:")
     console.log(editedLoggedInUser)
 }
 
@@ -143,4 +152,39 @@ async function updateUserPassword() {
     } else {
         messageBox("Passwords not matching!")
     }
+}
+
+async function generateUserPdf() {
+
+   loadingGif();
+    let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    const url = baseFetchUrl + 'userPdf/' + user.id;
+    let cred = btoa(`editUser:editUser`);
+    let response;
+    try {
+        response = await fetchDataGet(url, cred);
+        if (response.ok){
+            let pdfUser = await response.json();
+            console.log(pdfUser);
+            user.pdfUser = pdfUser
+            sessionStorage.setItem("loggedInUser", JSON.stringify(user))
+            let pdfDiv = document.querySelector("#pdfDiv");
+            pdfDiv.style.visibility = "visible";
+            let userPdfBox = document.querySelector("#userPdfBox");
+            userPdfBox.src = "../images/checkBoxPositive.svg"
+            userPdfBox.alt = "Pdf present"
+
+            let age = pdfUser.createdAt;
+            let age1 = age.substring(0,10);
+            let age2 = age.substring(11,19);
+            document.querySelector("#pdfAge").innerText = "(" + age1 + ": " + age2 + ")";
+            messageDiv.innerHTML = ``;
+        }
+    } catch (e) {
+        errorBox("Something went wrong! Try again later.");
+        let noPdfDiv = document.querySelector("#noPdfDiv");
+        noPdfDiv.style.visibility = "visible";
+    }
+
+
 }
