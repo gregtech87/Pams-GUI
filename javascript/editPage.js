@@ -84,7 +84,6 @@ function displayProfileEdit() {
         <div id="noPdfDiv" style="visibility: hidden">Could not generate Pdf, try again later!</div>
     `;
     populateEditUserForm();
-    setProfilePic('#editPic');
 
     let updateUserForm = document.querySelector('#updateUserForm');
     updateUserForm.addEventListener("submit", function (event) {
@@ -111,7 +110,7 @@ function displayProfileEdit() {
 
     let userPdfBtn = document.querySelector('#userPdfBtn');
     userPdfBtn.addEventListener("click", function () {
-        generateUserPdf();
+        generateUserPdf().then();
     });
 }
 

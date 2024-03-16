@@ -14,7 +14,7 @@ function loadMapPage(userBoolean, itemBoolean) {
             </div>   
             <button type="submit" class="posButton">Set custom location</button>
             </form> 
-        </div>        
+        </div>
         `;
     loadMapContent(userBoolean, itemBoolean).then()
 
@@ -37,8 +37,9 @@ function setCustomLocation(userBoolean, itemBoolean) {
         user.customLat = parseFloat(document.querySelector("#customLat").value)
         user.customLong = parseFloat(document.querySelector("#customLong").value)
         sessionStorage.setItem("loggedInUser", JSON.stringify(user));
-        updateUser(true, false,false).then()
-        loadMapPage(userBoolean, itemBoolean);
+        updateUser(true, false, false).then(() => {
+            loadMapPage(userBoolean, itemBoolean);
+        });
     }
 
 }

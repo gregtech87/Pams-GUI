@@ -23,10 +23,11 @@ async function loadNotesPage() {
     loadingGif();
     let contentDiv = document.querySelector("#mainContent");
     contentDiv.innerHTML = `
+    <h2>Notes</h2>
     <button class="posButton" onclick="loadAddNotesPage()">Add new Note</button>
 `;
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
-
+let list;
     if (user.notes.length === 0) {
         let contentDiv = document.querySelector("#mainContent");
         contentDiv.innerHTML += `
@@ -35,9 +36,12 @@ async function loadNotesPage() {
             <p>No Notes writen so far!</p>
         </section>
         `;
+        list = "empty";
+    } else {
+        list = user.notes;
     }
 
-    let responseNote = await fetchDataGet(baseFetchUrl + "note/" + user.notes, btoa("noteGuy:noteGuy"))
+    let responseNote = await fetchDataGet(baseFetchUrl + "note/" + list, btoa("noteGuy:noteGuy"))
     let noteList = await responseNote.json();
     console.log(noteList)
     for (const n of noteList.reverse()) {
@@ -86,7 +90,7 @@ async function addNewNote() {
     let user = await response.json();
     console.log(user);
     sessionStorage.setItem("loggedInUser", JSON.stringify(user));
-    updateUser(false, true, false)
+    await updateUser(false, true, false)
     await loadNotesPage();
 
 }

@@ -58,42 +58,31 @@ async function fetchDataPost(url, credentials, formData) {
 }
 
 async function fetchDataPostFiles(url, credentials, data) {
+    sessionStorage.setItem("uploadResponse", null);
 
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", credentials);
-
-    const formdata = new FormData();
-    formdata.append("file", data, "/C:/Users/xxgregot/KravSpec/Bilder/Screenshot 2024-01-23 100832.png");
+    myHeaders.append("Authorization", "Basic "+credentials);
 
     const requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: formdata,
+        body: data,
         redirect: "follow"
     };
-
-    fetch("http://localhost:8586/api/v1/uploadFile?username=testGuy", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
-    // try {
-    //     const response = await fetch(url, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': undefined,
-    //             'Authorization': `Basic ${credentials}`
-    //         },
-    //         body: data,
-    //         redirect: "follow"
-    //     });
-    //     if (!response.ok) {
-    //         new Error('Network response was not ok');
-    //     }
-    //     return await response;
-    // } catch (error) {
-    //     console.error('Error:', error);
-    //     throw error;
-    // }
+    await fetch(url, requestOptions)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then((result) => {
+            sessionStorage.setItem("uploadResponse", result);
+        })
+        .catch((error) => {
+            console.error(error);
+            errorBox(error);
+        });
 }
 
 async function fetchDataPut(url, credentials, formData) {

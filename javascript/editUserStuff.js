@@ -32,6 +32,7 @@ function populateEditUserForm() {
         let age2 = age.substring(11,19);
         document.querySelector("#pdfAge").innerText = "(" + age1 + ": " + age2 + ")";
     }
+    setProfilePic('#editPic');
 }
 
 async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean) {
@@ -40,12 +41,11 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
     loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
     console.log("Unedited:")
     console.log(loggedInUser)
-    let editedLoggedInUser;
+    let editedLoggedInUser = loggedInUser;
     if (!userLocationBoolean && !noteBoolean && !itemLocationBoolean){
-        editedLoggedInUser = {"address": {}, "profilePictureData": {}};
-        editedLoggedInUser.id = loggedInUser.id;
+        // editedLoggedInUser = {"address": {}, "profilePictureData": {}};
+        // editedLoggedInUser = loggedInUser;
         editedLoggedInUser.username = document.querySelector("#update-username").value;
-        editedLoggedInUser.password = "Dummydata";
         editedLoggedInUser.firstName = document.querySelector("#update-firstName").value;
         editedLoggedInUser.lastName = document.querySelector("#update-lastName").value;
         editedLoggedInUser.email = document.querySelector("#update-email").value;
@@ -56,21 +56,27 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
         editedLoggedInUser.address.city = document.querySelector("#update-city").value;
         editedLoggedInUser.customLocation = document.querySelector("#customLocation").checked
         editedLoggedInUser.dateOfBirth = document.querySelector("#update-dob").value;
-        editedLoggedInUser.notes = loggedInUser.notes;
-        editedLoggedInUser.role = loggedInUser.role;
-        editedLoggedInUser.enabled = loggedInUser.enabled;
-        editedLoggedInUser.locked = loggedInUser.locked;
-        editedLoggedInUser.confirmationToken = loggedInUser.confirmationToken;
+        // editedLoggedInUser.id = loggedInUser.id;
+        // editedLoggedInUser.password = "Dummydata";
+        // editedLoggedInUser.notes = loggedInUser.notes;
+        // editedLoggedInUser.role = loggedInUser.role;
+        // editedLoggedInUser.enabled = loggedInUser.enabled;
+        // editedLoggedInUser.locked = loggedInUser.locked;
+        // editedLoggedInUser.confirmationToken = loggedInUser.confirmationToken;
+        // editedLoggedInUser.pdfUser = loggedInUser.pdfUser;
+        // editedLoggedInUser.personalFiles = loggedInUser.personalFiles;
+        // editedLoggedInUser.mbOfStorage = loggedInUser.mbOfStorage;
+        // editedLoggedInUser.usedStorage = loggedInUser.usedStorage;
     }
     if (userLocationBoolean){
-        editedLoggedInUser = loggedInUser;
+        // editedLoggedInUser = loggedInUser;
         editedLoggedInUser.customLocation = true;
-        delete editedLoggedInUser.authorities;
+        // delete editedLoggedInUser.authorities;
     }
-    if (itemLocationBoolean){
-        editedLoggedInUser = loggedInUser;
-        delete editedLoggedInUser.authorities;
-    }
+    // if (itemLocationBoolean || noteBoolean){
+    //     // editedLoggedInUser = loggedInUser;
+    //     delete editedLoggedInUser.authorities;
+    // }
     if (newProfilePic) {
         editedLoggedInUser.profilePic = {"$binary": {"base64": uploadedTempProfilePicture.$binary.base64}};
         editedLoggedInUser.profilePictureData.name = uploadedTempProfilePicture.name;
@@ -86,7 +92,7 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
         editedLoggedInUser.profilePictureData.lastModified = loggedInUser.profilePictureData.lastModified;
         editedLoggedInUser.profilePictureData.lastModifiedDate = loggedInUser.profilePictureData.lastModifiedDate;
     }
-
+    delete editedLoggedInUser.authorities;
     let response;
     const url = baseFetchUrl + 'user';
     let cred = btoa(`editUser:editUser`)
@@ -158,11 +164,13 @@ async function generateUserPdf() {
 
    loadingGif();
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+
     const url = baseFetchUrl + 'userPdf/' + user.id;
     let cred = btoa(`editUser:editUser`);
     let response;
     try {
         response = await fetchDataGet(url, cred);
+        console.log("dpfResponse: " + response)
         if (response.ok){
             let pdfUser = await response.json();
             console.log(pdfUser);

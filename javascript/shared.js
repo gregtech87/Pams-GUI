@@ -15,6 +15,7 @@ function handleImageChange(inputId, elementID) {
     // Get the file input element
     const input = document.querySelector(inputId);
     const file = input.files[0];
+
     // Get the image element
     let previewImage = document.querySelector(elementID);
 
