@@ -166,6 +166,7 @@ async function generateUserPdf() {
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
     const url = baseFetchUrl + 'userPdf/' + user.id;
+    console.log(url)
     let cred = btoa(`editUser:editUser`);
     let response;
     try {

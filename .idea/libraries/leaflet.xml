@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="leaflet" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_cdn.leafletjs.com_leaflet-0.7.3_leaflet.css" />
+        <item url="file://$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_cdn.leafletjs.com_leaflet-0.7.3_leaflet.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_cdn.leafletjs.com_leaflet-0.7.3_leaflet.css" />
+      <root url="file://$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_cdn.leafletjs.com_leaflet-0.7.3_leaflet.js" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

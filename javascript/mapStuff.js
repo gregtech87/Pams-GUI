@@ -2,7 +2,8 @@ function loadMapPage(userBoolean, itemBoolean) {
     let contentDiv = document.querySelector("#mainContent");
     contentDiv.innerHTML = `
         <div id="map" class="mapDiv">mapps</div>
-        <div >
+        <div>
+        <p>Drag and drop for custom position</p>
         <form id="mapForm" class="mapForm">
             <div>
                 <label for="customLat">Latitude:</label>
@@ -66,7 +67,7 @@ async function searchAddress(userBoolean, itemBoolean) {
     if (userBoolean) {
         //TODO dynamic country???
         // let response = await fetchDataGetUnAuth("https://geocode.maps.co/search?q=sweden+" + user.address.street + "+" + user.address.streetNumber + "&api_key=65e03fe9bee9e315182041veo737119")
-        let response = await fetchDataGetUnAuth("https://geocode.maps.co/search?q=" + user.address.street + "+" + user.address.streetNumber + "&api_key=65e03fe9bee9e315182041veo737119")
+        let response = await fetchDataGetUnAuth("https://geocode.maps.co/search?q=" + user.address.street + "+" + user.address.streetNumber + "+" + user.address.postalCode + "+" + user.address.city + "&api_key=65e03fe9bee9e315182041veo737119")
         await response.json().then(a => {
             address = a.at(0);
         })
@@ -77,26 +78,34 @@ async function searchAddress(userBoolean, itemBoolean) {
         let addressString = user.address.street + " " + user.address.streetNumber + ", " + user.address.postalCode + ", " + user.address.city;
         console.log(addressString)
 
-        if (user.customLocation && user.customLat === 0 && user.customLong === 0) {
+        if (!user.customLocation && user.customLat === 0 && user.customLong === 0) {
             setClickMarker(addressString);
         }
-
 
         if (user.customLocation && user.customLat !== 0 && user.customLong !== 0) {
             let addressLat = parseFloat(user.customLat);
             let addressLong = parseFloat(user.customLong);
             console.log(addressLat, addressLong)
-            // let addressString = user.address.street + " " + user.address.streetNumber + ", " + user.address.postalCode + ", " + user.address.city;
-            // console.log(addressString)
             setMapMarker(addressLat, addressLong, addressString)
         }
 
+        if (!user.customLocation && (user.address.street === "" || user.address.city === "" || user.address.streetNumber === 0 || user.address.postalCode === 0)) {
+            setClickMarker(addressString);
+        }
 
-        if (address !== undefined && !user.customLocation) {
+        if (!user.customLocation && (user.address.street !== "" || user.address.city !== "" || user.address.streetNumber !== 0 || user.address.postalCode !== 0)) {
             let addressLat = parseFloat(address.lat);
             let addressLong = parseFloat(address.lon);
             console.log(addressLat, addressLong)
             setMapMarker(addressLat, addressLong, address.display_name)
+        }
+
+        if (user.customLocation && (user.address.street !== "" || user.address.city !== "" || user.address.streetNumber !== 0 || user.address.postalCode !== 0)) {
+            let addressLat = parseFloat(user.customLat);
+            let addressLong = parseFloat(user.customLong);
+            console.log(addressLat, addressLong)
+            let customAddressString = addressString + " (Custom pin location)"
+            setMapMarker(addressLat, addressLong, customAddressString)
         }
     }
 
@@ -126,6 +135,7 @@ function setMapMarker(lat, long, addressInfo) {
     sessionStorage.setItem("latLong", JSON.stringify(curLocation))
     console.log(JSON.parse(sessionStorage.getItem("latLong")))
 
+
     map.setView([lat.toPrecision(10), long.toPrecision(10)], 16)
     layerGroup.clearLayers();
     map.closePopup();
@@ -144,6 +154,8 @@ function setMapMarker(lat, long, addressInfo) {
         document.querySelector("#customLat").value = position.lat
         document.querySelector("#customLong").value = position.lng
     });
-
+    if (addressInfo == " 0, 0, ") {
+        addressInfo = "No address stored, custom coordinates"
+    }
     marker.bindPopup(addressInfo).openPopup();
 }

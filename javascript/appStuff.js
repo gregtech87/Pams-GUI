@@ -33,6 +33,8 @@ function logout() {
     uploadedTempProfilePicture = "Nope";
     sessionStorage.setItem("base64credentials", "")
     sessionStorage.setItem("loggedInUser", "")
+    sessionStorage.setItem("uploadResponse", "")
+    sessionStorage.setItem("latLong", "")
     window.open("index.html", "_self", windowSize);
 }
 

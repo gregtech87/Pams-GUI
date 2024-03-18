@@ -19,8 +19,8 @@ function loadApplication() {
     <div class="sidebar">
     <img src="../images/liten%20logga.svg" alt="pam">
         <h2>Personal Asset Management</h2>
-        <img id="profilePic" src="../images/defaultUser.png" alt="Profile picture" style="width: 60%"><br>
-        <p><strong style="color: #85d6e9">User:</strong> ${loggedInUser.firstName}</p>
+        <img id="profilePic" src="../images/defaultUser.png" alt="Profile picture" style="width: 60%; max-height: 200px"><br>
+        <p><strong style="color: #85d6e9">User:</strong> ${loggedInUser.username}</p>
         <ul>
             <li><a href="#" onclick="loadApplication()"><i class="fas fa-home"></i>Home</a></li>
             <li><a href="#" onclick="displayProfileEdit()"><i class="fas fa-user"></i>Profile</a></li>
