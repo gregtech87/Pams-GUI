@@ -79,11 +79,24 @@ function displayProfileEdit() {
             <p><b style="color: black"> Pdf Present: </b></p>
             <img id="userPdfBox" src="../images/checkBoxNegative.svg" alt="No Pdf present" style="width: 20px; margin:0 5px 0 5px">
             <p><b style="color: black"> Created at: </b><span id="pdfAge" style="color: black">Not yet.</span></p>
+            <img class="downloadPdfBtn" id="downloadPdf" src="../images/download-Ico.svg" alt="Download" onmouseover="downloadImgHover(this);" onmouseout="downloadImgUnhover(this);">
+            <img class="downloadPdfBtn" id="viewPdf" src="../images/viewFile.svg" alt="Download" onmouseover="downloadImgHover(this);" onmouseout="downloadImgUnhover(this);">
         </div>
         <div id="pdfDiv" style="visibility: hidden">New Pdf generated!</div>
         <div id="noPdfDiv" style="visibility: hidden">Could not generate Pdf, try again later!</div>
     `;
     populateEditUserForm();
+
+    let downloadPdf = document.querySelector('#downloadPdf');
+    downloadPdf.addEventListener("click", function (event) {
+        event.preventDefault();
+        downloadFile(loggedInUser.username, loggedInUser.pdfUser.userInfoPdfIdentifier, loggedInUser.pdfUser.name, 'application/pdf');
+    });
+    let viewPdf = document.querySelector('#viewPdf');
+    viewPdf.addEventListener("click", function (event) {
+        event.preventDefault();
+        downloadFile(loggedInUser.username, loggedInUser.pdfUser.userInfoPdfIdentifier, loggedInUser.pdfUser.name, 'application/pdf', true);
+    });
 
     let updateUserForm = document.querySelector('#updateUserForm');
     updateUserForm.addEventListener("submit", function (event) {

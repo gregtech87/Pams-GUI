@@ -120,21 +120,4 @@ async function inspectNewUser(newUser) {
 
 
 
-function fileToBlob(dataURI, fileType) {
-    // Convert base64 data URI to a binary string.
-    const byteString = atob(dataURI.split(',')[1]);
-    // console.log(byteString)
-
-    // Create a Uint8Array from the binary string.
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const uint8Array = new Uint8Array(arrayBuffer);
-
-    for (let i = 0; i < byteString.length; i++) {
-        uint8Array[i] = byteString.charCodeAt(i);
-        // console.log(uint8Array)
-    }
-
-    // Create a Blob from the Uint8Array with dynamic MIME type and return it.
-    return new Blob([uint8Array], {type: fileType});
-}
 

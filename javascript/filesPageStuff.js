@@ -23,14 +23,18 @@ async function getFiles() {
             let usedStorage = prettySize(file.size);
             let id =file.id;
             let identifier =file.identifier;
+            let filename = file.fileName;
+            let type = file.type
+            let date = new Date(file.createdAt);
+            let timeString = date.getDate() + "/" + (date.getMonth()+1) + "-" + date.getFullYear() + " " + clockStyler(date.getHours()) + ":" + clockStyler(date.getMinutes()) + ":" + clockStyler(date.getSeconds());
             fileTableBody.innerHTML += `
                 <tr>
                     <td>${file.fileName}</td>
                     <td>${usedStorage}</td>
-                    <td>${file.createdAt}</td>
+                    <td>${timeString}</td>
                     <td class="actionField">
-                        <img id="downloadImg" onclick="downloadFile('${identifier}')" src="../images/download-Ico.svg" alt="Download" onmouseover="downloadImgHover(this);" onmouseout="downloadImgUnhover(this);">
-                        <img id="removeImg" onclick="removeFile('${identifier}', '${id}')" src="../images/trash-can.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
+                        <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}')" src="../images/download-Ico.svg" alt="Download" onmouseover="downloadImgHover(this);" onmouseout="downloadImgUnhover(this);">
+                        <img onclick="removeFile('${identifier}', '${id}')" src="../images/trash-can.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
                     </td>
                 </tr>
             `;
@@ -46,19 +50,27 @@ async function getFiles() {
         // Handle the error (e.g., display an error message to the user)
     }
 }
-function downloadImgHover(element) {
-    element.style.width = '28px';
+
+// function downloadFile(id, identifier, filename, type) {
+//     console.log("downloading")
+//     console.log(id)
+//     console.log(identifier)
+// }
+
+function removeFile(identifier, id) {
+    console.log("removing")
+    console.log(id)
+    console.log(identifier)
 }
 
-function downloadImgUnhover(element) {
-    element.style.width = '25px';
-}
-function removeImgHover(element) {
-    element.style.width = '28px';
-}
 
-function removeImgUnhover(element) {
-    element.style.width = '25px';
+function clockStyler(number) {
+    if (number < 10){
+        return "0"+number;
+    } else {
+        return number;
+    }
+
 }
 
 async function handleFileUpload(inputId) {
@@ -66,7 +78,6 @@ async function handleFileUpload(inputId) {
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
     // Get the file input element
     const input = document.querySelector(inputId);
-
     const formData = new FormData();
     formData.append("file", input.files[0], input.files[0].name);
 
@@ -87,13 +98,3 @@ async function handleFileUpload(inputId) {
     loadFilesPage();
 }
 
-function downloadFile(identifier) {
-    console.log("downloading")
-    console.log(identifier)
-}
-
-function removeFile(identifier, id) {
-    console.log("removing")
-    console.log(id)
-    console.log(identifier)
-}

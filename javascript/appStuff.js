@@ -58,3 +58,18 @@ function prettySize(size) {
     }
     return usedStorage;
 }
+
+function downloadImgHover(element) {
+    element.style.width = '28px';
+}
+
+function downloadImgUnhover(element) {
+    element.style.width = '25px';
+}
+function removeImgHover(element) {
+    element.style.width = '28px';
+}
+
+function removeImgUnhover(element) {
+    element.style.width = '25px';
+}

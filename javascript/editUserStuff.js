@@ -28,8 +28,8 @@ function populateEditUserForm() {
         userPdfBox.alt = "Pdf present"
 
         let age = loggedInUser.pdfUser.createdAt;
-        let age1 = age.substring(0,10);
-        let age2 = age.substring(11,19);
+        let age1 = age.substring(0, 10);
+        let age2 = age.substring(11, 19);
         document.querySelector("#pdfAge").innerText = "(" + age1 + ": " + age2 + ")";
     }
     setProfilePic('#editPic');
@@ -42,7 +42,7 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
     console.log("Unedited:")
     console.log(loggedInUser)
     let editedLoggedInUser = loggedInUser;
-    if (!userLocationBoolean && !noteBoolean && !itemLocationBoolean){
+    if (!userLocationBoolean && !noteBoolean && !itemLocationBoolean) {
         // editedLoggedInUser = {"address": {}, "profilePictureData": {}};
         // editedLoggedInUser = loggedInUser;
         editedLoggedInUser.username = document.querySelector("#update-username").value;
@@ -68,7 +68,7 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
         // editedLoggedInUser.mbOfStorage = loggedInUser.mbOfStorage;
         // editedLoggedInUser.usedStorage = loggedInUser.usedStorage;
     }
-    if (userLocationBoolean){
+    if (userLocationBoolean) {
         // editedLoggedInUser = loggedInUser;
         editedLoggedInUser.customLocation = true;
         // delete editedLoggedInUser.authorities;
@@ -96,9 +96,9 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
     let response;
     const url = baseFetchUrl + 'user';
     let cred = btoa(`editUser:editUser`)
-    try{
+    try {
         response = await fetchDataPut(url, cred, editedLoggedInUser)
-    }catch (e){
+    } catch (e) {
         errorBox("Something went wrong! Try again later.")
     }
 
@@ -109,11 +109,11 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
 
         const url = baseFetchUrl + 'user/' + editedLoggedInUser.id;
         let cred = btoa(`editUser:editUser`)
-        try{
+        try {
             response = await fetchDataGet(url, cred)
             let user = await response.json();
             sessionStorage.setItem("loggedInUser", JSON.stringify(user));
-        }catch (e){
+        } catch (e) {
             errorBox("Something went wrong! Try again later.")
         }
         successBox("User updated successfully!")
@@ -141,13 +141,12 @@ async function updateUserPassword() {
     if (password1 === password2) {
 
 
-
         let response;
         const url = baseFetchUrl + 'userPassword';
         let signupUser = btoa(`editUser:editUser`)
         try {
             response = await fetchDataPost(url, signupUser, sendingString);
-            if (await response){
+            if (await response) {
                 successBox("Password updated successfully!")
             } else {
                 errorBox("Password NOT updated successfully for some reason!")
@@ -162,7 +161,7 @@ async function updateUserPassword() {
 
 async function generateUserPdf() {
 
-   loadingGif();
+    loadingGif();
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
 
     const url = baseFetchUrl + 'userPdf/' + user.id;
@@ -172,7 +171,7 @@ async function generateUserPdf() {
     try {
         response = await fetchDataGet(url, cred);
         console.log("dpfResponse: " + response)
-        if (response.ok){
+        if (response.ok) {
             let pdfUser = await response.json();
             console.log(pdfUser);
             user.pdfUser = pdfUser
@@ -184,8 +183,8 @@ async function generateUserPdf() {
             userPdfBox.alt = "Pdf present"
 
             let age = pdfUser.createdAt;
-            let age1 = age.substring(0,10);
-            let age2 = age.substring(11,19);
+            let age1 = age.substring(0, 10);
+            let age2 = age.substring(11, 19);
             document.querySelector("#pdfAge").innerText = "(" + age1 + ": " + age2 + ")";
             messageDiv.innerHTML = ``;
         }
@@ -196,4 +195,46 @@ async function generateUserPdf() {
     }
 
 
+}
+
+async function downloadFile(username, identifier, filename, type, viewPdf) {
+    console.log(username)
+    console.log(identifier)
+    console.log(filename)
+    console.log(type)
+    let viewBoolean = false;
+    console.log(viewPdf)
+    if(viewPdf !== undefined) {
+        viewBoolean = viewPdf;
+    }
+    console.log("pdf down")
+    let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    const url = baseFetchUrl + 'downloadFile/' + identifier + "/" + username;
+    let base64 = JSON.parse(sessionStorage.getItem("base64credentials"));
+
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            Authorization: 'Basic ' + base64
+        }
+    })
+        .then(res => res.blob())
+        .then(blob => {
+            // readFile(blob)
+            const f = new File([blob], filename, {type: type})
+            let file = window.URL.createObjectURL(f);
+            console.log(file)
+
+            if (viewBoolean) {
+                // window.location.assign(file);
+                window.open(file)
+            } else {
+                const a = document.createElement('a');
+                a.href = file;
+                a.download = filename;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+            }
+        });
 }

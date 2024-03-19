@@ -3,8 +3,8 @@ const weekDaysForPrintout = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursd
 const mainDiv = document.querySelector("#app")
 const messageDiv = document.querySelector("#messageBoxes");
 let windowSize = "width=" + window.innerWidth + ",height=" + window.innerHeight + ",scrollbars=no";
-let baseFetchUrl = 'https://pam-api.gregtech.duckdns.org/api/v1/';
-// let baseFetchUrl = 'http://localhost:8586/api/v1/';
+// let baseFetchUrl = 'https://pam-api.gregtech.duckdns.org/api/v1/';
+let baseFetchUrl = 'http://localhost:8586/api/v1/';
 // let baseFetchUrl = 'http://localhost:8585/api/v1/';
 let loggedInUser;
 let base64credentials;
@@ -97,4 +97,43 @@ function activateSortingForTables() {
             sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
         });
     });
+}
+
+
+
+function fileToBlob(dataURI, fileType) {
+    // Convert base64 data URI to a binary string.
+    const byteString = atob(dataURI.split(',')[1]);
+    // console.log(byteString)
+
+    // Create a Uint8Array from the binary string.
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+        uint8Array[i] = byteString.charCodeAt(i);
+        // console.log(uint8Array)
+    }
+
+    // Create a Blob from the Uint8Array with dynamic MIME type and return it.
+    return new Blob([uint8Array], {type: fileType});
+}
+const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+    const byteCharacters = atob(b64Data.split(',')[1]);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(b64Data);
+        byteArrays.push(byteArray);
+    }
+
+    // return new Blob(byteArrays, {type: contentType});
+    return new Blob(byteArrays);
 }

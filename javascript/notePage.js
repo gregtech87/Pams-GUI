@@ -69,7 +69,7 @@ async function addNewNote() {
 
     let date = new Date();
     let timeString = "(" + weekDaysForPrintout[date.getDay()] + ") " + date.getDate() + " / " + monthsForPrintout[date.getMonth()] +
-        " - " + date.getFullYear() + ", " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        " - " + date.getFullYear() + ", " + clockStyler(date.getHours()) + ":" + clockStyler(date.getMinutes()) + ":" + clockStyler(date.getSeconds());
     console.log(timeString);
     let storedUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
     let note = document.querySelector("#note").value;
