@@ -11,13 +11,13 @@ function displaySignupPage() {
         <form id="register-form" class="register-form" onsubmit="registerUser(event)">
           <div class="column one">
             <label for="register-username" class="required">Username:</label>
-            <input type="text" id="register-username" placeholder="Fixa validering" required>
+            <input type="text" id="register-username" required>
 
             <label for="register-firstname" class="required">First Name:</label>
             <input type="text" id="register-firstname" required>
 
             <label for="register-email" class="required">Email:</label>
-            <input type="email" id="register-email" placeholder="Fixa validering" required>
+            <input type="email" id="register-email" required>
             <label for="register-address">Address:</label>
             <div STYLE="display: flex">
                 <div>

@@ -4,3 +4,18 @@
     width: 25px;
     margin-left: 10px;
 }
+
+.assetImg {
+text-align: center;
+}
+
+.assetColumn{
+    max-width: 250px;
+}
+
+.descriptionArea {
+    width: 250px;
+    height: 340px;
+    white-space: pre-wrap;
+    resize: none;
+}

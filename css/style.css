@@ -25,9 +25,8 @@
   border-radius: 10px;
 }
 
-.logOutBtn {
+.sideBarBtn {
   width: 15px;
-  color: #7bbe46;
   padding-right: 10px;
 }
 
@@ -64,6 +63,7 @@
   width: 800px;
   height: 400px;
   white-space: pre-wrap;
+  resize: none;
 }
 
 .displayNotes {
