@@ -256,9 +256,10 @@ th {
 }
 
 .actionField {
-    width: 60px;
-    justify-content: space-between;
+    width: 90px;
+    justify-content: space-around;
     display: flex;
 }
+
 
 /******************* TABLES END *******************/

@@ -25,9 +25,12 @@ async function getFiles() {
             let identifier =file.identifier;
             let filename = file.fileName;
             let type = file.type
+            console.log(type)
             let date = new Date(file.createdAt);
             let timeString = date.getDate() + "/" + (date.getMonth()+1) + "-" + date.getFullYear() + " " + clockStyler(date.getHours()) + ":" + clockStyler(date.getMinutes()) + ":" + clockStyler(date.getSeconds());
-            fileTableBody.innerHTML += `
+
+            if (type.startsWith("image") || type.startsWith("text") || type.endsWith("pdf")) {
+                fileTableBody.innerHTML += `
                 <tr>
                     <td>${file.fileName}</td>
                     <td>${usedStorage}</td>
@@ -35,9 +38,23 @@ async function getFiles() {
                     <td class="actionField">
                         <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}')" src="../images/download-Ico.svg" alt="Download" onmouseover="downloadImgHover(this);" onmouseout="downloadImgUnhover(this);">
                         <img onclick="removeFile('${identifier}', '${id}', '${filename}')" src="../images/trash-can.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
+                        <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}', true)" src="../images/viewFile.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
                     </td>
                 </tr>
             `;
+            } else {
+                fileTableBody.innerHTML += `
+                <tr>
+                    <td>${file.fileName}</td>
+                    <td>${usedStorage}</td>
+                    <td>${timeString}</td>
+                    <td class="actionField">
+                        <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}')" src="../images/download-Ico.svg" alt="Download" onmouseover="downloadImgHover(this);" onmouseout="downloadImgUnhover(this);">
+                        <img onclick="removeFile('${identifier}', '${id}', '${filename}')" src="../images/trash-can.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
+                     </td>
+                </tr>
+            `;
+            }
         });
 
         // Sort the table by the first column in ascending order
@@ -51,27 +68,32 @@ async function getFiles() {
     }
 }
 
-async function removeFile(identifier, id, filename) {
+async function removeFile(fileIdentifier, fileId, filename) {
+    loadingGif();
     console.log("removing")
-    console.log(id)
-    console.log(identifier)
     let json = {
-        fileId: id,
-        fileIdentifier: identifier,
+        fileId: fileId,
+        fileIdentifier: fileIdentifier,
         fileName: filename,
         userId: loggedInUser.id
-
-
     }
-    let formData = new FormData();
-    formData.append('userId', 'John');
-    formData.append('identifier', 'John123');
 
-    let response = await fetchDataDelete(baseFetchUrl + 'file/'+id+"/"+identifier, base64credentials)
-    console.log(response);
-    let response2 = await fetchDataDelete(baseFetchUrl + 'file/'+JSON.stringify(json), base64credentials)
-    console.log(response2);
+    let deleteResponse = await fetchDataDelete(baseFetchUrl + 'file/'+JSON.stringify(json), base64credentials)
+    console.log(typeof deleteResponse);
+    console.log(deleteResponse);
 
+    let userResponse;
+    const url = baseFetchUrl + 'user/' + loggedInUser.id;
+    let cred = btoa(`editUser:editUser`)
+    try {
+        userResponse = await fetchDataGet(url, cred)
+        let user = await userResponse.json();
+        sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+    } catch (e) {
+        errorBox("Something went wrong! Try again later.")
+    }
+
+    loadFilesPage();
 }
 
 

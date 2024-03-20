@@ -197,15 +197,15 @@ async function generateUserPdf() {
 
 }
 
-async function downloadFile(username, identifier, filename, type, viewPdf) {
+async function downloadFile(username, identifier, filename, type, viewFile) {
     console.log(username)
     console.log(identifier)
     console.log(filename)
     console.log(type)
     let viewBoolean = false;
-    console.log(viewPdf)
-    if(viewPdf !== undefined) {
-        viewBoolean = viewPdf;
+    console.log(viewFile)
+    if(viewFile !== undefined) {
+        viewBoolean = viewFile;
     }
     console.log("pdf down")
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
