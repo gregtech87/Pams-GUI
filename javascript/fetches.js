@@ -112,7 +112,6 @@ async function fetchDataDelete(url, credentials) {
         await fetch(url, {
             method: 'DELETE',
             headers: {
-                'Accept': 'application/json',
                 'Authorization': `Basic ${credentials}`
             }
         })

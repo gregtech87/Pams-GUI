@@ -34,7 +34,7 @@ async function getFiles() {
                     <td>${timeString}</td>
                     <td class="actionField">
                         <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}')" src="../images/download-Ico.svg" alt="Download" onmouseover="downloadImgHover(this);" onmouseout="downloadImgUnhover(this);">
-                        <img onclick="removeFile('${identifier}', '${id}')" src="../images/trash-can.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
+                        <img onclick="removeFile('${identifier}', '${id}', '${filename}')" src="../images/trash-can.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
                     </td>
                 </tr>
             `;
@@ -51,16 +51,27 @@ async function getFiles() {
     }
 }
 
-// function downloadFile(id, identifier, filename, type) {
-//     console.log("downloading")
-//     console.log(id)
-//     console.log(identifier)
-// }
-
-function removeFile(identifier, id) {
+async function removeFile(identifier, id, filename) {
     console.log("removing")
     console.log(id)
     console.log(identifier)
+    let json = {
+        fileId: id,
+        fileIdentifier: identifier,
+        fileName: filename,
+        userId: loggedInUser.id
+
+
+    }
+    let formData = new FormData();
+    formData.append('userId', 'John');
+    formData.append('identifier', 'John123');
+
+    let response = await fetchDataDelete(baseFetchUrl + 'file/'+id+"/"+identifier, base64credentials)
+    console.log(response);
+    let response2 = await fetchDataDelete(baseFetchUrl + 'file/'+JSON.stringify(json), base64credentials)
+    console.log(response2);
+
 }
 
 

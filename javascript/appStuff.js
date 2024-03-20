@@ -46,7 +46,7 @@ function prettySize(size) {
     // 1MB = 1048576 byte.
     //
     if (used < 1024) {
-        usedStorage = used.toFixed(2)+" Byte"
+        usedStorage = used + " Byte"
     }
     if (used > 1024 && used < 1048576) {
         let s = used/1024
