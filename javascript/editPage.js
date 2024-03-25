@@ -53,9 +53,9 @@ function displayProfileEdit() {
         </div>
         <div class="editUserPic" style="margin-bottom: 0">
             <img id="editPic" src="../images/defaultUser.png" alt="Profile picture"><br>
-            <label for="newPicture">Profile Picture:</label><br>
+            <label for="newPicture" class="pic-upload stdButton">
             <input type="file" id="newPicture" accept="image/*" onchange="editUSerProfilePic('#newPicture', '#editPic')">
-            
+            Change profile picture</label>
             <form id="passwordForm" class="passwordForm">
                 <label for="oldPassword">Old Password:</label>
                 <input type="password" id="oldPassword" name="oldPassword" required>

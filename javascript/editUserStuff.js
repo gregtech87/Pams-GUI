@@ -32,7 +32,7 @@ function populateEditUserForm() {
         let age2 = age.substring(11, 19);
         document.querySelector("#pdfAge").innerText = "(" + age1 + ": " + age2 + ")";
     }
-    setProfilePic('#editPic');
+    setProfilePic('#editPic', loggedInUser);
 }
 
 async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean) {

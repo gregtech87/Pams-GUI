@@ -69,19 +69,51 @@ button {
 /******************* BUTTONS END *******************/
 
 
+/******************* FILE UPLOAD BUTTON START *******************/
+
+.file-upload {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    width: fit-content;
+    border-radius: 10px;
+    padding: 0 10px 0 10px;
+    color: black;
+}
+
+.file-upload:hover{
+    background: -webkit-linear-gradient(top, rgba(154, 234, 67, 0.80), rgba(0, 168, 45, 0.8));
+}
+
+.file-upload::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.file-upload input {
+    overflow: hidden;
+    display: none;
+    width: 0;
+}
+
+/******************* FILE UPLOAD BUTTON END *******************/
+
+
+
 /******************* PROFILE PICTURE UPLOAD BUTTON START *******************/
 
 .pic-upload {
+    cursor: pointer;
     display: block;
     margin: 5px auto 20px;
     width: fit-content;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 5px;
+    color: black;
 }
 
-.pic-upload:hover{
-    background: -webkit-linear-gradient(top, rgba(103, 232, 255, 0.80), rgba(92, 162, 231, 0.8));
-}
+/*.pic-upload:hover{*/
+/*    background: -webkit-linear-gradient(top, rgba(103, 232, 255, 0.80), rgba(92, 162, 231, 0.8));*/
+/*}*/
 
 .pic-upload::-webkit-file-upload-button {
     visibility: hidden;

@@ -18,6 +18,7 @@
 
 .editUserPic img {
   max-width: 20rem;
+  border-radius: 10%;
 }
 
 .editBorder {
@@ -71,33 +72,6 @@
   word-break: break-all;
 }
 
-/******************* FILE UPLOAD BUTTON START *******************/
-
-.file-upload {
-  display: block;
-  margin-bottom: 5px;
-  margin-top: 10px;
-  width: fit-content;
-  border-radius: 10px;
-  padding: 0 10px 0 10px;
-  color: black;
-}
-
-.file-upload:hover{
-  background: -webkit-linear-gradient(top, rgba(154, 234, 67, 0.80), rgba(0, 168, 45, 0.8));
-}
-
-.file-upload::-webkit-file-upload-button {
-  visibility: hidden;
-}
-
-.file-upload input {
-  overflow: hidden;
-  display: none;
-  width: 0;
-}
-
-/******************* FILE UPLOAD BUTTON END *******************/
 
 
 .fileStorageMeter {

@@ -1,10 +1,11 @@
-function setProfilePic(elementId) {
+function setProfilePic(elementId, origin) {
+    console.log(origin)
     const imageElement = document.querySelector(elementId);
     // console.log(loggedInUser.profilePic.substring(0,100))
     // console.log(loggedInUser.profilePic.length)
-    if (loggedInUser.profilePic.length > 100) {
+    if (origin.profilePic.length > 100) {
         // Convert base64 data URI to a binary string.
-        const byteString = atob(loggedInUser.profilePic);
+        const byteString = atob(origin.profilePic);
         // Create a Uint8Array from the binary string.
         const arrayBuffer = new ArrayBuffer(byteString.length);
         const uint8Array = new Uint8Array(arrayBuffer);
@@ -13,7 +14,7 @@ function setProfilePic(elementId) {
             uint8Array[i] = byteString.charCodeAt(i);
         }
         // Create a Blob from the Uint8Array with dynamic MIME type.
-        let pic = new File([uint8Array], loggedInUser.profilePictureData.name, {type: loggedInUser.profilePictureData.type,});
+        let pic = new File([uint8Array], origin.profilePictureData.name, {type: origin.profilePictureData.type,});
         // Check if any files are selected
         if (pic) {
             let reader = new FileReader();
@@ -31,10 +32,11 @@ function logout() {
     baseFetchUrl = "Nope";
     base64credentials = "Nope";
     uploadedTempProfilePicture = "Nope";
-    sessionStorage.setItem("base64credentials", "")
-    sessionStorage.setItem("loggedInUser", "")
-    sessionStorage.setItem("uploadResponse", "")
-    sessionStorage.setItem("latLong", "")
+    // sessionStorage.setItem("base64credentials", "")
+    // sessionStorage.setItem("loggedInUser", "")
+    // sessionStorage.setItem("uploadResponse", "")
+    // sessionStorage.setItem("latLong", "")
+    sessionStorage.clear()
     window.open("index.html", "_self", windowSize);
 }
 
@@ -72,4 +74,30 @@ function removeImgHover(element) {
 
 function removeImgUnhover(element) {
     element.style.width = '25px';
+}
+
+function toggleReadOnly(elementId) {
+    console.log("toggling")
+    let form = document.querySelector(elementId);
+    let elements = form.elements;
+
+    for (let i = 0; i < elements.length; i++) {
+        if (elements[i].type !== "button") { // Exclude buttons from being toggled
+            if (elements[i].hasAttribute("readonly")) {
+                elements[i].removeAttribute("readonly");
+            } else {
+                elements[i].setAttribute("readonly", "readonly");
+            }
+        }
+    }
+}
+
+function loopThroughForm(elementId) {
+    let form = document.querySelector(elementId);
+    let elements = form.elements;
+
+    for (let i = 0; i < elements.length; i++) {
+        console.log("Element name: " + elements[i].id);
+        console.log("Element value: " + elements[i].value);
+    }
 }

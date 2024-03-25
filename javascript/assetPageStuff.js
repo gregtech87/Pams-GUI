@@ -7,10 +7,10 @@ function loadAddNewAssetPage() {
             <div id="register-page" >
                 <div class="assetImg">
                     <div>
-                        <img id="previewImage" src="../images/no-image-asset.gif" alt="Uploaded Image" style="width: 200px">
+                        <img id="previewImage" src="../images/no-image-asset.gif" alt="Uploaded Image">
                     </div>
                     <div>
-                        <label class="pic-upload stdButton">
+                        <label class="file-upload stdButton">
                         <input type="file" id="imageInput" accept="image/*" onchange="handleImageChange('#imageInput', '#previewImage')">
                         Upload picture
                         </label>
@@ -45,8 +45,8 @@ function loadAddNewAssetPage() {
                         
                     </div>
                     <div class="assetColumn two">
-                        <label for="age"><b>Age:</b></label>
-                        <input type="date" id="age">
+                        <label for="dateOfPurchase"><b>Date of purchase:</b></label>
+                        <input type="date" id="dateOfPurchase">
                         
                         <label><b>Size:</b></label>
                         <div>
@@ -75,32 +75,37 @@ function loadAddNewAssetPage() {
             </div>
         </section>
         `;
-
+    // reseting the tempfile
+    uploadedTempProfilePicture = {"$binary": {}};
     let assetSubmit = document.querySelector("#assetSubmit");
     assetSubmit.addEventListener('click', event => {
         event.preventDefault();
-        registerAsset();
+        registerAsset().then(loadAssetPage);
     })
 }
 
-function registerAsset() {
+async function registerAsset() {
 
     let date = new Date();
-    let timeString = date.getDate() + "/" + (date.getMonth()+1) + "-" + date.getFullYear() + " " + clockStyler(date.getHours()) + ":" + clockStyler(date.getMinutes()) + ":" + clockStyler(date.getSeconds());
+    console.log(date)
+    console.log(date.toJSON())
+    console.log(date.toLocaleString())
+    console.log(date.toLocaleDateString())
+    console.log(date.toLocaleTimeString())
+    console.log(date.toDateString())
+    console.log(date.toISOString())
+    let timeString = date.getDate() + "/" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " + clockStyler(date.getHours()) + ":" + clockStyler(date.getMinutes()) + ":" + clockStyler(date.getSeconds());
     console.log(timeString)
 
     let newAsset = {
+        "id": 0,
+        "owner": loggedInUser.id,
         "title": document.querySelector("#title").value,
         "brand": document.querySelector("#brand").value,
         "model": document.querySelector("#model").value,
         "price": document.querySelector("#price").value,
-        "placeOfPurchase": {
-            "street": document.querySelector("#address").value,
-            "streetNumber": document.querySelector("#addressNumber").value,
-            "postalCode": document.querySelector("#postalCode").value,
-            "city": document.querySelector("#city").value
-        },
-        "age": document.querySelector("#age").value,
+        "createdAt": timeString,
+        "dateOfPurchase": document.querySelector("#dateOfPurchase").value,
         "length": document.querySelector("#length").value,
         "width": document.querySelector("#width").value,
         "height": document.querySelector("#height").value,
@@ -108,15 +113,21 @@ function registerAsset() {
         "state": document.querySelector("#state").value,
         "insurance": document.querySelector("#insurance").value,
         "description": document.querySelector("#info").value,
+        "placeOfPurchase": {
+            "street": document.querySelector("#address").value,
+            "streetNumber": document.querySelector("#addressNumber").value,
+            "postalCode": document.querySelector("#postalCode").value,
+            "city": document.querySelector("#city").value
+        },
 
-        "PictureData": {
+        "profilePictureData": {
             "name": uploadedTempProfilePicture.name,
             "type": uploadedTempProfilePicture.type,
             "size": uploadedTempProfilePicture.size,
             "lastModified": uploadedTempProfilePicture.lastModified,
             "lastModifiedDate": uploadedTempProfilePicture.lastModifiedDate,
         },
-        "picture": {
+        "profilePic": {
             "$binary": {
                 "base64": uploadedTempProfilePicture.$binary.base64
             }
@@ -125,5 +136,17 @@ function registerAsset() {
     }
 
     console.log(newAsset)
+
+    let responseItem = await fetchDataPost(baseFetchUrl + "item", btoa("itemGuy:itemGuy"), newAsset);
+    console.log(responseItem);
+
+    let storedUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    const url = baseFetchUrl + 'user/' + storedUser.id;
+    const response = await fetchDataGet(url, btoa("editUser:editUser"));
+    console.log(response)
+    let user = await response.json();
+    console.log(user);
+    sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+
 
 }

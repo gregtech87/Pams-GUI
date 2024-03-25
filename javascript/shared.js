@@ -137,3 +137,4 @@ const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
     // return new Blob(byteArrays, {type: contentType});
     return new Blob(byteArrays);
 }
+

@@ -19,3 +19,51 @@ text-align: center;
     white-space: pre-wrap;
     resize: none;
 }
+
+.infoArea {
+    width: 100%;
+    height: 340px;
+    white-space: pre-wrap;
+    resize: none;
+}
+
+.assetArea{
+    max-width: 800px;
+    background: #c7c7c7;
+}
+
+.itemBox {
+    width: 25%;
+    cursor: pointer;
+    background: #f4f4f4;
+    color: black;
+}
+
+.itemBox img {
+    width: 100%;
+    border-radius: 10%;
+}
+
+#assetContent {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+#previewImage {
+    width: 200px;
+    border-radius: 10%;
+}
+
+.mapButtonItems {
+    cursor: pointer;
+    padding-bottom: 4px;
+    border-radius: 10px;
+    font-family: 'Droid Sans', 'Helvetica Neue', sans-serif;
+    color: black;
+    line-height: 1;
+    font-size: 15px;
+    -moz-osx-font-smoothing: grayscale;
+    min-width: 90px;
+}

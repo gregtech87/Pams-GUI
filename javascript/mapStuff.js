@@ -74,12 +74,12 @@ async function searchAddress(userBoolean, itemBoolean) {
         await response.json().then(a => {
             address = a.at(0);
         })
-        console.log(address)
-        console.log(address.display_name)
-        console.log(user.address)
+        // console.log(address)
+        // console.log(address.display_name)
+        // console.log(user.address)
 
         let addressString = user.address.street + " " + user.address.streetNumber + ", " + user.address.postalCode + ", " + user.address.city;
-        console.log(addressString)
+        // console.log(addressString)
         setClickMarker("New custom coordinates?");
 
         // if (!user.customLocation && user.customLat === 0 && user.customLong === 0) {
@@ -89,7 +89,7 @@ async function searchAddress(userBoolean, itemBoolean) {
         if (user.customLocation && user.customLat !== 0 && user.customLong !== 0) {
             let addressLat = parseFloat(user.customLat);
             let addressLong = parseFloat(user.customLong);
-            console.log(addressLat, addressLong)
+            // console.log(addressLat, addressLong)
             setMapMarker(addressLat, addressLong, addressString)
         }
 
@@ -100,14 +100,14 @@ async function searchAddress(userBoolean, itemBoolean) {
         if (!user.customLocation && (user.address.street !== "" || user.address.city !== "" || user.address.streetNumber !== 0 || user.address.postalCode !== 0)) {
             let addressLat = parseFloat(address.lat);
             let addressLong = parseFloat(address.lon);
-            console.log(addressLat, addressLong)
+            // console.log(addressLat, addressLong)
             setMapMarker(addressLat, addressLong, address.display_name)
         }
 
         if (user.customLocation && (user.address.street !== "" || user.address.city !== "" || user.address.streetNumber !== 0 || user.address.postalCode !== 0)) {
             let addressLat = parseFloat(user.customLat);
             let addressLong = parseFloat(user.customLong);
-            console.log(addressLat, addressLong)
+            // console.log(addressLat, addressLong)
             let customAddressString = addressString + " (Custom pin location)"
             setMapMarker(addressLat, addressLong, customAddressString)
         }
@@ -126,7 +126,7 @@ function setClickMarker(popupString) {
     map.on("click", function (e) {
         marker.setLatLng([e.latlng.lat, e.latlng.lng]).addTo(map)
         marker.bindPopup(popupString).openPopup();
-        console.log([e.latlng.lat, e.latlng.lng])
+        // console.log([e.latlng.lat, e.latlng.lng])
         document.querySelector("#customLat").value = e.latlng.lat
         document.querySelector("#customLong").value = e.latlng.lng
     })
@@ -137,9 +137,9 @@ function setMapMarker(lat, long, addressInfo) {
     // let long = 17.15018313038701;
 
     let curLocation = [lat, long];
-    console.log(curLocation)
-    sessionStorage.setItem("latLong", JSON.stringify(curLocation))
-    console.log(JSON.parse(sessionStorage.getItem("latLong")))
+    // console.log(curLocation)
+    // sessionStorage.setItem("latLong", JSON.stringify(curLocation))
+    // console.log(JSON.parse(sessionStorage.getItem("latLong")))
 
 
     map.setView([lat.toPrecision(10), long.toPrecision(10)], 16)
@@ -155,8 +155,8 @@ function setMapMarker(lat, long, addressInfo) {
         marker.setLatLng(position, {
             draggable: 'true'
         }).bindPopup(position).update();
-        console.log(position.lat);
-        console.log(position.lng);
+        // console.log(position.lat);
+        // console.log(position.lng);
         document.querySelector("#customLat").value = position.lat
         document.querySelector("#customLong").value = position.lng
     });
