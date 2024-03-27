@@ -21,12 +21,12 @@ async function getFiles() {
 
         fileList.forEach(file => {
             let usedStorage = prettySize(file.size);
-            let id =file.id;
-            let identifier =file.identifier;
+            let id = file.id;
+            let identifier = file.identifier;
             let filename = file.fileName;
             let type = file.type
             let date = new Date(file.createdAt);
-            let timeString = date.getDate() + "/" + (date.getMonth()+1) + "-" + date.getFullYear() + " " + clockStyler(date.getHours()) + ":" + clockStyler(date.getMinutes()) + ":" + clockStyler(date.getSeconds());
+            let timeString = date.getDate() + "/" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " + clockStyler(date.getHours()) + ":" + clockStyler(date.getMinutes()) + ":" + clockStyler(date.getSeconds());
 
             if (type.startsWith("image") || type.startsWith("text") || type.endsWith("pdf")) {
                 fileTableBody.innerHTML += `
@@ -67,38 +67,146 @@ async function getFiles() {
     }
 }
 
-async function removeFile(fileIdentifier, fileId, filename) {
+
+async function downloadFile(username, identifier, filename, type, viewFile, listInGallery, galleryName) {
+    console.log(username)
+    console.log(identifier)
+    console.log(filename)
+    console.log(type)
+    let viewBoolean = false;
+    let galleryBoolean = false;
+    if (viewFile !== undefined) {
+        viewBoolean = viewFile;
+    }
+    if (listInGallery !== undefined) {
+        galleryBoolean = true;
+    }
+    console.log(viewBoolean)
+    console.log(galleryBoolean)
+    console.log("pdf down")
+    // let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    let url;
+    if (galleryBoolean) {
+        url = baseFetchUrl + 'downloadFile/' + identifier + "/" + username + "/" + galleryName;
+    } else {
+        url = baseFetchUrl + 'downloadFile/' + identifier + "/" + username;
+    }
+    let base64 = JSON.parse(sessionStorage.getItem("base64credentials"));
+
+
+    const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+            Authorization: 'Basic ' + base64
+        }
+    });
+
+    const blob = await res.blob();
+    const f = new File([blob], filename, {type: type});
+    console.log(f);
+
+    if (!viewBoolean && galleryBoolean) {
+        console.log('return?');
+        return f;
+    }
+
+
+    let file = window.URL.createObjectURL(f);
+    console.log(file);
+
+    if (viewBoolean) {
+        console.log('viewFile')
+        // window.location.assign(file);
+        window.open(file);
+    } else {
+        const a = document.createElement('a');
+        a.href = file;
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+    }
+
+    // fetch(url, {
+    //     method: 'GET',
+    //     headers: {
+    //         Authorization: 'Basic ' + base64
+    //     }
+    // })
+    //     .then(res => res.blob())
+    //     .then(blob => {
+    //         // readFile(blob)
+    //         const f = new File([blob], filename, {type: type})
+    //         console.log(f)
+    //
+    //         if (galleryBoolean) {
+    //             console.log('return?')
+    //             return f;
+    //         }
+    //
+    //         let file = window.URL.createObjectURL(f);
+    //         console.log(file)
+    //
+    //         if (viewBoolean) {
+    //             // window.location.assign(file);
+    //             window.open(file)
+    //         } else {
+    //             const a = document.createElement('a');
+    //             a.href = file;
+    //             a.download = filename;
+    //             a.style.display = 'none';
+    //             document.body.appendChild(a);
+    //             a.click();
+    //         }
+    //     });
+}
+
+
+async function removeFile(fileIdentifier, fileId, filename, itemId, itemInSessionStorage) {
     loadingGif();
     console.log("removing")
+    let item = null
+    if (itemId !== undefined){
+        item = itemId
+    }
     let json = {
         fileId: fileId,
         fileIdentifier: fileIdentifier,
         fileName: filename,
+        itemId: item,
         userId: loggedInUser.id
     }
+    console.log(itemId)
 
-    let deleteResponse = await fetchDataDelete(baseFetchUrl + 'file/'+JSON.stringify(json), base64credentials)
+    let deleteResponse = await fetchDataDelete(baseFetchUrl + 'file/' + JSON.stringify(json), base64credentials)
     console.log(typeof deleteResponse);
     console.log(deleteResponse);
 
-    let userResponse;
-    const url = baseFetchUrl + 'user/' + loggedInUser.id;
-    let cred = btoa(`editUser:editUser`)
-    try {
-        userResponse = await fetchDataGet(url, cred)
-        let user = await userResponse.json();
-        sessionStorage.setItem("loggedInUser", JSON.stringify(user));
-    } catch (e) {
-        errorBox("Something went wrong! Try again later.")
-    }
+    // let userResponse;
+    // const url = baseFetchUrl + 'user/' + loggedInUser.id;
+    // let cred = btoa(`editUser:editUser`)
+    // try {
+    //     userResponse = await fetchDataGet(url, cred)
+    //     let user = await userResponse.json();
+    //     sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+    // } catch (e) {
+    //     errorBox("Something went wrong! Try again later.")
 
-    loadFilesPage();
+    console.log(sessionStorage.getItem('loggedInUser'))
+    await updateUserInSessionStorage();
+    console.log(sessionStorage.getItem('loggedInUser'))
+    console.log()
+    if (itemId === undefined){
+        loadFilesPage();
+    } else {
+        await loadImagesToGallery(itemId, itemInSessionStorage)
+    }
 }
 
 
 function clockStyler(number) {
-    if (number < 10){
-        return "0"+number;
+    if (number < 10) {
+        return "0" + number;
     } else {
         return number;
     }
@@ -125,8 +233,7 @@ async function handleFileUpload(inputId, itemId) {
     const formData = new FormData();
 
 
-
-    if (itemId !== undefined){
+    if (itemId !== undefined) {
         url = baseFetchUrl + 'uploadToGallery?username=' + user.username + '&itemId=' + itemId;
         let fileDataUrl = sessionStorage.getItem('previewImage');
         let galleryImage = dataURLtoFile(fileDataUrl, sessionStorage.getItem('previewImageName'))
@@ -138,9 +245,6 @@ async function handleFileUpload(inputId, itemId) {
     }
 
     console.log(url)
-
-
-
 
 
     let cred = btoa(`fileGuy:fileGuy`)
@@ -163,14 +267,24 @@ async function handleFileUpload(inputId, itemId) {
     if (postResult.storageLimitExceed) {
         messageBox('Not enough storage space!')
     }
-**********************************************
-    if (itemId === undefined && !postResult.storageLimitExceed && !postResult.fileSizeExceed) {
+    if (postResult.fileAlreadyExists) {
+        messageBox('Filename already exists in storage!')
+    }
+// **********************************************
+    if (itemId === undefined && !postResult.storageLimitExceed && !postResult.fileSizeExceed && !postResult.fileAlreadyExists) {
         // Update stored user.
-        const response = await fetchDataGet(baseFetchUrl + 'user/' + user.id, btoa("editUser:editUser"));
-        let user2 = await response.json();
-        console.log(user2);
-        sessionStorage.setItem("loggedInUser", JSON.stringify(user2));
+        // const response = await fetchDataGet(baseFetchUrl + 'user/' + user.id, btoa("editUser:editUser"));
+        // let user2 = await response.json();
+        // console.log(user2);
+        // sessionStorage.setItem("loggedInUser", JSON.stringify(user2));
+        console.log('que')
+        await updateUserInSessionStorage();
         loadFilesPage();
+    }
+
+    if (itemId !== undefined && !postResult.storageLimitExceed && !postResult.fileSizeExceed && !postResult.fileAlreadyExists) {
+        await updateUserInSessionStorage();
+        await loadImagesToGallery(itemId);
     }
 
 }

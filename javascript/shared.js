@@ -54,6 +54,10 @@ function loadingGif() {
     messageDiv.innerHTML += `
         <img src="../images/loadingGif.gif" alt="loading Image" id="loadingSnail" class="loadingGif">
     `;
+    // setTimeout(function () {
+    //
+    //     errorBox('AAAAAAAAAAAA')
+    // }, 4000);
 }
 
 function sortTableByColumn(table, column, asc = true) {

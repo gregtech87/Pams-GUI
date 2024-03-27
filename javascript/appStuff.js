@@ -26,6 +26,41 @@ function setProfilePic(elementId, origin) {
     }
 }
 
+// async function updateUserInSessionStorage() {
+//     console.log('uppdatting')
+//     let userResponse;
+//     const url = baseFetchUrl + 'user/' + loggedInUser.id;
+//     let cred = btoa(`editUser:editUser`)
+//     try {
+//         userResponse = await fetchDataGet(url, cred)
+//         let user = await userResponse.json();
+//         sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+//         loggedInUser = user;
+//     } catch (e) {
+//         errorBox("Something went wrong! Try again later.")
+//     }
+//
+// }
+
+async function updateUserInSessionStorage() {
+    console.log('updating');
+    let userResponse;
+    const url = baseFetchUrl + 'user/' + loggedInUser.id;
+    let cred = btoa(`editUser:editUser`);
+    try {
+        userResponse = await fetchDataGet(url, cred);
+        let user = await userResponse.json();
+        console.log('Fetched user:', user); // Debugging: Log fetched user
+        sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+        console.log('Updated sessionStorage:', sessionStorage.getItem('loggedInUser')); // Debugging: Log updated sessionStorage
+        loggedInUser = user; // Update the global loggedInUser variable
+    } catch (e) {
+        errorBox("Something went wrong! Try again later.");
+    }
+}
+
+
+
 function dataURLtoFile(dataUrl, filename) {
     let dataArray = dataUrl.split(","),
         mime = dataArray[0].match(/:(.*?);/)[1],

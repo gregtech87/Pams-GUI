@@ -186,6 +186,7 @@ async function generateUserPdf() {
             let age1 = age.substring(0, 10);
             let age2 = age.substring(11, 19);
             document.querySelector("#pdfAge").innerText = "(" + age1 + ": " + age2 + ")";
+            await updateUserInSessionStorage();
             messageDiv.innerHTML = ``;
         }
     } catch (e) {
@@ -195,46 +196,4 @@ async function generateUserPdf() {
     }
 
 
-}
-
-async function downloadFile(username, identifier, filename, type, viewFile) {
-    console.log(username)
-    console.log(identifier)
-    console.log(filename)
-    console.log(type)
-    let viewBoolean = false;
-    console.log(viewFile)
-    if(viewFile !== undefined) {
-        viewBoolean = viewFile;
-    }
-    console.log("pdf down")
-    // let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
-    const url = baseFetchUrl + 'downloadFile/' + identifier + "/" + username;
-    let base64 = JSON.parse(sessionStorage.getItem("base64credentials"));
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            Authorization: 'Basic ' + base64
-        }
-    })
-        .then(res => res.blob())
-        .then(blob => {
-            // readFile(blob)
-            const f = new File([blob], filename, {type: type})
-            let file = window.URL.createObjectURL(f);
-            console.log(file)
-
-            if (viewBoolean) {
-                // window.location.assign(file);
-                window.open(file)
-            } else {
-                const a = document.createElement('a');
-                a.href = file;
-                a.download = filename;
-                a.style.display = 'none';
-                document.body.appendChild(a);
-                a.click();
-            }
-        });
 }

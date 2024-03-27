@@ -81,7 +81,7 @@ function populateItemDetails(item) {
         event.preventDefault();
         deleteAsset();
     })
-
+loadImagesToGallery(asset.id, item).then()
     // loopThroughForm("#asset-form")
     messageDiv.innerHTML = ``;
 }
@@ -114,17 +114,94 @@ function addImageToGallery(item) {
     handleFileUpload('#galleryInput', currentItem.id).then();
 
 }
-function loadImagesToGallery() {
-
+async function loadImagesToGallery(itemId, itemInSessionStorage) {
+    console.log(itemId)
+    console.log(itemInSessionStorage)
 
     let galleryDiv = document.querySelector("#galleryContent");
-    galleryDiv.innerHTML += `
-        <section>
-            <div class="galleryBox">
-                <img id="img" src="../images/no-image-asset.gif" alt="gallery image">
-                <img id="removeImage" src="../images/x-mark.svg" alt="d" style="width: 25px; position: absolute" onmouseover="removeImgHover(this);" onmouseout="removeImgUnHover(this);">
-            </div>
-        </section>
-    `;
-    messageDiv.innerHTML=``;
+    galleryDiv.innerHTML = ``;
+    let galleryPreview = document.querySelector("#galleryPreview");
+    galleryPreview.src= '../images/no-image-asset.gif'
+    let listOfPictures;
+    let currentItem;
+    let fileIdList;
+
+    const url = baseFetchUrl + 'item/' + itemId;
+    const response = await fetchDataGet(url, btoa("itemGuy:itemGuy"));
+    currentItem = await response.json();
+    console.log(currentItem)
+    console.log(currentItem.additionalPictureIds)
+    if (currentItem.additionalPictureIds.length === 0) {
+        // empty table ROw
+        fileIdList = "empty";
+    } else {
+        fileIdList = currentItem.additionalPictureIds;
+    }
+
+    let responseFiles = await fetchDataGet(baseFetchUrl + "file/" + fileIdList, btoa("fileGuy:fileGuy"));
+    let fileList = await responseFiles.json();
+    console.log(fileList)
+    let listIndex = 0;
+
+    if (fileList.length > 0) {
+        fileList.forEach(file => {
+            // Generate the boxes
+            galleryDiv.innerHTML += `
+             <section>
+                 <div class="galleryBox">
+                     <img id="img${listIndex}" src="../images/no-image-asset.gif" alt="gallery image">
+                     <img id="removeImage${listIndex}" onclick="removeFile('${file.identifier}', '${file.id}', '${file.fileName}', '${currentItem.id}', '${itemInSessionStorage}')" src="../images/x-mark.svg" alt="d" style="width: 25px; position: absolute" onmouseover="removeImgHover(this);" onmouseout="removeImgUnHover(this);">
+                 </div>
+             </section>
+        `;
+
+            listIndex++;
+
+        });
+
+        for (let i = 0; i < fileIdList.length; i++) {
+            // Set image in respective box
+            let imageFile = await downloadFile(loggedInUser.username, fileList[i].identifier, fileList[i].fileName, fileList[i].type, false, true, currentItem.title);
+            console.log(imageFile)
+            if (imageFile) {
+                let reader = new FileReader();
+                let imageElement = document.querySelector("#img" + i)
+                console.log(imageElement)
+                reader.onload = function () {
+                    imageElement.src = reader.result;
+                };
+                reader.readAsDataURL(imageFile);
+            }
+
+            // Add event listener to image and delete icon
+            let clickableImage = document.querySelector("#img" + i);
+            clickableImage.addEventListener('click', () => {
+                downloadFile(loggedInUser.username, fileList[i].identifier, fileList[i].fileName, fileList[i].type, true, true, currentItem.title);
+            });
+            let deleteIcon = document.querySelector("#removeImage" + i);
+
+        }
+    }
+    // galleryDiv.innerHTML += `
+    //     <section>
+    //         <div class="galleryBox">
+    //             <img id="img" src="../images/no-image-asset.gif" alt="gallery image">
+    //             <img id="removeImage" src="../images/x-mark.svg" alt="d" style="width: 25px; position: absolute" onmouseover="removeImgHover(this);" onmouseout="removeImgUnHover(this);">
+    //         </div>
+    //     </section>
+    // `;
+
+    // if (picFile) {
+    //     let reader = new FileReader();
+    //     reader.onload = function (e) {
+    //         imageElement.src = e.target.result;
+    //     };
+    //     reader.readAsDataURL(pic);
+    // }
+    messageDiv.innerHTML = ``;
+}
+
+function deleteGalleryImage(itemId, imageId) {
+    console.log(itemId)
+    console.log(imageId)
 }

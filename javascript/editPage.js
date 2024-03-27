@@ -95,7 +95,9 @@ function displayProfileEdit() {
     let viewPdf = document.querySelector('#viewPdf');
     viewPdf.addEventListener("click", function (event) {
         event.preventDefault();
-        downloadFile(loggedInUser.username, loggedInUser.pdfUser.userInfoPdfIdentifier, loggedInUser.pdfUser.name, 'application/pdf', true);
+        console.log(loggedInUser)
+        console.log(loggedInUser.pdfUser.userInfoPdfIdentifier)
+        downloadFile(loggedInUser.username, loggedInUser.pdfUser.userInfoPdfIdentifier, loggedInUser.pdfUser.name, 'application/pdf', true).then();
     });
 
     let updateUserForm = document.querySelector('#updateUserForm');
@@ -124,6 +126,7 @@ function displayProfileEdit() {
     let userPdfBtn = document.querySelector('#userPdfBtn');
     userPdfBtn.addEventListener("click", function () {
         generateUserPdf().then();
+        displayProfileEdit();
     });
 }
 

@@ -16,7 +16,7 @@ async function getAssets() {
 
 
     let storedUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-    const url = baseFetchUrl + 'item/' + storedUser.items;
+    const url = baseFetchUrl + 'items/' + storedUser.items;
     const response = await fetchDataGet(url, btoa("itemGuy:itemGuy"));
     console.log(response)
     if (response === undefined) {
