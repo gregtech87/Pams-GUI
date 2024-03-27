@@ -101,8 +101,30 @@ function deleteAsset() {
 }
 
 function placeOfPurchaseOnMapItem() {
-    console.log(mappy)
+    console.log('mappy')
 }
 function currentLocationMapItem() {
-    console.log(mappy)
+    console.log('mappy')
+}
+
+function addImageToGallery(item) {
+    console.log('adding')
+    console.log(item)
+    let currentItem = JSON.parse(sessionStorage.getItem(item));
+    handleFileUpload('#galleryInput', currentItem.id).then();
+
+}
+function loadImagesToGallery() {
+
+
+    let galleryDiv = document.querySelector("#galleryContent");
+    galleryDiv.innerHTML += `
+        <section>
+            <div class="galleryBox">
+                <img id="img" src="../images/no-image-asset.gif" alt="gallery image">
+                <img id="removeImage" src="../images/x-mark.svg" alt="d" style="width: 25px; position: absolute" onmouseover="removeImgHover(this);" onmouseout="removeImgUnHover(this);">
+            </div>
+        </section>
+    `;
+    messageDiv.innerHTML=``;
 }

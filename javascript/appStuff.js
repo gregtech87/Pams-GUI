@@ -26,6 +26,18 @@ function setProfilePic(elementId, origin) {
     }
 }
 
+function dataURLtoFile(dataUrl, filename) {
+    let dataArray = dataUrl.split(","),
+        mime = dataArray[0].match(/:(.*?);/)[1],
+        binaryString = atob(dataArray[dataArray.length - 1]),
+        n = binaryString.length,
+        u8Array = new Uint8Array(n);
+    while (n--) {
+        u8Array[n] = binaryString.charCodeAt(n);
+    }
+    return new File([u8Array], filename, { type: mime });
+}
+
 function logout() {
     console.log("Logging out")
     loggedInUser = "Nope";
@@ -61,19 +73,19 @@ function prettySize(size) {
     return usedStorage;
 }
 
-function downloadImgHover(element) {
+function fileHover(element) {
     element.style.width = '28px';
 }
 
-function downloadImgUnhover(element) {
+function fileUnHover(element) {
     element.style.width = '25px';
 }
 function removeImgHover(element) {
-    element.style.width = '28px';
+    element.style.width = '23px';
 }
 
-function removeImgUnhover(element) {
-    element.style.width = '25px';
+function removeImgUnHover(element) {
+    element.style.width = '20px';
 }
 
 function toggleReadOnly(elementId) {

@@ -25,7 +25,6 @@ async function getFiles() {
             let identifier =file.identifier;
             let filename = file.fileName;
             let type = file.type
-            console.log(type)
             let date = new Date(file.createdAt);
             let timeString = date.getDate() + "/" + (date.getMonth()+1) + "-" + date.getFullYear() + " " + clockStyler(date.getHours()) + ":" + clockStyler(date.getMinutes()) + ":" + clockStyler(date.getSeconds());
 
@@ -36,9 +35,9 @@ async function getFiles() {
                     <td>${usedStorage}</td>
                     <td>${timeString}</td>
                     <td class="actionField">
-                        <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}')" src="../images/download-Ico.svg" alt="Download" onmouseover="downloadImgHover(this);" onmouseout="downloadImgUnhover(this);">
-                        <img onclick="removeFile('${identifier}', '${id}', '${filename}')" src="../images/trash-can.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
-                        <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}', true)" src="../images/viewFile.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
+                        <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}')" src="../images/download-Ico.svg" alt="Download" onmouseover="fileHover(this);" onmouseout="fileUnHover(this);">
+                        <img onclick="removeFile('${identifier}', '${id}', '${filename}')" src="../images/trash-can.svg" alt="Remove" onmouseover="fileHover(this);" onmouseout="fileUnHover(this);">
+                        <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}', true)" src="../images/viewFile.svg" alt="Remove" onmouseover="fileHover(this);" onmouseout="fileUnHover(this);">
                     </td>
                 </tr>
             `;
@@ -49,8 +48,8 @@ async function getFiles() {
                     <td>${usedStorage}</td>
                     <td>${timeString}</td>
                     <td class="actionField">
-                        <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}')" src="../images/download-Ico.svg" alt="Download" onmouseover="downloadImgHover(this);" onmouseout="downloadImgUnhover(this);">
-                        <img onclick="removeFile('${identifier}', '${id}', '${filename}')" src="../images/trash-can.svg" alt="Remove" onmouseover="removeImgHover(this);" onmouseout="removeImgUnhover(this);">
+                        <img onclick="downloadFile('${user.username}','${identifier}','${filename}','${type}')" src="../images/download-Ico.svg" alt="Download" onmouseover="fileHover(this);" onmouseout="fileUnHover(this);">
+                        <img onclick="removeFile('${identifier}', '${id}', '${filename}')" src="../images/trash-can.svg" alt="Remove" onmouseover="fileHover(this);" onmouseout="fileUnHover(this);">
                      </td>
                 </tr>
             `;
@@ -106,28 +105,73 @@ function clockStyler(number) {
 
 }
 
-async function handleFileUpload(inputId) {
+async function handleFileUpload(inputId, itemId) {
+    console.log(inputId)
+    console.log(itemId)
     loadingGif()
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
     // Get the file input element
     const input = document.querySelector(inputId);
-    const formData = new FormData();
-    formData.append("file", input.files[0], input.files[0].name);
+    console.log(input)
+    if (input == null) {
+        messageDiv.innerHTML = ``;
+        messageBox('No file selected')
+    }
 
-    const url = baseFetchUrl + 'uploadFile?username=' + user.username;
+    // dataUrl to file stuff
+
+
+    let url;
+    const formData = new FormData();
+
+
+
+    if (itemId !== undefined){
+        url = baseFetchUrl + 'uploadToGallery?username=' + user.username + '&itemId=' + itemId;
+        let fileDataUrl = sessionStorage.getItem('previewImage');
+        let galleryImage = dataURLtoFile(fileDataUrl, sessionStorage.getItem('previewImageName'))
+        console.log(galleryImage)
+        formData.append("file", galleryImage, galleryImage.name);
+    } else {
+        url = baseFetchUrl + 'uploadFile?username=' + user.username;
+        formData.append("file", input.files[0], input.files[0].name);
+    }
+
+    console.log(url)
+
+
+
+
+
     let cred = btoa(`fileGuy:fileGuy`)
 
     await fetchDataPostFiles(url, cred, formData)
     const postResult = JSON.parse(sessionStorage.getItem("uploadResponse"));
     console.log(postResult)
 
-    const url2 = baseFetchUrl + 'user/' + user.id;
-    const response = await fetchDataGet(url2, btoa("editUser:editUser"));
-    console.log(response)
-    let user2 = await response.json();
-    console.log(user2);
-    sessionStorage.setItem("loggedInUser", JSON.stringify(user2));
 
-    loadFilesPage();
+    // fileAlreadyExists: true
+    // fileName: "ChromeSetup(3).exe"
+    // identifier: null
+    // size : 1369128
+    // storageLimitExceed:false
+    // userNamePresent:true
+    // maxFileSize
+    if (postResult.fileSizeExceed) {
+        messageBox('File to large! Max size: ' + postResult.maxFileSize + "MB")
+    }
+    if (postResult.storageLimitExceed) {
+        messageBox('Not enough storage space!')
+    }
+**********************************************
+    if (itemId === undefined && !postResult.storageLimitExceed && !postResult.fileSizeExceed) {
+        // Update stored user.
+        const response = await fetchDataGet(baseFetchUrl + 'user/' + user.id, btoa("editUser:editUser"));
+        let user2 = await response.json();
+        console.log(user2);
+        sessionStorage.setItem("loggedInUser", JSON.stringify(user2));
+        loadFilesPage();
+    }
+
 }
 

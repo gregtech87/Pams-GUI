@@ -38,5 +38,5 @@ function loadFilesPage() {
         </div>
             `;
 
-getFiles();
+    getFiles().then();
 }

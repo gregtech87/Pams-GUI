@@ -4,7 +4,7 @@ function loadItemDetailsPage(item) {
     console.log(asset)
     let contentDiv = document.querySelector("#mainContent");
     contentDiv.innerHTML = `
-       <section style="max-width: 800px">
+        <section style="max-width: 800px">
             <h2>Asset detail</h2>
             <div id="register-page" >
                 <div class="assetImg">
@@ -135,20 +135,20 @@ function loadItemDetailsPage(item) {
         
         <section style="max-width: 800px">
             <h2>Image gallery</h2>
-            <div style="text-align: -webkit-center; margin-bottom: 10px">
-                
+            <div style="text-align: center; margin-bottom: 10px">
                 <img id="galleryPreview" src="../images/no-image-asset.gif" alt="Uploaded Image" style="width: 200px">
                 <div style="display: flex; justify-content: center">
-                  <label class="pic-upload stdButton" style="margin: 10px 11px 4px 0; padding: 5px 10px 0 10px;">
-                  <input type="file" id="inputPreview" accept="image/*" onchange="handleImageChange('#inputPreview', '#galleryPreview')">
-                   Select image
-                   </label>
-                     <button class="file-upload posButton">Save image to gallery</button>
-                </div>
-                          
+                    <label class="pic-upload stdButton" style="margin: 10px 11px 4px 0; padding: 5px 10px 0 10px;">
+                    <input type="file" id="galleryInput" accept="image/*" onchange="handleImageChange('#galleryInput', '#galleryPreview')">
+                    Select image
+                    </label>
+                    <button class="file-upload posButton" onclick="addImageToGallery('${item}')">Save image to gallery</button>
+                </div>        
             </div>
             <section>
-                <div id="galleryContent">No content so far</div>
+                <div id="galleryContent" class="galleryContent">
+<!--                No content so far-->
+                </div>
             </section>
         </section>
     `;

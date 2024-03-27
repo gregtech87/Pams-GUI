@@ -33,6 +33,8 @@ function handleImageChange(inputId, elementID) {
         reader.onload = function (e) {
             // The e.target.result contains the data URL of the image
             let imageData = e.target.result;
+            sessionStorage.setItem('previewImage', imageData.toString())
+            sessionStorage.setItem('previewImageName', file.name)
             // Use the 'blob' object as needed (e.g., send it to a server).
             setTempProfilePicture(imageData);
             // Update the source of the image element

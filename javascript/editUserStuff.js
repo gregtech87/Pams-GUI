@@ -208,7 +208,7 @@ async function downloadFile(username, identifier, filename, type, viewFile) {
         viewBoolean = viewFile;
     }
     console.log("pdf down")
-    let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    // let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
     const url = baseFetchUrl + 'downloadFile/' + identifier + "/" + username;
     let base64 = JSON.parse(sessionStorage.getItem("base64credentials"));
 
