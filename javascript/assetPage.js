@@ -33,6 +33,7 @@ async function getAssets() {
             <div>
             <img id="itemImg${boxIndex}" src="../images/no-image-asset.gif" alt="ItemPic">
             <p>${item.title}</p>
+            <p style="font-size: small">Created: ${item.createdAt}</p>
             </div>         
         </section>
        `;

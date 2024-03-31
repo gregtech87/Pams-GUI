@@ -1,4 +1,3 @@
-
 function populateItemDetails(item) {
     loadingGif()
     console.log('populating')
@@ -7,46 +6,45 @@ function populateItemDetails(item) {
     setProfilePic('#previewImage', asset);
 
     // Populating fields from Item entity
-    document.querySelector('#title').value = asset.title || '';
-    document.querySelector('#brand').value = asset.brand || '';
-    document.querySelector('#model').value = asset.model || '';
-    document.querySelector('#price').value = asset.price || '';
-    document.querySelector('#dateOfPurchase').value = asset.dateOfPurchase || '';
-    document.querySelector('#length').value = asset.length || '';
-    document.querySelector('#width').value = asset.width || '';
-    document.querySelector('#height').value = asset.height || '';
-    document.querySelector('#weight').value = asset.weight || '';
-    document.querySelector('#state').value = asset.state || '';
-    document.querySelector('#insurance').value = asset.insurance || '';
-    document.querySelector('#info').value = asset.description || '';
+    document.querySelector('#title').value = asset.title;
+    document.querySelector('#brand').value = asset.brand;
+    document.querySelector('#model').value = asset.model;
+    document.querySelector('#price').value = asset.price;
+    document.querySelector('#dateOfPurchase').value = asset.dateOfPurchase;
+    document.querySelector('#length').value = asset.length;
+    document.querySelector('#width').value = asset.width;
+    document.querySelector('#height').value = asset.height;
+    document.querySelector('#weight').value = asset.weight;
+    document.querySelector('#state').value = asset.state;
+    document.querySelector('#insurance').value = asset.insurance;
+    document.querySelector('#info').value = asset.description;
 
     // Populating fields from ItemStatus entity
-    if (asset.status) {
-        document.querySelector('#item-address').value = asset.status.currentLocation.street || '';
-        document.querySelector('#item-addressNumber').value = asset.status.currentLocation.streetNumber || '';
-        document.querySelector('#item-postalCode').value = asset.status.currentLocation.postalCode || '';
-        document.querySelector('#item-city').value = asset.status.currentLocation.city || '';
-        document.querySelector('#nameOfHolder').value = asset.status.nameOfHolder || '';
-        document.querySelector('#purpose').value = asset.status.purpose || '';
+    if (asset.status.currentLocation) {
+        document.querySelector('#item-address').value = asset.status.currentLocation.street;
+        document.querySelector('#item-addressNumber').value = asset.status.currentLocation.streetNumber;
+        document.querySelector('#item-postalCode').value = asset.status.currentLocation.postalCode;
+        document.querySelector('#item-city').value = asset.status.currentLocation.city;
     }
+    document.querySelector('#nameOfHolder').value = asset.status.nameOfHolder;
+    document.querySelector('#purpose').value = asset.status.purpose;
 
     // Populating fields from Place of purchase
     if (asset.placeOfPurchase) {
-        document.querySelector('#address').value = asset.placeOfPurchase.street || '';
-        document.querySelector('#addressNumber').value = asset.placeOfPurchase.streetNumber || '';
-        document.querySelector('#postalCode').value = asset.placeOfPurchase.postalCode || '';
-        document.querySelector('#city').value = asset.placeOfPurchase.city || '';
+        document.querySelector('#address').value = asset.placeOfPurchase.street;
+        document.querySelector('#addressNumber').value = asset.placeOfPurchase.streetNumber;
+        document.querySelector('#postalCode').value = asset.placeOfPurchase.postalCode;
+        document.querySelector('#city').value = asset.placeOfPurchase.city;
     }
 
     // Check if custom location is enabled
-    document.querySelector('#customLocation').checked = asset.customLocation || false;
-    toggleCustomLocation(); // Function to toggle custom location fields visibility
+    document.querySelector('#customLocation').checked = !!asset.customLocation;
 
     // Populating custom location fields
-    if (asset.customLocation) {
-        document.querySelector('#customLat').value = asset.customLat || '';
-        document.querySelector('#customLong').value = asset.customLong || '';
-    }
+    // if (asset.customLocation) {
+        document.querySelector('#customLat').value = asset.customLat;
+        document.querySelector('#customLong').value = asset.customLong;
+    // }
 
     let mapBtnPurchased = document.querySelector("#mapBtnPurchased");
     mapBtnPurchased.addEventListener('click', event => {
@@ -59,19 +57,20 @@ function populateItemDetails(item) {
         console.log('current adress')
     })
     let submitBtn = document.querySelector("#assetSubmit");
-
+    submitBtn.addEventListener('click', event => {
+        event.preventDefault();
+        updateAsset(asset.id, item);
+    })
 
     let editBtn = document.querySelector("#assetEdit");
     editBtn.addEventListener('click', event => {
         event.preventDefault();
         console.log(editBtn.innerText)
         toggleReadOnly("#asset-form")
-        if (editBtn.innerText ==='Edit'){
+        if (editBtn.innerText === 'Edit') {
             editBtn.innerText = 'Make read only'
             submitBtn.style.visibility = 'visible'
         } else {
-            // editBtn.innerText = 'Edit'
-            // submitBtn.style.visibility = 'hidden'
             loadItemDetailsPage(item)
         }
     })
@@ -79,33 +78,14 @@ function populateItemDetails(item) {
     let deleteBtn = document.querySelector("#assetDelete");
     deleteBtn.addEventListener('click', event => {
         event.preventDefault();
-        deleteAsset();
+        deleteAsset(asset.id);
     })
-loadImagesToGallery(asset.id, item).then()
+    loadImagesToGallery(asset.id, item).then()
     // loopThroughForm("#asset-form")
     messageDiv.innerHTML = ``;
 }
 
-// Function to toggle custom location fields visibility based on checkbox state
-function toggleCustomLocation() {
-    var customLocationCheckbox = document.querySelector('#customLocation');
-    var customLocationFields = document.querySelectorAll('.custom-location-fields');
 
-    customLocationFields.forEach(function(field) {
-        field.style.display = customLocationCheckbox.checked ? 'block' : 'none';
-    });
-}
-
-function deleteAsset() {
-    console.log("deelete assert")
-}
-
-function placeOfPurchaseOnMapItem() {
-    console.log('mappy')
-}
-function currentLocationMapItem() {
-    console.log('mappy')
-}
 
 function addImageToGallery(item) {
     console.log('adding')
@@ -114,6 +94,7 @@ function addImageToGallery(item) {
     handleFileUpload('#galleryInput', currentItem.id).then();
 
 }
+
 async function loadImagesToGallery(itemId, itemInSessionStorage) {
     console.log(itemId)
     console.log(itemInSessionStorage)
@@ -121,7 +102,7 @@ async function loadImagesToGallery(itemId, itemInSessionStorage) {
     let galleryDiv = document.querySelector("#galleryContent");
     galleryDiv.innerHTML = ``;
     let galleryPreview = document.querySelector("#galleryPreview");
-    galleryPreview.src= '../images/no-image-asset.gif'
+    galleryPreview.src = '../images/no-image-asset.gif'
     let listOfPictures;
     let currentItem;
     let fileIdList;
@@ -182,26 +163,99 @@ async function loadImagesToGallery(itemId, itemInSessionStorage) {
 
         }
     }
-    // galleryDiv.innerHTML += `
-    //     <section>
-    //         <div class="galleryBox">
-    //             <img id="img" src="../images/no-image-asset.gif" alt="gallery image">
-    //             <img id="removeImage" src="../images/x-mark.svg" alt="d" style="width: 25px; position: absolute" onmouseover="removeImgHover(this);" onmouseout="removeImgUnHover(this);">
-    //         </div>
-    //     </section>
-    // `;
-
-    // if (picFile) {
-    //     let reader = new FileReader();
-    //     reader.onload = function (e) {
-    //         imageElement.src = e.target.result;
-    //     };
-    //     reader.readAsDataURL(pic);
-    // }
     messageDiv.innerHTML = ``;
 }
 
-function deleteGalleryImage(itemId, imageId) {
-    console.log(itemId)
-    console.log(imageId)
+async function deleteAsset(assetId) {
+    console.log("deelete assert")
+    console.log(assetId)
+    let deleteResponse = await fetchDataDelete(baseFetchUrl + 'item/' + assetId, base64credentials)
+    console.log(typeof deleteResponse);
+    console.log(deleteResponse);
 }
+
+function placeOfPurchaseOnMapItem() {
+    console.log('mappy')
+}
+
+function currentLocationMapItem() {
+    console.log('mappy')
+}
+
+
+async function updateAsset(assetId, itemInSessionStorage) {
+
+    const url = baseFetchUrl + 'item/' + assetId;
+    const response = await fetchDataGet(url, btoa("itemGuy:itemGuy"));
+    let dbAsset = await response.json();
+    let newAsset = dbAsset;
+    let newProfilePic = JSON.parse(sessionStorage.getItem("newProfilePic"));
+    console.log('From DB:')
+    console.log(newAsset)
+
+    newAsset.title = document.getElementById('title').value;
+    newAsset.brand = document.getElementById('brand').value;
+    newAsset.model = document.getElementById('model').value;
+    newAsset.placeOfPurchase = {
+        street: document.getElementById('address').value,
+        addressNumber: document.getElementById('addressNumber').value,
+        postalCode: document.getElementById('postalCode').value,
+        city: document.getElementById('city').value
+    };
+    newAsset.price = document.getElementById('price').value;
+    newAsset.dateOfPurchase = document.getElementById('dateOfPurchase').value;
+
+    newAsset.length = document.getElementById('length').value;
+    newAsset.width = document.getElementById('width').value;
+    newAsset.height = document.getElementById('height').value;
+
+    newAsset.weight = document.getElementById('weight').value;
+    newAsset.state = document.getElementById('state').value;
+    newAsset.insurance = document.getElementById('insurance').value;
+    newAsset.status = {
+        nameOfHolder: document.getElementById('nameOfHolder').value,
+        purpose: document.getElementById('purpose').value,
+        address: {
+            street: document.getElementById('item-address').value,
+            addressNumber: document.getElementById('item-addressNumber').value,
+            postalCode: document.getElementById('item-postalCode').value,
+            city: document.getElementById('item-city').value
+        }
+    };
+    newAsset.customLocation = document.getElementById('customLocation').checked;
+    newAsset.customLat = document.getElementById('customLat').value;
+    newAsset.customLong = document.getElementById('customLong').value;
+
+    newAsset.description = document.getElementById('info').value;
+    if (newProfilePic) {
+        newAsset.profilePic = {"$binary": {"base64": uploadedTempProfilePicture.$binary.base64}};
+        newAsset.profilePictureData.name = uploadedTempProfilePicture.name;
+        newAsset.profilePictureData.type = uploadedTempProfilePicture.type;
+        newAsset.profilePictureData.size = uploadedTempProfilePicture.size;
+        newAsset.profilePictureData.lastModified = uploadedTempProfilePicture.lastModified;
+        newAsset.profilePictureData.lastModifiedDate = uploadedTempProfilePicture.lastModifiedDate;
+    } else {
+        newAsset.profilePic = {"$binary": {"base64": dbAsset.profilePic}};
+        newAsset.profilePictureData.name = dbAsset.profilePictureData.name;
+        newAsset.profilePictureData.type = dbAsset.profilePictureData.type;
+        newAsset.profilePictureData.size = dbAsset.profilePictureData.size;
+        newAsset.profilePictureData.lastModified = dbAsset.profilePictureData.lastModified;
+        newAsset.profilePictureData.lastModifiedDate = dbAsset.profilePictureData.lastModifiedDate;
+    }
+    console.log(newAsset)
+    console.log(uploadedTempProfilePicture)
+
+    let updateResponse;
+    const updateUrl = baseFetchUrl + 'item';
+    let cred = btoa(`itemGuy:itemGuy`)
+    try {
+        updateResponse = await fetchDataPut(updateUrl, cred, newAsset)
+    } catch (e) {
+        errorBox("Something went wrong! Try again later.")
+    }
+    console.log("RESP")
+    console.log(updateResponse)
+    sessionStorage.setItem(itemInSessionStorage, JSON.stringify(updateResponse))
+    loadItemDetailsPage(itemInSessionStorage)
+}
+

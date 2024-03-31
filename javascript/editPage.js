@@ -54,7 +54,7 @@ function displayProfileEdit() {
         <div class="editUserPic" style="margin-bottom: 0">
             <img id="editPic" src="../images/defaultUser.png" alt="Profile picture"><br>
             <label for="newPicture" class="pic-upload stdButton">
-            <input type="file" id="newPicture" accept="image/*" onchange="editUSerProfilePic('#newPicture', '#editPic')">
+            <input type="file" id="newPicture" accept="image/*" onchange="handleImageChange('#newPicture', '#editPic')">
             Change profile picture</label>
             <form id="passwordForm" class="passwordForm">
                 <label for="oldPassword">Old Password:</label>
@@ -128,11 +128,5 @@ function displayProfileEdit() {
         generateUserPdf().then();
         displayProfileEdit();
     });
-}
-
-function editUSerProfilePic(inputPic, target) {
-    handleImageChange(inputPic, target);
-    console.log(uploadedTempProfilePicture)
-    sessionStorage.setItem("newProfilePic", "true");
 }
 

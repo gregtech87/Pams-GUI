@@ -126,7 +126,7 @@ function loadItemDetailsPage(item) {
                 </form>
                                
                 <div style="text-align: center">
-                    <button type="submit" id="assetSubmit" class="posButton" style="visibility: hidden">Save changes</button>   
+                    <button id="assetSubmit" type="submit" class="posButton" style="visibility: hidden">Save changes</button>   
                     <button id="assetEdit" class="stdButton">Edit</button>
                     <button id="assetDelete" class="negButton">Delete</button>
                 </div>

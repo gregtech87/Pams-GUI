@@ -13,6 +13,7 @@ let uploadedTempProfilePicture = {"$binary": {}};
 function handleImageChange(inputId, elementID) {
     // Resetting temp file
     uploadedTempProfilePicture = {"$binary": {}};
+    sessionStorage.setItem("newProfilePic", "true");
     // Get the file input element
     const input = document.querySelector(inputId);
     const file = input.files[0];
