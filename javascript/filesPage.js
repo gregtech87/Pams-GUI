@@ -1,3 +1,9 @@
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 function loadFilesPage() {
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"));
     let usedStorage = prettySize(user.usedStorage);

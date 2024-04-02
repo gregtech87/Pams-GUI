@@ -1,3 +1,9 @@
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 async function getFiles() {
     loadingGif()
     activateSortingForTables();
@@ -126,39 +132,6 @@ async function downloadFile(username, identifier, filename, type, viewFile, list
         document.body.appendChild(a);
         a.click();
     }
-
-    // fetch(url, {
-    //     method: 'GET',
-    //     headers: {
-    //         Authorization: 'Basic ' + base64
-    //     }
-    // })
-    //     .then(res => res.blob())
-    //     .then(blob => {
-    //         // readFile(blob)
-    //         const f = new File([blob], filename, {type: type})
-    //         console.log(f)
-    //
-    //         if (galleryBoolean) {
-    //             console.log('return?')
-    //             return f;
-    //         }
-    //
-    //         let file = window.URL.createObjectURL(f);
-    //         console.log(file)
-    //
-    //         if (viewBoolean) {
-    //             // window.location.assign(file);
-    //             window.open(file)
-    //         } else {
-    //             const a = document.createElement('a');
-    //             a.href = file;
-    //             a.download = filename;
-    //             a.style.display = 'none';
-    //             document.body.appendChild(a);
-    //             a.click();
-    //         }
-    //     });
 }
 
 
@@ -182,16 +155,6 @@ async function removeFile(fileIdentifier, fileId, filename, itemId, itemInSessio
     console.log(typeof deleteResponse);
     console.log(deleteResponse);
 
-    // let userResponse;
-    // const url = baseFetchUrl + 'user/' + loggedInUser.id;
-    // let cred = btoa(`editUser:editUser`)
-    // try {
-    //     userResponse = await fetchDataGet(url, cred)
-    //     let user = await userResponse.json();
-    //     sessionStorage.setItem("loggedInUser", JSON.stringify(user));
-    // } catch (e) {
-    //     errorBox("Something went wrong! Try again later.")
-
     console.log(sessionStorage.getItem('loggedInUser'))
     await updateUserInSessionStorage();
     console.log(sessionStorage.getItem('loggedInUser'))
@@ -210,7 +173,6 @@ function clockStyler(number) {
     } else {
         return number;
     }
-
 }
 
 async function handleFileUpload(inputId, itemId) {

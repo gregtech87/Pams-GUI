@@ -1,4 +1,10 @@
 
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 function loadParameters() {
     loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
     base64credentials = JSON.parse(sessionStorage.getItem("base64credentials"));

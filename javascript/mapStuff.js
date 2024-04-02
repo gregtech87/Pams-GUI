@@ -1,3 +1,9 @@
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 function loadMapPage(userBoolean, itemBoolean) {
     let contentDiv = document.querySelector("#mainContent");
     contentDiv.innerHTML = `

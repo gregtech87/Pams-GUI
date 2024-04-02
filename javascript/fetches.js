@@ -1,3 +1,9 @@
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 async function fetchDataGet(url, credentials) {
     try {
         const response = await fetch(url, {

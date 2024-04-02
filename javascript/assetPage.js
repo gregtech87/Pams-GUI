@@ -1,3 +1,9 @@
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 function loadAssetPage() {
     let contentDiv = document.querySelector("#mainContent");
     contentDiv.innerHTML = `

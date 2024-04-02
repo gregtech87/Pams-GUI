@@ -1,3 +1,9 @@
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 // function loadNotesPage() {
 //     let contentDiv = document.querySelector("#mainContent");
 //     let date = new Date()

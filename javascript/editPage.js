@@ -1,4 +1,10 @@
 
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 function displayProfileEdit() {
     let contentDiv = document.querySelector("#mainContent");
     sessionStorage.setItem("newProfilePic", "false");

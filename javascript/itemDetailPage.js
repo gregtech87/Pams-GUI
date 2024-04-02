@@ -1,4 +1,10 @@
 
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 function loadItemDetailsPage(item) {
     let asset = JSON.parse(sessionStorage.getItem(item));
     console.log(asset)

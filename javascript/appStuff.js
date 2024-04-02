@@ -1,3 +1,9 @@
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 function setProfilePic(elementId, origin) {
     console.log(origin)
     const imageElement = document.querySelector(elementId);

@@ -1,3 +1,9 @@
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 function populateEditUserForm() {
     const updateUserForm = document.getElementById('updateUserForm');
     const inputField1 = updateUserForm.querySelector(`[name="firstName"]`);

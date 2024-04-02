@@ -1,3 +1,16 @@
+
+
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Copyright (c) 2024. Tobias Gregorsson.
+ * Github: Gregtech87
+ ******************************************************************************/
+
 const monthsForPrintout = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const weekDaysForPrintout = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const mainDiv = document.querySelector("#app")
