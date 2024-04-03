@@ -58,21 +58,25 @@ function displayProfileEdit() {
             </form>
         </div>
         <div class="editUserPic" style="margin-bottom: 0">
-            <img id="editPic" src="../images/defaultUser.png" alt="Profile picture"><br>
-            <label for="newPicture" class="pic-upload stdButton">
-            <input type="file" id="newPicture" accept="image/*" onchange="handleImageChange('#newPicture', '#editPic')">
-            Change profile picture</label>
-            <form id="passwordForm" class="passwordForm">
-                <label for="oldPassword">Old Password:</label>
-                <input type="password" id="oldPassword" name="oldPassword" required>
-                
-                <label for="newPassword">New Password:</label>
-                <input type="password" id="newPassword" name="newPassword" required>
-                
-                <label for="confirmPassword">Confirm Password:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
-                <button type="submit" class="stdButton">Change Password</button>
-            </form>
+            <div>
+                <img id="editPic" src="../images/defaultUser.png" alt="Profile picture"><br>
+                <label for="newPicture" class="pic-upload stdButton">
+                <input type="file" id="newPicture" accept="image/*" onchange="handleImageChange('#newPicture', '#editPic')">
+                Change profile picture</label>
+            </div>
+            <div>
+                <form id="passwordForm" class="passwordForm">
+                    <label for="oldPassword">Old Password:</label>
+                    <input type="password" id="oldPassword" name="oldPassword" required>
+                    
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                    
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </form>
+                    <button type="submit" class="stdButton">Change Password</button>
+            </div>
         </div>    
         <!--        External form buttons for ev resizing          -->
         <div style="margin-bottom: 0;">
