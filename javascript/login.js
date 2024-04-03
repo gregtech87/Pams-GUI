@@ -1,6 +1,4 @@
 
-
-
 /*******************************************************************************
  * Copyright (c) 2024. Tobias Gregorsson.
  * Github: Gregtech87
@@ -25,7 +23,7 @@ function loadLoginPage() {
       </div>
       
 <!--      Devbutton-->
-      <button onclick="aaaaaaa()">aaaaaaaa</button>
+      <button onclick="aaaaaaa()">Demo user</button>
     </section>
     `;
     loadLoginButtons()

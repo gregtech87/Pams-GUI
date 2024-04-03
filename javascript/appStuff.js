@@ -58,7 +58,6 @@ async function updateUserInSessionStorage() {
         let user = await userResponse.json();
         console.log('Fetched user:', user); // Debugging: Log fetched user
         sessionStorage.setItem("loggedInUser", JSON.stringify(user));
-        console.log('Updated sessionStorage:', sessionStorage.getItem('loggedInUser')); // Debugging: Log updated sessionStorage
         loggedInUser = user; // Update the global loggedInUser variable
     } catch (e) {
         errorBox("Something went wrong! Try again later.");
@@ -136,6 +135,9 @@ function toggleReadOnly(elementId) {
 
     for (let i = 0; i < elements.length; i++) {
         if (elements[i].type !== "button") { // Exclude buttons from being toggled
+            if (elements[i].type === "checkbox") {
+                elements[i].disabled = !elements[i].disabled;
+            }
             if (elements[i].hasAttribute("readonly")) {
                 elements[i].removeAttribute("readonly");
             } else {

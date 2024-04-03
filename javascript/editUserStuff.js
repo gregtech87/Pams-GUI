@@ -119,6 +119,7 @@ async function updateUser(userLocationBoolean, noteBoolean, itemLocationBoolean)
             response = await fetchDataGet(url, cred)
             let user = await response.json();
             sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+            setProfilePic('#profilePic', user);
         } catch (e) {
             errorBox("Something went wrong! Try again later.")
         }

@@ -10,8 +10,8 @@ function loadItemDetailsPage(item) {
     console.log(asset)
     let contentDiv = document.querySelector("#mainContent");
     contentDiv.innerHTML = `
-        <section style="max-width: 800px">
-            <h2>Asset detail</h2>
+        <section style="max-width: 1300px">
+            <h2>Asset detail. (Gallery below)</h2>
             <div id="register-page" >
                 <div class="assetImg">
                     <div>
@@ -44,25 +44,40 @@ function loadItemDetailsPage(item) {
                             </div>          
                         </div>
                         
+                        <input type="text" id="placeOfPurchaseName" placeholder="Name">
+                        
                         <div STYLE="display: flex">
                             <div>
-                                <input type="text" id="address" placeholder="Street">                    
+                                <input type="text" id="item-address" placeholder="Street">                    
                             </div>
                             <div style="width: 25%; margin-right: 10px;">
-                                <input type="number" id="addressNumber" placeholder="Num">
+                                <input type="number" id="item-addressNumber" placeholder="Num">
                             </div>          
                         </div>
-                        <input type="number" id="postalCode" placeholder="Postal code">
-                        <input type="text" id="city" placeholder="City">
+                        <input type="number" id="item-postalCode" placeholder="Postal code">
+                        <input type="text" id="item-city" placeholder="City">
                         
-                        <label for="price"><b>Price:</b></label>
-                        <input type="number" id="price">
+                         <div>
+                            <label for="customOnSiteLocation"><b>Custom coordinates:</b></label>
+                            <input type="checkbox" id="customOnSiteLocation" name="customOnSiteLocation" style="width: fit-content">
+                        </div>
                         
+                        <div STYLE="display: flex; justify-content: space-between">
+                            <label for="OnSiteCustomLat" style="padding-right: 5px"><b> Lat: </b></label>
+                            <input type="number" step="any" id="OnSiteCustomLat" name="OnSiteCustomLat" style="width: 75%">
+                        </div>
                         
+                        <div STYLE="display: flex; justify-content: space-between">
+                            <label for="OnSiteCustomLong" style="padding-right: 5px"><b> Long: </b></label>
+                            <input type="number" step="any" id="OnSiteCustomLong" name="OnSiteCustomLong" style="width: 75%">
+                        </div>   
                     </div>
                     <div class="assetColumn two">
                         <label for="dateOfPurchase"><b>Date of purchase:</b></label>
                         <input type="date" id="dateOfPurchase">
+                        
+                        <label for="price"><b>Price:</b></label>
+                        <input type="number" id="price">
                         
                         <label><b>Size:</b></label>
                         <div>
@@ -100,34 +115,36 @@ function loadItemDetailsPage(item) {
                             
                             <div STYLE="display: flex">
                                 <div>
-                                    <input type="text" id="item-address" placeholder="Street">                    
+                                    <input type="text" id="item-offSite-address" placeholder="Street">                    
                                 </div>
                                 <div style="width: 25%; margin-right: 10px;">
-                                    <input type="number" id="item-addressNumber" placeholder="Num">
+                                    <input type="number" id="item-offSite-addressNumber" placeholder="Num">
                                 </div>          
                             </div>
-                            <input type="number" id="item-postalCode" placeholder="Postal code">
-                            <input type="text" id="item-city" placeholder="City">
+                            <input type="number" id="item-offSite-postalCode" placeholder="Postal code">
+                            <input type="text" id="item-offSite-city" placeholder="City">
                             
                             <div>
-                                <label for="customLocation"><b>Custom coordinates:</b></label>
-                                <input type="checkbox" id="customLocation" name="customLocation" style="width: fit-content">
+                                <label for="customOffSiteLocation"><b>Custom coordinates:</b></label>
+                                <input type="checkbox" id="customOffSiteLocation" name="customOffSiteLocation" style="width: fit-content">
                             </div>
                             
                             <div STYLE="display: flex; justify-content: space-between">
-                                <label for="customLat" style="padding-right: 5px"><b> Lat: </b></label>
-                                <input type="number" step="any" id="customLat" name="customLat" style="width: 75%">
+                                <label for="OffSiteCustomLat" style="padding-right: 5px"><b> Lat: </b></label>
+                                <input type="number" step="any" id="OffSiteCustomLat" name="OffSiteCustomLat" style="width: 75%">
                             </div>
                             
                             <div STYLE="display: flex; justify-content: space-between">
-                                <label for="customLong" style="padding-right: 5px"><b> Long: </b></label>
-                                <input type="number" step="any" id="customLong" name="customLong" style="width: 75%">
+                                <label for="OffSiteCustomLong" style="padding-right: 5px"><b> Long: </b></label>
+                                <input type="number" step="any" id="OffSiteCustomLong" name="OffSiteCustomLong" style="width: 75%">
                             </div>                             
                         </div>
                     </div>
+                    <div class="assetColumn four" style="width: 450px; max-width: 500px;">
                     <div style="display: block; width: 100%">
                         <label for="info"><b>Info:</b></label>
                         <textarea id="info" name="info" placeholder="Description/History." class="infoArea"></textarea>
+                    </div>
                     </div>
                 </form>
                                
@@ -144,7 +161,7 @@ function loadItemDetailsPage(item) {
             <div style="text-align: center; margin-bottom: 10px">
                 <img id="galleryPreview" src="../images/no-image-asset.gif" alt="Uploaded Image" style="width: 200px">
                 <div style="display: flex; justify-content: center">
-                    <label class="pic-upload stdButton" style="margin: 10px 11px 4px 0; padding: 5px 10px 0 10px;">
+                    <label class="pic-upload stdButton" style="margin: 10px 11px 4px 0; padding: 10px 10px 0 10px;">
                     <input type="file" id="galleryInput" accept="image/*" onchange="handleImageChange('#galleryInput', '#galleryPreview')">
                     Select image
                     </label>

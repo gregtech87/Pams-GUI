@@ -95,7 +95,7 @@
     line-height: 45px;
     text-align: center;
     margin: 0 5px;
-    color: #bdb8d7;
+    color: rgba(189, 184, 215, 0.94);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
@@ -115,7 +115,7 @@
 .wrapper .main_content .info{
     margin: 20px;
     color: #717171;
-    line-height: 25px;
+    line-height: 20px;
 }
 
 /*.wrapper .main_content .info div{*/

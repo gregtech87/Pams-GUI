@@ -22,7 +22,7 @@ function loadAddNewAssetPage() {
                         </label>
                     </div>
                 </div>
-                <form id="register-form" class="register-form" onsubmit="registerUser(event)">
+                <form id="register-form" class="register-form">
                     <div class="assetColumn one">
                         <label for="title" class="required"><b>Title:</b></label>
                         <input type="text" id="title" required>
@@ -125,7 +125,19 @@ async function registerAsset() {
             "postalCode": document.querySelector("#postalCode").value,
             "city": document.querySelector("#city").value
         },
-
+        "status": {
+            nameOfHolder: "",
+            purpose: "",
+            address: {
+                street: "",
+                addressNumber: 0,
+                postalCode: 0,
+                city: ""
+            },
+            customLocation: false,
+            customLat: 0,
+            customLong: 0,
+        },
         "profilePictureData": {
             "name": uploadedTempProfilePicture.name,
             "type": uploadedTempProfilePicture.type,
@@ -146,13 +158,7 @@ async function registerAsset() {
     let responseItem = await fetchDataPost(baseFetchUrl + "item", btoa("itemGuy:itemGuy"), newAsset);
     console.log(responseItem);
 
-    let storedUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
-    const url = baseFetchUrl + 'user/' + storedUser.id;
-    const response = await fetchDataGet(url, btoa("editUser:editUser"));
-    console.log(response)
-    let user = await response.json();
-    console.log(user);
-    sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+    await updateUserInSessionStorage();
 
 
 }
