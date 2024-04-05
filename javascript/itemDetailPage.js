@@ -189,7 +189,7 @@ async function loadItemDetailsPage(item) {
         </section>
     `;
 
-    populateItemDetails(item);
+    await populateItemDetails(item);
     toggleReadOnly("#asset-form")
 
 }

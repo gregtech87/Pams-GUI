@@ -28,7 +28,7 @@ function loadMapPage(userBoolean, itemPurchaseBoolean, itemOffSiteBoolean, itemN
         `;
     if (itemPurchaseBoolean || itemOffSiteBoolean){
         contentDiv.innerHTML += `
-                <button class="negButton" onclick="loadItemDetailsPage('${itemNameInSessionStorage}')">Return</button>
+                <button class="negButton" onclick="loadItemsFromMap('${itemNameInSessionStorage}')">Return</button>
         `;
     }
     loadMapContent(userBoolean, itemPurchaseBoolean, itemOffSiteBoolean, itemNameInSessionStorage).then()
@@ -38,6 +38,11 @@ function loadMapPage(userBoolean, itemPurchaseBoolean, itemOffSiteBoolean, itemN
         event.preventDefault();
         setCustomLocation(userBoolean, itemPurchaseBoolean, itemOffSiteBoolean, itemNameInSessionStorage);
     });
+}
+
+async function loadItemsFromMap(itemNameInSessionStorage) {
+    loadingGif();
+    await loadItemDetailsPage(itemNameInSessionStorage);
 }
 
 async function setCustomLocation(userBoolean, itemPurchaseBoolean, itemOffSiteBoolean, itemNameInSessionStorage) {

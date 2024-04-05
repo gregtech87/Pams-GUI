@@ -56,6 +56,7 @@ async function getAssets() {
         itemBtn.addEventListener('click', (event) => {
             // event.preventDefault();
             console.log("wtf: " + internalIndex)
+            loadingGif()
             loadItemDetailsPage('item'+ internalIndex)
         });
 

@@ -4,7 +4,6 @@
  ******************************************************************************/
 
 async function populateItemDetails(item) {
-    loadingGif()
     console.log('populating')
     console.log(item)
     // let asset = JSON.parse(sessionStorage.getItem(item));
@@ -96,6 +95,7 @@ async function populateItemDetails(item) {
             editBtn.innerText = 'Make read only'
             submitBtn.style.visibility = 'visible'
         } else {
+            loadingGif();
             loadItemDetailsPage(item)
         }
     })
@@ -107,7 +107,6 @@ async function populateItemDetails(item) {
     })
     loadImagesToGallery(asset.id, item).then()
     // loopThroughForm("#asset-form")
-    messageDiv.innerHTML = ``;
 }
 
 
@@ -269,7 +268,7 @@ async function updateAsset(assetId, itemInSessionStorage, updatePurchaseBoolean,
     console.log(updatePurchaseBoolean)
     console.log(updateOffSiteBoolean)
 
-    if (newProfilePic === true && !updatePurchaseBoolean || !updateOffSiteBoolean) {
+    if (newProfilePic === true && (!updatePurchaseBoolean || !updateOffSiteBoolean)) {
         newAsset.profilePic = {"$binary": {"base64": uploadedTempProfilePicture.$binary.base64}};
         newAsset.profilePictureData.name = uploadedTempProfilePicture.name;
         newAsset.profilePictureData.type = uploadedTempProfilePicture.type;
@@ -310,5 +309,6 @@ async function updateAsset(assetId, itemInSessionStorage, updatePurchaseBoolean,
     console.log("RESP")
     console.log(updateResponse)
     sessionStorage.setItem(itemInSessionStorage, updateResponse.id);
-    loadItemDetailsPage(itemInSessionStorage);
+    loadingGif();
+    await loadItemDetailsPage(itemInSessionStorage);
 }
