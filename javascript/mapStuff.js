@@ -40,15 +40,15 @@ function loadMapPage(userBoolean, itemPurchaseBoolean, itemOffSiteBoolean, itemN
     });
 }
 
-function setCustomLocation(userBoolean, itemPurchaseBoolean, itemOffSiteBoolean, itemNameInSessionStorage) {
+async function setCustomLocation(userBoolean, itemPurchaseBoolean, itemOffSiteBoolean, itemNameInSessionStorage) {
     console.log(userBoolean)
     console.log(itemPurchaseBoolean)
     console.log(document.querySelector("#customLat").value)
     console.log(document.querySelector("#customLong").value)
 
     let asset;
-    if (itemNameInSessionStorage !== undefined){
-        asset = JSON.parse(sessionStorage.getItem(itemNameInSessionStorage));
+    if (itemNameInSessionStorage !== undefined) {
+        asset = await getAssetById(sessionStorage.getItem(itemNameInSessionStorage));
     }
     console.log(asset)
 
@@ -63,13 +63,13 @@ function setCustomLocation(userBoolean, itemPurchaseBoolean, itemOffSiteBoolean,
         });
     }
     if (itemPurchaseBoolean && itemNameInSessionStorage !== undefined) {
-        sessionStorage.setItem('tempLat',document.querySelector("#customLat").value);
-        sessionStorage.setItem('tempLong',document.querySelector("#customLong").value);
+        sessionStorage.setItem('tempLat', document.querySelector("#customLat").value);
+        sessionStorage.setItem('tempLong', document.querySelector("#customLong").value);
         updateAsset(asset.id, itemNameInSessionStorage, true, false).then()
     }
     if (itemOffSiteBoolean && itemNameInSessionStorage !== undefined) {
-        sessionStorage.setItem('tempLat',document.querySelector("#customLat").value);
-        sessionStorage.setItem('tempLong',document.querySelector("#customLong").value);
+        sessionStorage.setItem('tempLat', document.querySelector("#customLat").value);
+        sessionStorage.setItem('tempLong', document.querySelector("#customLong").value);
         updateAsset(asset.id, itemNameInSessionStorage, false, true).then()
     }
 }
@@ -93,8 +93,9 @@ async function searchAddress(userBoolean, itemPurchaseBoolean, itemOffSiteBoolea
     let address;
     let user = JSON.parse(sessionStorage.getItem("loggedInUser"))
     let asset;
+    console.log(itemNameInSessionStorage)
     if (itemNameInSessionStorage !== undefined){
-        asset = JSON.parse(sessionStorage.getItem(itemNameInSessionStorage));
+        asset = await getAssetById(sessionStorage.getItem(itemNameInSessionStorage));
     }
     console.log(asset)
 

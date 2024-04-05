@@ -3,11 +3,13 @@
  * Github: Gregtech87
  ******************************************************************************/
 
-function populateItemDetails(item) {
+async function populateItemDetails(item) {
     loadingGif()
     console.log('populating')
     console.log(item)
-    let asset = JSON.parse(sessionStorage.getItem(item));
+    // let asset = JSON.parse(sessionStorage.getItem(item));
+    let asset = await getAssetById(sessionStorage.getItem(item));
+    console.log(asset)
     setProfilePic('#previewImage', asset);
 
     // Populating fields from Item entity
@@ -51,7 +53,7 @@ function populateItemDetails(item) {
         document.querySelector('#purpose').value = asset.status.purpose;
         document.querySelector('#customOffSiteLocation').checked = !!asset.status.customLocation;
 
-        if (asset.status.currentLocation){
+        if (asset.status.currentLocation) {
             document.querySelector('#item-offSite-address').value = asset.status.currentLocation.street;
             document.querySelector('#item-offSite-addressNumber').value = asset.status.currentLocation.streetNumber;
             document.querySelector('#item-offSite-postalCode').value = asset.status.currentLocation.postalCode;
@@ -109,10 +111,11 @@ function populateItemDetails(item) {
 }
 
 
-function addImageToGallery(item) {
+async function addImageToGallery(item) {
     console.log('adding')
     console.log(item)
-    let currentItem = JSON.parse(sessionStorage.getItem(item));
+    let currentItem = await getAssetById(sessionStorage.getItem(item));
+    console.log(currentItem)
     handleFileUpload('#galleryInput', currentItem.id).then();
 
 }
@@ -207,6 +210,7 @@ async function updateAsset(assetId, itemInSessionStorage, updatePurchaseBoolean,
     const url = baseFetchUrl + 'item/' + assetId;
     const response = await fetchDataGet(url, btoa("itemGuy:itemGuy"));
     let dbAsset = await response.json();
+    console.log(dbAsset)
     let newAsset = dbAsset;
     console.log('From DB:')
     console.log(newAsset)
@@ -261,9 +265,11 @@ async function updateAsset(assetId, itemInSessionStorage, updatePurchaseBoolean,
             newAsset.status.customLong = 0;
         }
     }
+    console.log(newProfilePic)
+    console.log(updatePurchaseBoolean)
+    console.log(updateOffSiteBoolean)
 
-
-    if (newProfilePic && !updatePurchaseBoolean || !updateOffSiteBoolean) {
+    if (newProfilePic === true && !updatePurchaseBoolean || !updateOffSiteBoolean) {
         newAsset.profilePic = {"$binary": {"base64": uploadedTempProfilePicture.$binary.base64}};
         newAsset.profilePictureData.name = uploadedTempProfilePicture.name;
         newAsset.profilePictureData.type = uploadedTempProfilePicture.type;
@@ -303,6 +309,6 @@ async function updateAsset(assetId, itemInSessionStorage, updatePurchaseBoolean,
     }
     console.log("RESP")
     console.log(updateResponse)
-    sessionStorage.setItem(itemInSessionStorage, JSON.stringify(updateResponse));
+    sessionStorage.setItem(itemInSessionStorage, updateResponse.id);
     loadItemDetailsPage(itemInSessionStorage);
 }

@@ -5,8 +5,10 @@
  * Github: Gregtech87
  ******************************************************************************/
 
-function loadItemDetailsPage(item) {
-    let asset = JSON.parse(sessionStorage.getItem(item));
+async function loadItemDetailsPage(item) {
+    // let asset = JSON.parse(sessionStorage.getItem(item));
+    console.log(item)
+    let asset = await getAssetById(sessionStorage.getItem(item));
     console.log(asset)
     let contentDiv = document.querySelector("#mainContent");
     contentDiv.innerHTML = `
@@ -81,12 +83,23 @@ function loadItemDetailsPage(item) {
                         
                         <label><b>Size:</b></label>
                         <div>
-                            <input type="number" id="length" placeholder="Length">
-                            <input type="number" id="width" placeholder="Width">
-                            <input type="number" id="height" placeholder="Height">
+                            <div STYLE="display: flex; justify-content: space-between">
+                                <label for="length" style="margin-right: 5px"><b>L(cm): </b></label>
+                                <input type="number" id="length" placeholder="Length">
+                            </div>
+                            <div STYLE="display: flex; justify-content: space-between">
+                                 <label for="width" style="margin-right: 5px"><b>W(cm): </b></label>    
+                                <input type="number" id="width" placeholder="Width">
+                            </div>
+                            <div STYLE="display: flex; justify-content: space-between">
+                                 <label for="height" style="margin-right: 5px"><b>H(cm): </b></label> 
+                                <input type="number" id="height" placeholder="Height">
+                            </div>
+                            <div STYLE="display: flex; justify-content: space-between">
+                                 <label for="weight" style="margin-right: 5px"><b>Kg: </b></label> 
+                                <input type="number" id="weight" placeholder="Weight (Kilo)">
+                            </div>
                         </div>
-                        <input type="number" id="weight" placeholder="Weight (Kilo)">
-                        
                         <label for="state"><b>State:</b></label>
                         <input type="text" id="state" placeholder="New/clean/broken etc">
                         
@@ -179,4 +192,14 @@ function loadItemDetailsPage(item) {
     populateItemDetails(item);
     toggleReadOnly("#asset-form")
 
+}
+
+async function getAssetById(assetId) {
+    console.log(assetId)
+    const url = baseFetchUrl + 'item/' + assetId;
+    const response = await fetchDataGet(url, btoa("itemGuy:itemGuy"));
+    console.log(response)
+    let item = await response.json();
+    console.log(item)
+    return item;
 }

@@ -197,8 +197,7 @@ async function handleFileUpload(inputId, itemId) {
 
     if (itemId !== undefined) {
         url = baseFetchUrl + 'uploadToGallery?username=' + user.username + '&itemId=' + itemId;
-        let fileDataUrl = sessionStorage.getItem('previewImage');
-        let galleryImage = dataURLtoFile(fileDataUrl, sessionStorage.getItem('previewImageName'))
+        let galleryImage = dataURLtoFile(previewTempImage, sessionStorage.getItem('previewImageName'))
         console.log(galleryImage)
         formData.append("file", galleryImage, galleryImage.name);
     } else {
@@ -243,6 +242,9 @@ async function handleFileUpload(inputId, itemId) {
         await updateUserInSessionStorage();
         loadFilesPage();
     }
+
+    sessionStorage.setItem("newProfilePic", "false");
+    previewTempImage = null;
 
     if (itemId !== undefined && !postResult.storageLimitExceed && !postResult.fileSizeExceed && !postResult.fileAlreadyExists) {
         await updateUserInSessionStorage();

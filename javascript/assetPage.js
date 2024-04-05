@@ -33,7 +33,7 @@ async function getAssets() {
 
     let boxIndex = 0;
     itemList.reverse().forEach(item => {
-        sessionStorage.setItem("item" + boxIndex, JSON.stringify(item))
+        sessionStorage.setItem("item" + boxIndex, item.id)
         contentDiv.innerHTML += `
         <section class="itemBox" id="item${boxIndex}">
             <div>
@@ -59,7 +59,8 @@ async function getAssets() {
             loadItemDetailsPage('item'+ internalIndex)
         });
 
-        setProfilePic('#itemImg'+contentIndex, JSON.parse(sessionStorage.getItem("item"+contentIndex)));
+        // setProfilePic('#itemImg'+contentIndex, JSON.parse(sessionStorage.getItem("item"+contentIndex));
+        setProfilePic('#itemImg'+contentIndex, itemList[contentIndex]);
         contentIndex++
     }
     messageDiv.innerHTML = ``;

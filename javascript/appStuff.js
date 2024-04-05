@@ -84,6 +84,7 @@ function logout() {
     baseFetchUrl = "Nope";
     base64credentials = "Nope";
     uploadedTempProfilePicture = "Nope";
+    previewTempImage = "Nope";
     // sessionStorage.setItem("base64credentials", "")
     // sessionStorage.setItem("loggedInUser", "")
     // sessionStorage.setItem("uploadResponse", "")

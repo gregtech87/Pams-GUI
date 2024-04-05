@@ -15,6 +15,7 @@ let baseFetchUrl = 'https://pam-api.gregtech.duckdns.org/api/v1/';
 // let baseFetchUrl = 'http://localhost:8586/api/v1/';
 let loggedInUser;
 let base64credentials;
+let previewTempImage;
 let uploadedTempProfilePicture = {"$binary": {}};
 
 function handleImageChange(inputId, elementID) {
@@ -41,7 +42,7 @@ function handleImageChange(inputId, elementID) {
         reader.onload = function (e) {
             // The e.target.result contains the data URL of the image
             let imageData = e.target.result;
-            sessionStorage.setItem('previewImage', imageData.toString())
+            previewTempImage = imageData.toString();
             sessionStorage.setItem('previewImageName', file.name)
             // Use the 'blob' object as needed (e.g., send it to a server).
             setTempProfilePicture(imageData);
