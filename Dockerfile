@@ -1,6 +1,6 @@
 FROM tomcat:latest
 
-MAINTAINER gregtech87
+LABEL maintainer="gregtech87"
 
 #   Prepare deployment
 #edit baseFetchUrl in shared.js
