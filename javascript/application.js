@@ -28,10 +28,10 @@ function loadApplication() {
         <img id="profilePic" src="../images/defaultUser.png" alt="Profile picture"><br>
         <p><strong style="color: #85d6e9">User:</strong> ${loggedInUser.username}</p>
         <ul>
-            <li><a href="#" onclick="loadApplication()"><i class="fas fa-home"></i>Home</a></li>
-            <li><a href="#" onclick="displayProfileEdit()"><i class="fas fa-user"></i>Profile</a></li>
-            <li><a href="#" onclick="loadMapPage(true, false, false, undefined)"><i class="fas fa-map-pin"></i>Map</a></li>
-            <li><a href="#" onclick="loadAssetPage()"><i class="fas fa-project-diagram"></i>Assets</a></li>
+            <li><a href="#" onclick="loadApplication()"><img src="../images/home-solid.svg" class="sideBarBtn" alt="Logout symbol">Home</a></li>
+            <li><a href="#" onclick="displayProfileEdit()"><img src="../images/user-solid.svg" class="sideBarBtn" alt="Logout symbol">Profile</a></li>
+            <li><a href="#" onclick="loadMapPage(true, false, false, undefined)"><img src="../images/map-pin-solid.svg" class="sideBarBtn" alt="Logout symbol">Map</a></li>
+            <li><a href="#" onclick="loadAssetPage()"><img src="../images/project-diagram-solid.svg" class="sideBarBtn" alt="Logout symbol">Assets</a></li>
             <li><a href="#" onclick="loadFilesPage()"><img src="../images/files.svg" class="sideBarBtn" alt="Logout symbol">Files</a></li>
             <li><a href="#" onclick="loadNotesPage()"><img src="../images/notes.svg" class="sideBarBtn" alt="Logout symbol">Notes</a></li>
 <!--            <li><a href="#" onclick="loadFilesPage()"><img src="../images/files1.svg" class="sideBarBtn" alt="Logout symbol">Files</a></li>-->
